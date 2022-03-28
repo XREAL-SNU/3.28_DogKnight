@@ -11,23 +11,26 @@ public enum AnimatorParameters
 public class Character : MonoBehaviour, Observer
 {
     public string _myName;
-    public float _myHp;
+    public float _myHp, maxHp;
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
+    protected bool myturn = false;
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
-    public void TurnUpdate(int round, string turn)
+    public void TurnUpdate(int round, string turn, Character character)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
+        myturn = character == this;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +42,7 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        AttackMotion();
     }
 
     /// <summary>
@@ -53,7 +56,26 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
+        _myHp -= damage;
+        if(_myHp <= 0) {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
+    }
 
+    public virtual void Heal(float hp) {
+        _myHp += hp;
+        if(_myHp > maxHp) _myHp = maxHp;
+    }
+
+    public virtual Character Target() {
+        List<Character> enemies = GameManager.Instance().TeamMember(!GameManager.Instance().PlayerTurn());
+
+        return enemies[Random.Range(0, enemies.Count)];
     }
 
     /// <summary>
@@ -71,6 +93,7 @@ public class Character : MonoBehaviour, Observer
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
+        _myHp = maxHp;
     }
     protected void AttackMotion()
     {

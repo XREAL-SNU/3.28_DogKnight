@@ -6,6 +6,6 @@ public interface Subject
 
 public interface Observer
 {
-    void TurnUpdate(int round, string turn);
+    void TurnUpdate(int round, string turn, Character character);
     void FinishUpdate(bool isFinish);
 }
