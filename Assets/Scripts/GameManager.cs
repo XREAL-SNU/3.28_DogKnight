@@ -104,6 +104,11 @@ public class GameManager : MonoBehaviour, Subject
         return PlayerTurn() ? players[turn] : enemies[turn];
     }
 
+    public Character NextCharacter() {
+        if(turn >= TeamMember(PlayerTurn()).Count - 1) return TeamMember(!PlayerTurn())[0];
+        return TeamMember(PlayerTurn())[turn + 1];
+    }
+
     public List<Character> TeamMember(bool player) {
         return player ? players : enemies;
     }

@@ -46,14 +46,14 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        base.Attack();
-
         Character target = Target();
         if (Random.Range(0f, 1f) < 0.3f) {
+            SpecialAttackMotion();
             target.GetHit(_myDamage + 10);
             Debug.Log($"{_myName} Special Attack!");
         }
         else {
+            AttackMotion();
             target.GetHit(_myDamage);
         }
     }
