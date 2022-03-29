@@ -27,19 +27,14 @@ public class Player : Character
         _myDamage = 20;
     }
 
-    private void Awake()
-    {
-        Init();
-    }
-
     /// <summary>
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         Init();
-        if(_enemy == null)
+        if (_enemy == null)
         {
             _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
         }
@@ -80,6 +75,7 @@ public class Player : Character
 
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
 
     }
 }

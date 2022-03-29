@@ -78,6 +78,10 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
+        _isEnd = true;
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _finishHandler(_isEnd);
 
     }
 

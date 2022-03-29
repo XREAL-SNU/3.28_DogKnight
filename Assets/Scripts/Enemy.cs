@@ -5,10 +5,12 @@ using UnityEngine;
 public class Enemy : Character
 {
     private Player _player;
-    private float _randomHeal;
+
     private int DAMAGE_INCREASE = 3;
     private int FINAL_ROUND = 10;
     private int PLAYER_HP = 100;
+    private int SPECIAL_HEAL_MAX_VALUE = 3;
+    private int HEAL_INCREASE = 10;
 
     public GameObject gameManager;
     /// <summary>
@@ -27,24 +29,21 @@ public class Enemy : Character
         _myDamage = 10;
     }
 
-    private void Awake()
-    {
-        Init();
-    }
-
     /// <summary>
     /// 1) _player가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _player 할당
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         Init();
-        if(_player == null)
+        if (_player == null)
         {
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
     }
 
+    
+ 
     /// <summary>
     /// Attack:
     /// 1) _gameRound가 지날때마다 데미지 3씩 증가
@@ -76,7 +75,14 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
+        int _randomHealOrNot = Random.Range(0, 10);
 
+        if(0 <= _randomHealOrNot && _randomHealOrNot < SPECIAL_HEAL_MAX_VALUE)
+        {
+            PLAYER_HP += HEAL_INCREASE;
+            Debug.Log($"{_myName} Heal!");
+        }
     }
 }
 
