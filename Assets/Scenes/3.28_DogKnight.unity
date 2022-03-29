@@ -427,6 +427,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f40b9d95d382cc4085ab5df39130696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemey: {fileID: 2047800146}
+  player: {fileID: 607758866}
 --- !u!1 &607758866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
@@ -448,6 +450,7 @@ MonoBehaviour:
   _myHp: 0
   _myDamage: 0
   attackButton: {fileID: 16706858}
+  gameManager: {fileID: 128527306}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,3 +936,4 @@ MonoBehaviour:
   _myHp: 0
   _myDamage: 0
   attackButton: {fileID: 16706858}
+  gameManager: {fileID: 128527306}

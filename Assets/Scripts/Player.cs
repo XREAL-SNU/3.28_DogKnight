@@ -38,6 +38,7 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
+        Init();
         if(_enemy == null)
         {
             _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
@@ -57,6 +58,8 @@ public class Player : Character
     public override void Attack()
     {
         float _damage = 0;
+
+        Debug.Log("Attack");
         if (!_isFinished && _myName == _whoseTurn)
         {
             int _randomAttack = Random.Range(0, 10);
@@ -67,6 +70,7 @@ public class Player : Character
                 Debug.Log($"{_myName} Special Attack!");
             } else
             {
+                AttackMotion();
                 _damage = _myDamage;
             }
 

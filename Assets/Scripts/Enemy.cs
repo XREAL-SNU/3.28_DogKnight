@@ -6,6 +6,9 @@ public class Enemy : Character
 {
     private Player _player;
     private float _randomHeal;
+    private int DAMAGE_INCREASE = 3;
+    private int FINAL_ROUND = 10;
+    private int PLAYER_HP = 100;
 
     public GameObject gameManager;
     /// <summary>
@@ -35,7 +38,11 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        Init();
+        if(_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
 
     /// <summary>
@@ -45,7 +52,20 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            AttackMotion();
+            if (_gameRound == FINAL_ROUND)
+            {
+                _myDamage = PLAYER_HP;
+            } else
+            {
+                _myDamage = _myDamage + DAMAGE_INCREASE;
+            }
+            _player.GetHit(_myDamage);
+        }
 
+        
     }
 
     /// <summary>

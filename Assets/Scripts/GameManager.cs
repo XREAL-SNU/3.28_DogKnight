@@ -16,15 +16,14 @@ public class GameManager : MonoBehaviour, Subject
     delegate void TurnHandler(int round, string turn);
     delegate void FinishHandler(bool isFinish);
 
-    GameObject enemey;
-    GameObject player;
+    public GameObject enemey;
+    public GameObject player;
 
     TurnHandler _turnHandler;
     FinishHandler _finishHandler;
 
     void Start()
     {
-        Debug.Log("shown");
         _turnHandler += new TurnHandler(player.GetComponent<Player>().TurnUpdate);
         _turnHandler += new TurnHandler(enemey.GetComponent<Enemy>().TurnUpdate);
 
@@ -63,6 +62,7 @@ public class GameManager : MonoBehaviour, Subject
         {
             _whoseTurn = "Enemy";
         }
+        
         _turnHandler(_gameRound, _whoseTurn);
         Debug.Log($"GameManager: {_whoseTurn} turn.");
 
