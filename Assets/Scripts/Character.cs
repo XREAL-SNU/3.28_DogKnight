@@ -13,21 +13,20 @@ public class Character : MonoBehaviour, Observer
     public string _myName;
     public float _myHp;
     public float _myDamage;
-
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn; //int -> string
     protected bool _isFinished;
-
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +38,8 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        ///공통 코드
+        //공통 코드가 뭐가있나..?
     }
 
     /// <summary>
@@ -53,9 +53,20 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 
+    #region Summary
     /// <summary>
     /// 이 밑으로는 animation 관련 code, 이해할 필요 없음 (다음주 세션에서 할 것)
     /// 원래는 아래처럼 여러 메소드를 만들 필요도 없지만 배우지 않은 내용이기 때문에
@@ -101,5 +112,7 @@ public class Character : MonoBehaviour, Observer
     {
         yield return new WaitForSeconds(1f);
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
+
     }
+    #endregion
 }

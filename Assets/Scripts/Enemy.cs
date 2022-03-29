@@ -7,6 +7,12 @@ public class Enemy : Character
     private Player _player;
     private float _randomHeal;
 
+    //GameManager GM;
+    //public Enemy(GameManager GM)
+    //{
+    //    this.GM = GM;
+    //}
+
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -17,6 +23,12 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+
+        GameManager.Instance().AddCharacter(this);
+
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
@@ -30,6 +42,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
 
     }
 
@@ -41,6 +57,14 @@ public class Enemy : Character
     public override void Attack()
     {
 
+        if (_myName == _whoseTurn && !_isFinished)
+        {
+            AttackMotion();
+            _player.GetHit(_myDamage); //이 부분에서 헷갈려가지고 애먹은...ㅠㅠㅠ
+            _myDamage += 3;
+        }
+
+        if (_gameRound >= 10) _myDamage = _player._myHp;
     }
 
     /// <summary>
@@ -51,7 +75,15 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
+        _randomHeal = Random.Range(0, 10);
+        if (_randomHeal % 3 == 0 && !_isFinished)
+        {
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
+            Debug.Log($"{_myName}의 회복하고 난 후의 HP:{_myHp}");
+        }
+  
 
     }
 }
-
