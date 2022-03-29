@@ -55,7 +55,7 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        base.Attack();
     }
 
     public override void GetHit(float damage)

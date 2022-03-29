@@ -43,7 +43,7 @@ public class Character : MonoBehaviour, Observer
         if(!_isFinished && _myName == _whoseTurn)
         {
             AttackMotion();
-           
+            
         }
     }
 
