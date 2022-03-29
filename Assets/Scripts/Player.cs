@@ -17,6 +17,11 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
+
     }
 
     private void Awake()
@@ -30,7 +35,12 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if (_enemy == null)
+        {
+            GameObject playerGameObj = GameObject.FindWithTag("Enemy");
+            _enemy = playerGameObj.GetComponent<Enemy>();
+            Debug.Log("Enemy 세팅 완료");
+        }
     }
 
     /// <summary>

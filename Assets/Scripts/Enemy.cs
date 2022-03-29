@@ -17,6 +17,10 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
@@ -30,7 +34,12 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if ( _player == null)
+        {
+            GameObject playerGameObj = GameObject.FindWithTag("Player");
+            _player = playerGameObj.GetComponent<Player>();
+            Debug.Log("플레이어 세팅 완료");
+        }
     }
 
     /// <summary>
@@ -40,7 +49,8 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-
+        _myDamage += 3;
+        
     }
 
     /// <summary>
