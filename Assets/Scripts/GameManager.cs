@@ -13,7 +13,25 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
+    delegate void TurnHandler(int round, string turn);
+    delegate void FinishHandler(bool isFinish);
 
+    GameObject enemey;
+    GameObject player;
+
+    TurnHandler _turnHandler;
+    FinishHandler _finishHandler;
+
+    void Start()
+    {
+        Debug.Log("shown");
+        _turnHandler += new TurnHandler(player.GetComponent<Player>().TurnUpdate);
+        _turnHandler += new TurnHandler(enemey.GetComponent<Enemy>().TurnUpdate);
+
+        _finishHandler += new FinishHandler(player.GetComponent<Player>().FinishUpdate);
+        _finishHandler += new FinishHandler(enemey.GetComponent<Enemy>().FinishUpdate);
+        
+    }
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -22,7 +40,12 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-
+        if(_whoseTurn == "Enemy")
+        {
+            _gameRound += 1;
+            Debug.Log($"GameManager: Round {_gameRound}.");
+        }
+        TurnNotify();
     }
 
     /// <summary>
@@ -33,7 +56,17 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
+       if(_whoseTurn == "Enemy")
+        {
+            _whoseTurn = "Player";
+        } else
+        {
+            _whoseTurn = "Enemy";
+        }
+        _turnHandler(_gameRound, _whoseTurn);
+        Debug.Log($"GameManager: {_whoseTurn} turn.");
 
+        
     }
 
     /// <summary>

@@ -7,6 +7,7 @@ public class Enemy : Character
     private Player _player;
     private float _randomHeal;
 
+    public GameObject gameManager;
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -17,6 +18,10 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        gameManager.GetComponent<GameManager>().AddCharacter(this);
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()

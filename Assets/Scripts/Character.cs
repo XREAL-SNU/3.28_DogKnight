@@ -26,6 +26,7 @@ public class Character : MonoBehaviour, Observer
     {
         _gameRound = round;
         _whoseTurn = turn;
+        Attack();
     }
 
     // 2. FinishUpdate: _isFinished update
@@ -88,6 +89,7 @@ public class Character : MonoBehaviour, Observer
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
+
     }
     protected void AttackMotion()
     {

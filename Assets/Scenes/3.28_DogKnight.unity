@@ -447,6 +447,7 @@ MonoBehaviour:
   _myName: 
   _myHp: 0
   _myDamage: 0
+  attackButton: {fileID: 16706858}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,3 +932,4 @@ MonoBehaviour:
   _myName: 
   _myHp: 0
   _myDamage: 0
+  attackButton: {fileID: 16706858}

@@ -9,6 +9,8 @@ public class Player : Character
     private int SPECIAL_ATTACK_MAX_VALUE = 3;
     private int SPECIAL_ATTACK_ADDITIOANL_VALUE = 10;
 
+    public GameObject gameManager;
+
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -19,6 +21,7 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        gameManager.GetComponent<GameManager>().AddCharacter(this);
         _myName = "Player";
         _myHp = 100;
         _myDamage = 20;
@@ -35,7 +38,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if(_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        }
     }
 
     /// <summary>
