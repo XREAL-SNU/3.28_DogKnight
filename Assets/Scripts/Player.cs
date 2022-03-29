@@ -6,6 +6,8 @@ public class Player : Character
 {
     private Enemy _enemy;
     private float _randomAttack;
+    private int SPECIAL_ATTACK_MAX_VALUE = 3;
+    private int SPECIAL_ATTACK_ADDITIOANL_VALUE = 10;
 
     /// <summary>
     /// 1. Init: 초기화 기능
@@ -17,6 +19,9 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
     }
 
     private void Awake()
@@ -45,7 +50,22 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
+        float _damage = 0;
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            int _randomAttack = Random.Range(0, 10);
+            if(0 <= _randomAttack && _randomAttack < SPECIAL_ATTACK_MAX_VALUE)
+            {
+                SpecialAttackMotion();
+                _damage = _myDamage + SPECIAL_ATTACK_ADDITIOANL_VALUE;
+                Debug.Log($"{_myName} Special Attack!");
+            } else
+            {
+                _damage = _myDamage;
+            }
 
+            _enemy.GetHit(_damage);
+        }
     }
 
     public override void GetHit(float damage)
