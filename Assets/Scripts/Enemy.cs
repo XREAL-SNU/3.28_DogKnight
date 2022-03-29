@@ -49,6 +49,7 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        base.Attack();
         _myDamage += 3;
         
     }

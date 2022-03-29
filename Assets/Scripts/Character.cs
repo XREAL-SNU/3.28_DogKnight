@@ -43,8 +43,7 @@ public class Character : MonoBehaviour, Observer
         if(!_isFinished && _myName == _whoseTurn)
         {
             AttackMotion();
-            Character other = new Character();
-            other.GetHit(_myDamage);
+           
         }
     }
 
