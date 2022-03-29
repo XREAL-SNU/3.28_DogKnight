@@ -12,7 +12,6 @@ public class Enemy : Character
     private int SPECIAL_HEAL_MAX_VALUE = 3;
     private int HEAL_INCREASE = 10;
 
-    public GameObject gameManager;
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -23,7 +22,6 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-        gameManager.GetComponent<GameManager>().AddCharacter(this);
         _myName = "Enemy";
         _myHp = 100;
         _myDamage = 10;

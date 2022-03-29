@@ -13,7 +13,7 @@ public class Character : MonoBehaviour, Observer
     public string _myName;
     public float _myHp;
     public float _myDamage;
-    public GameObject attackButton;
+    public GameObject gameManager;
 
     protected int _gameRound;
     protected string _whoseTurn;
@@ -60,7 +60,7 @@ public class Character : MonoBehaviour, Observer
         if(_myHp <= 0)
         {
             DeadMotion();
-            attackButton.GetComponent<GameManager>().EndNotify();
+            gameManager.GetComponent<GameManager>().EndNotify();
 
         } else
         {
@@ -84,7 +84,7 @@ public class Character : MonoBehaviour, Observer
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
-
+        gameManager.GetComponent<GameManager>().AddCharacter(this);
     }
     protected void AttackMotion()
     {
