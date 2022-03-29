@@ -16,19 +16,12 @@ public class GameManager : MonoBehaviour, Subject
     delegate void TurnHandler(int round, string turn);
     delegate void FinishHandler(bool isFinish);
 
-    public GameObject enemey;
-    public GameObject player;
-
     TurnHandler _turnHandler;
     FinishHandler _finishHandler;
 
     void Start()
     {
-        _turnHandler += new TurnHandler(player.GetComponent<Player>().TurnUpdate);
-        _turnHandler += new TurnHandler(enemey.GetComponent<Enemy>().TurnUpdate);
-
-        _finishHandler += new FinishHandler(player.GetComponent<Player>().FinishUpdate);
-        _finishHandler += new FinishHandler(enemey.GetComponent<Enemy>().FinishUpdate);
+      
         
     }
     /// <summary>
@@ -88,6 +81,7 @@ public class GameManager : MonoBehaviour, Subject
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-
+        _turnHandler += new TurnHandler(character.GetComponent<Character>().TurnUpdate);
+        _finishHandler += new FinishHandler(character.GetComponent<Character>().FinishUpdate);
     }
 }
