@@ -43,7 +43,7 @@ public class Character : MonoBehaviour, Observer
         if(!_isFinished && _myName == _whoseTurn)
         {
             AttackMotion();
-            
+          
         }
     }
 
@@ -64,9 +64,8 @@ public class Character : MonoBehaviour, Observer
             DeadMotion();
             GameManager.Instance().EndNotify();
 
-        }
-        if (!_isFinished)
-        {
+        }else
+        { 
             GetHitMotion();
             Debug.Log($"{_myName} HP: {_myHp}");
         }

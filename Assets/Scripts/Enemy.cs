@@ -7,6 +7,9 @@ public class Enemy : Character
     private Player _player;
     private float _randomHeal;
 
+    private const int DamageInc = 3;
+  
+
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -49,8 +52,12 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        base.Attack();
-        _myDamage += 3;
+
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            AttackMotion();
+            _player.GetHit((this._gameRound >= 10) ? _player._myHp : DamageInc);
+        }
         
     }
 
@@ -62,6 +69,17 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        _randomHeal = Random.Range(0, 10);
 
+        if (_randomHeal < 3)
+        {
+            SpecialAttackMotion();
+            Debug.Log($"{_myName} Heal!");
+            this._myHp += 10;
+        }
+        else
+        {
+            base.GetHit(damage);
+        }
     }
 }
