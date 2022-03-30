@@ -17,6 +17,10 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+
+
+
+
     }
 
     private void Awake()
