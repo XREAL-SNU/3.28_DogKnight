@@ -17,6 +17,8 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+
+        //옵저버 등록하기
         _myName = "Player";
         _myHp = 100;
         _myDamage = 20;
@@ -75,7 +77,7 @@ public class Player : Character
         if(_myHp <= 0)
         {
             DeadMotion();
-            _enemy.EndNotify();
+            GameManager.Instance().EndNotify();
 
         }
         else

@@ -35,7 +35,7 @@ public class Enemy : Character
     {
         if(!_player)
         {
-            _player = GameObject.FindWithTag("Player").GetComponent(Player);
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
     }
 
@@ -49,6 +49,8 @@ public class Enemy : Character
         if (_myName == _whoseTurn)
         {
             AttackMotion();
+            _player.GetHit(_myDamage);
+            _myDamage += 3;
         }
         if (_gameRound == 10)
         {
@@ -64,15 +66,22 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-        f(_myHp <= 0)
+        if(_myHp <= 0)
         {
             DeadMotion();
-            _player.EndNotify();
+            GameManager.Instance().EndNotify();
 
         }
         else
         {
             GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
+        _randomHeal = Random.Range(0, 10);
+        if (_randomHeal <= 3)
+        {
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
             Debug.Log($"{_myName} HP: {_myHp}");
         }
     }
