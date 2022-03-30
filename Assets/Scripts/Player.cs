@@ -6,7 +6,6 @@ public class Player : Character
 {
     private Enemy _enemy;
     private float _randomAttack;
-
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -17,7 +16,7 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        GameManager._instance.AddCharacter(this);
+        GameManager.Instance.AddCharacter(this);
         _myHp = 100;
         _myDamage = 20;
         _myName = "Player";
@@ -54,7 +53,9 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-     
+        bool revisFinished = !_isFinished;
+        if (_myName == _whoseTurn && revisFinished)
+        {
             int _randomAttack = Random.Range(0, 10);
             if (_randomAttack >= 7)
             {
@@ -68,20 +69,11 @@ public class Player : Character
                 AttackMotion();
                 _enemy.GetHit(_myDamage);
             }
-        
+        }
     }
 
     public override void GetHit(float damage)
     {
-        if (_myHp <= 0)
-        {
-            DeadMotion();
-            GameManager._instance.EndNotify();
-        }
-        else
-        {
-            GetHitMotion();
-            Debug.Log($"{_myName} HP: {_myHp}");
-        }
+        base.GetHit(damage);
     }
 }

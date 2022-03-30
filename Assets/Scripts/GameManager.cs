@@ -6,8 +6,20 @@ public class GameManager : MonoBehaviour, Subject
 {
     // 1. Singleton Pattern: Instance() method
    
-    public static GameManager _instance;
+    public static GameManager Instance;
+    /*public static GameManager Instance()
+    {
+        if(_instance == null)
+        {
+            _instance = FindObjectOfType<GameManager>();
+        }
+        return _instance;
+    }
 
+    private void Init()
+    {
+        Instance = this;
+    }*/
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -47,9 +59,18 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-        _whoseTurn="true";
-        Debug.Log($"GameManager: {_whoseTurn} turn.");
-        _turnHandler(_gameRound, _whoseTurn);
+        if (_whoseTurn == "Enemy")
+        {
+            _whoseTurn = "Player";
+            Debug.Log($"GameManager: {_whoseTurn} turn.");
+            _turnHandler(_gameRound, _whoseTurn);
+        }
+        else
+        {
+            _whoseTurn = "Enemy";
+            Debug.Log($"GameManager: {_whoseTurn} turn.");
+            _turnHandler(_gameRound, _whoseTurn);
+        }
     }
 
     /// <summary>
@@ -70,7 +91,7 @@ public class GameManager : MonoBehaviour, Subject
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-        TurnHandler _turnHandler = character.TurnUpdate;
-        FinishHandler _finishHandler = character.FinishUpdate;
+        _turnHandler += character.TurnUpdate;
+        _finishHandler += character.FinishUpdate;
     }
 }

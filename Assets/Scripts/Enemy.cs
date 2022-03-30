@@ -17,7 +17,7 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-        GameManager._instance.AddCharacter(this);
+        GameManager.Instance.AddCharacter(this);
         _myHp = 100;
         _myDamage = 10;
         _myName = "Enemy";
@@ -27,6 +27,7 @@ public class Enemy : Character
     private void Awake()
     {
         Init();
+
     }
 
     /// <summary>
@@ -48,18 +49,20 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        if (_gameRound == 10)
+        bool revisFinished = !_isFinished;
+        if (_myName == _whoseTurn && revisFinished)
         {
-            _myHp = 0;
+            if (_gameRound == 10)
+            {
+                _myHp = 0;
+            }
+            else
+            {
+                _myDamage = _myDamage + 3;
+            }
+            AttackMotion();
+            _player.GetHit(_myDamage);
         }
-        else
-        {
-            _myDamage = _myDamage + 3;
-        }
-        
-        AttackMotion();
-        _player.GetHit(_myDamage);
-
     }
 
     /// <summary>
