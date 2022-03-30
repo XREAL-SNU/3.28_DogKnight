@@ -43,7 +43,7 @@ public class Character : MonoBehaviour, Observer
     /// virtual void Attack()은 overriding 되어 실행 되지 않음.
     public virtual void Attack()
     {
-        if (!_isFinished && _myName.Length == _whoseTurn.Length)
+        if (!_isFinished && _myName == _whoseTurn)
         {
             AttackMotion();
             GetHit(_myDamage);

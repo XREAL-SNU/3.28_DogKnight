@@ -47,7 +47,7 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        if (!_isFinished && _myName.Length == _whoseTurn.Length)
+        if (!_isFinished && _myName == _whoseTurn)
         {
             if (_gameRound == 10)
             {
