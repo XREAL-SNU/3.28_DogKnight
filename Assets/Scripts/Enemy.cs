@@ -42,16 +42,18 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        if (_whoseTurn == _myName)
-        {
-            _myDamage += 3;
+        if(_myName == _whoseTurn) {
+            if (_gameRound != 1)
+            {
+                _myDamage += 3;
+            }
+            if (_gameRound == 10)
+            {
+                _myDamage = 999;
+            }
+            base.Attack();
+            _player.GetHit(_myDamage);
         }
-        if (_gameRound == 10)
-        {
-            _myDamage = 999;
-        }
-        base.Attack();
-        _player.GetHit(_myDamage);
     }
     /// <summary>
     /// GetHit:
@@ -65,7 +67,8 @@ public class Enemy : Character
         if (_randomHeal < 3)
         {
             _myHp += 10;
-            Debug.Log($"{_myName} Hea !");
+            Debug.Log($"{_myName} Heal!");
         }
+        base.GetHit(damage);
     }
 }

@@ -47,17 +47,20 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        _randomAttack = Random.Range(0, 10);
-        if (_randomAttack < 3)
-        {
-            SpecialAttackMotion();
-            Debug.Log($"{_myName} Special Attack!");
+        if(_myName == _whoseTurn) {
+            _randomAttack = Random.Range(0, 10);
+            if (_randomAttack < 3)
+            {
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+                _enemy.GetHit(_myDamage + 10);
+            }
+            else
+            {
+                base.Attack();
+                _enemy.GetHit(_myDamage);
+            }
         }
-        else
-        {
-            base.Attack();
-        }
-        _enemy.GetHit(_myDamage);
     }
     public override void GetHit(float damage)
     {
