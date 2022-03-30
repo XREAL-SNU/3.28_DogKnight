@@ -21,12 +21,15 @@ public class Character : MonoBehaviour, Observer
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
+     
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
+        _isFinished = isFinish;
 
     }
 
@@ -39,7 +42,11 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if(_myName == _whoseTurn)
+        {
+            AttackMotion();
+            GetHit(_myDamage);
+        }
     }
 
     /// <summary>
@@ -53,7 +60,16 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        if(_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager._instance.EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 
     /// <summary>

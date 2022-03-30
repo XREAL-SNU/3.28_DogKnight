@@ -17,6 +17,11 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        GameManager._instance.AddCharacter(this);
+        _myHp = 100;
+        _myDamage = 10;
+        _myName = "Enemy";
+
     }
 
     private void Awake()
@@ -30,7 +35,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>(); // John-Lemon문법 참고
+        }
     }
 
     /// <summary>
@@ -40,6 +48,17 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        if (_gameRound == 10)
+        {
+            _myHp = 0;
+        }
+        else
+        {
+            _myDamage = _myDamage + 3;
+        }
+        
+        AttackMotion();
+        _player.GetHit(_myDamage);
 
     }
 
@@ -51,7 +70,13 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        int _randomAttack= Random.Range(0, 10);
+        base.GetHit(damage);
+        if(_randomAttack >= 7)
+        {
+            _myHp = _myHp + 10;
+            Debug.Log($"{_myName} Heal!");
+        }
     }
 }
 

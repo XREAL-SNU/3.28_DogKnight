@@ -12,6 +12,7 @@ public class AttackButton : MonoBehaviour
     public void Active()
     {
         StartCoroutine(ButtonDisableCoroutine());
+
     }
 
     IEnumerator ButtonDisableCoroutine()
