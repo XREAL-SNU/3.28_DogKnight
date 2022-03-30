@@ -45,13 +45,18 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        _myDamage = 3 * (_gameRound) + 10;
-        if (_gameRound == 10)
+        if (_myHp > 0 && _myName == _whoseTurn)
         {
-            _myDamage = 10000;
+            _myDamage = 3 * (_gameRound) + 10;
+            if (_gameRound == 10)
+            {
+                _myDamage = 10000;
+            }
+            AttackMotion();
+            _player.GetHit(_myDamage);
         }
-        AttackMotion();
-        _player.GetHit(_myDamage);
+
+
     }
 
     /// <summary>
@@ -63,6 +68,7 @@ public class Enemy : Character
     public override void GetHit(float damage)
     {
         _randomHeal = Random.Range(0, 10);
+        base.GetHit(damage);
         if (_randomHeal < 3)
         {
             _myHp += 10;
