@@ -47,12 +47,17 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        if(_gameRound == 10)
+        if (!_isFinished && _myName.Length == _whoseTurn.Length)
         {
-            _myDamage = 100;
+            if (_gameRound == 10)
+            {
+                _myDamage = 100;
+            }
+            AttackMotion();
+            _player.GetHit(_myDamage);
+            _myDamage += 3;
+            _isFinished = true;
         }
-        _myDamage += 3;
-        _player.GetHit(_myDamage);
     }
 
     /// <summary>
@@ -66,8 +71,8 @@ public class Enemy : Character
         _randomHeal = Random.Range(0, 10);
         if(_randomHeal > 6)
         {
-            base.GetHit(damage - 10);
             Debug.Log($"{_myName} Heal!");
+            base.GetHit(damage - 10);
         }
         else
         {

@@ -15,14 +15,15 @@ public class Character : MonoBehaviour, Observer
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
-    protected bool _isFinished;
+    protected string _whoseTurn;
+    protected bool _isFinished = false;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
         _gameRound = round;
         _whoseTurn = turn;
+        _isFinished = false;
     }
 
     // 2. FinishUpdate: _isFinished update
@@ -38,13 +39,15 @@ public class Character : MonoBehaviour, Observer
     /// 2) AttackMotion() 호출해서 애니메이션 실행
     /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
     /// </summary>
+ 
+    /// virtual void Attack()은 overriding 되어 실행 되지 않음.
     public virtual void Attack()
     {
-        if(!_isFinished && _myName == _whoseTurn)
+        if (!_isFinished && _myName.Length == _whoseTurn.Length)
         {
             AttackMotion();
+            GetHit(_myDamage);
         }
-        GetHit(_myDamage);
     }
 
     /// <summary>

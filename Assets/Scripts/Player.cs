@@ -52,19 +52,23 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        _randomAttack = Random.Range(0, 10);
-        if(_randomAttack > 6)
+        if (!_isFinished && _myName.Length == _whoseTurn.Length)
         {
-            this.SpecialAttackMotion();
-            _enemy.GetHit(_myDamage + 10);
-            Debug.Log($"{_myName} Special Attack!");
-        }
-        else
-        {
-            this.AttackMotion();
-            _enemy.GetHit(_myDamage);
-            Debug.Log($"{_myName} Attack!");
-        }
+            _randomAttack = Random.Range(0, 10);
+            if (_randomAttack > 6)
+            {
+                this.SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+                _enemy.GetHit(_myDamage + 10);
+            }
+            else
+            {
+                this.AttackMotion();
+                Debug.Log($"{_myName} Attack!");
+                _enemy.GetHit(_myDamage);
+            }
+            _isFinished = true;
+        }            
     }
 
     public override void GetHit(float damage)
