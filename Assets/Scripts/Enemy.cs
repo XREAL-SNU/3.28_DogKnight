@@ -9,7 +9,7 @@ public class Enemy : Character
 
     /// <summary>
     /// 1. Init: 초기화 기능
-    /// 1) Subject에 Observer로 등록
+    /// 1) Subject에 Observer로 등록 (?)
     /// 2) _myName, _myHp, _myDamage 초기화
     /// 3) _myName은 무조건 "Enemy"로 할 것
     /// 4) _myHp, _myDamage는 100, 10으로 각각 초기화 (권장 사항)
@@ -17,6 +17,8 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        this._myName = "Enemy"; this._myHp = 100; this._myDamage = 10;
     }
 
     private void Awake()
@@ -30,17 +32,26 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
 
     /// <summary>
     /// Attack:
     /// 1) _gameRound가 지날때마다 데미지 3씩 증가
-    /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가
+    /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가 //데미지 증가? 그냥 10000 갖다 박아라 이런 건가?
     /// </summary>
     public override void Attack()
     {
-
+        _myDamage = 3 * (_gameRound) + 10;
+        if (_gameRound == 10)
+        {
+            _myDamage = 10000;
+        }
+        AttackMotion();
+        _player.GetHit(_myDamage);
     }
 
     /// <summary>
@@ -51,7 +62,12 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        _randomHeal = Random.Range(0, 10);
+        if (_randomHeal < 3)
+        {
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
+        }
     }
-}
 
+}

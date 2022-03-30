@@ -18,42 +18,55 @@ public class Character : MonoBehaviour, Observer
     protected string _whoseTurn;
     protected bool _isFinished;
 
-    // 1. TurnUpdate: _gameRound, _whoseTurn update
+    // 1. TurnUpdate: _gameRound, _whoseTurn update 0
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round; _whoseTurn = turn;
     }
 
-    // 2. FinishUpdate: _isFinished update
+    // 2. FinishUpdate: _isFinished update 0
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
-    /// 3. Attack: 공격시 실행될 내용 중 Player와 Enemy 공통으로 실행될 기능 작성
-    /// 이후 각 class에서 오버라이딩해서 작성
-    /// 1) 게임이 끝나지 않았고 자신의 _myName와 _whoseTurn이 일치한다면,
-    /// 2) AttackMotion() 호출해서 애니메이션 실행
-    /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
+    /// 3. Attack: 공격시 실행될 내용 중 Player와 Enemy 공통으로 실행될 기능 작성 0
+    /// 이후 각 class에서 오버라이딩해서 작성0
+    /// 1) 게임이 끝나지 않았고 자신의 _myName와 _whoseTurn이 일치한다면,0
+    /// 2) AttackMotion() 호출해서 애니메이션 실행0
+    /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출0
     /// </summary>
     public virtual void Attack()
     {
-
+        if (_myHp > 100&&_myName==_whoseTurn)
+        {
+            return;
+        }
     }
 
     /// <summary>
     /// 4. GetHit: 피격시 실행될 내용 3번과 동일하게 공통되는 기능 작성
     /// 이후 각 class에서 오버라이딩해서 작성
-    /// 1) 넘겨 받은 damage만큼 _myHp 감소
-    /// 2) 만약 _myHp가 0보다 작거나 같다면, DeadMotion() 호출해서 애니메이션 실행
-    ///    + Subject의 EndNotify() 호출
-    /// 3) 아직 살아있다면, GetHitMotion() 호출해서 애니메이션 실행
-    ///    + Debug.Log($"{_myName} HP: {_myHp}"); 추가
+    /// 1) 넘겨 받은 damage만큼 _myHp 감소00
+    /// 2) 만약 _myHp가 0보다 작거나 같다면, DeadMotion() 호출해서 애니메이션 실행0
+    ///    + Subject의 EndNotify() 호출0
+    /// 3) 아직 살아있다면, GetHitMotion() 호출해서 애니메이션 실행0
+    ///    + Debug.Log($"{_myName} HP: {_myHp}"); 추가0
     /// </summary>
     public virtual void GetHit(float damage)
     {
+        _myHp -= damage;
 
+        if (_myHp <= 0) { 
+            DeadMotion();           
+            GameManager.Instance().EndNotify(); 
+        }
+        else{ 
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
+        
     }
 
     /// <summary>
@@ -102,4 +115,6 @@ public class Character : MonoBehaviour, Observer
         yield return new WaitForSeconds(1f);
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
+
+
 }

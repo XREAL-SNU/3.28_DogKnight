@@ -2,22 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character
+public class Player : Character//, Subject //내가 넣은 듯?
 {
     private Enemy _enemy;
     private float _randomAttack;
 
     /// <summary>
     /// 1. Init: 초기화 기능
-    /// 1) Subject에 Observer로 등록
-    /// 2) _myName, _myHp, _myDamage 초기화
-    /// 3) _myName은 무조건 "Player"로 할 것
-    /// 4) _myHp, _myDamage는 100, 20으로 각각 초기화 (권장 사항)
+    /// 1) Subject에 Observer로 등록 
+    /// 2) _myName, _myHp, _myDamage 초기화 0
+    /// 3) _myName은 무조건 "Player"로 할 것 0
+    /// 4) _myHp, _myDamage는 100, 20으로 각각 초기화 (권장 사항) 0
     /// </summary>
     protected override void Init()
     {
         base.Init();
+        
+        GameManager.Instance().AddCharacter(this);
+        this._myName = "Player"; this._myHp = 100; this._myDamage = 20;
     }
+
 
     private void Awake()
     {
@@ -28,9 +32,13 @@ public class Player : Character
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
     /// </summary>
+    /// done(maybe)
     private void Start()
     {
-
+        if (_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        }
     }
 
     /// <summary>
@@ -43,13 +51,33 @@ public class Player : Character
     ///    + Debug.Log($"{_myName} Special Attack!"); 추가
     /// 5) 70% 확률로 하는 일반 공격은 Character에 써있는 주석과 동일
     /// </summary>
+
     public override void Attack()
     {
-
+        _randomAttack = Random.Range(0, 10);
+        if (_randomAttack < 7)
+        {
+            this.AttackMotion();
+            Debug.Log($"{_myName} Attack!");
+            _enemy.GetHit(_myDamage);
+        }
+        else
+        {
+            this.SpecialAttackMotion();
+            Debug.Log($"{_myName} Special Attack!");
+            _enemy.GetHit(_myDamage+10);
+        }
     }
 
     public override void GetHit(float damage)
     {
 
     }
+
+
+    //임시
+    //public string GetName()
+    //{
+    //    return _myName;
+    //}
 }
