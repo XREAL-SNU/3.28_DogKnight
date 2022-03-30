@@ -67,7 +67,6 @@ public class Player : Character
                 Debug.Log($"{_myName} Attack!");
                 _enemy.GetHit(_myDamage);
             }
-            _isFinished = true;
         }            
     }
 

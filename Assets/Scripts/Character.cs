@@ -23,7 +23,6 @@ public class Character : MonoBehaviour, Observer
     {
         _gameRound = round;
         _whoseTurn = turn;
-        _isFinished = false;
     }
 
     // 2. FinishUpdate: _isFinished update

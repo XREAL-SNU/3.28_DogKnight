@@ -56,7 +56,6 @@ public class Enemy : Character
             AttackMotion();
             _player.GetHit(_myDamage);
             _myDamage += 3;
-            _isFinished = true;
         }
     }
 

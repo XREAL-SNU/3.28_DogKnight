@@ -50,16 +50,19 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-        if (_whoseTurn == "Enemy")
+        if(!_isEnd)
         {
-            _whoseTurn = "Player";
+            if (_whoseTurn == "Enemy")
+            {
+                _whoseTurn = "Player";
+            }
+            else
+            {
+                _whoseTurn = "Enemy";
+            }
+            Debug.Log($"GameManager: {_whoseTurn} turn.");
+            _turnHandler(_gameRound, _whoseTurn);
         }
-        else
-        {
-            _whoseTurn = "Enemy";
-        }
-        Debug.Log($"GameManager: {_whoseTurn} turn.");
-        _turnHandler(_gameRound, _whoseTurn);
     }
 
     /// <summary>
