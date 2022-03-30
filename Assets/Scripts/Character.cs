@@ -15,19 +15,22 @@ public class Character : MonoBehaviour, Observer
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected int _whoseTurn;//GameManager ->Roundnoti
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
+        _gameRound = round;
+        _whoseTurn = turn;
+
 
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +42,15 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
+        //게임 안끝났고 , _myName ==_whoseTurn -> AttackMotion()
+        //상대방의 GetHit(float damage)를 _myDamage 로 넘겨서 호출 -> 필요한가용
+        
+        if (_isFinished == true) return;
+        else if (_myName == _whoseTurn)
+        {
+            AttackMotion();
 
+        }
     }
 
     /// <summary>
@@ -47,13 +58,22 @@ public class Character : MonoBehaviour, Observer
     /// 이후 각 class에서 오버라이딩해서 작성
     /// 1) 넘겨 받은 damage만큼 _myHp 감소
     /// 2) 만약 _myHp가 0보다 작거나 같다면, DeadMotion() 호출해서 애니메이션 실행
-    ///    + Subject의 EndNotify() 호출
+    ///    ##Gamemanager 구현 후 + Subject의 EndNotify() 호출
     /// 3) 아직 살아있다면, GetHitMotion() 호출해서 애니메이션 실행
     ///    + Debug.Log($"{_myName} HP: {_myHp}"); 추가
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if (_myHp =< 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else { 
+            GetHitMotion();
+            Debug.Log($"{_myName} HP:{_myHp}");
+                }
     }
 
     /// <summary>
