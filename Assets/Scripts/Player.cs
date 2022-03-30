@@ -17,6 +17,10 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
     }
 
     private void Awake()
@@ -30,7 +34,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if(_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        }
     }
 
     /// <summary>
@@ -45,11 +52,23 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        _randomAttack = Random.Range(0, 10);
+        if(_randomAttack > 6)
+        {
+            this.SpecialAttackMotion();
+            _enemy.GetHit(_myDamage + 10);
+            Debug.Log($"{_myName} Special Attack!");
+        }
+        else
+        {
+            this.AttackMotion();
+            _enemy.GetHit(_myDamage);
+            Debug.Log($"{_myName} Attack!");
+        }
     }
 
     public override void GetHit(float damage)
     {
-
+        base.GetHit(damage);
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Enemy : Character
 {
@@ -17,6 +17,10 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
@@ -30,7 +34,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if(_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
 
     /// <summary>
@@ -40,7 +47,12 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-
+        if(_gameRound == 10)
+        {
+            _myDamage = 100;
+        }
+        _myDamage += 3;
+        _player.GetHit(_myDamage);
     }
 
     /// <summary>
@@ -51,7 +63,16 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        _randomHeal = Random.Range(0, 10);
+        if(_randomHeal > 6)
+        {
+            base.GetHit(damage - 10);
+            Debug.Log($"{_myName} Heal!");
+        }
+        else
+        {
+            base.GetHit(damage);
+        }
     }
 }
 
