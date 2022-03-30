@@ -33,10 +33,10 @@ public class Enemy : Character
     /// 2) GameObject.FindWithTag 이용해서 _player 할당
     /// </summary>
     private void Start()
-    {
+    { 
         if (_player == null)
         {
-            _player = GameObject.FindWithTag("Player").GetComponent<Player>;
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
     }
 
@@ -68,8 +68,9 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-        int _randomHeal = Random.Range(0, 10);
-        if (_randomheal < 3)
+        base.GetHit(damage);
+        _randomHeal = Random.Range(0, 10);
+        if (_randomHeal < 3 && !_isFinished)
         {
             _myHp += 10;
             Debug.Log($"{_myName} Heal!");

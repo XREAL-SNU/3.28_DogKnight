@@ -38,7 +38,7 @@ public class Player : Character
     {
         if (_enemy == null) 
         {
-           _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>;
+           _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
         } 
     }
 
@@ -54,19 +54,22 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        float _randomAttack = Random.Range(0, 10);
-        if (_randomAttack < 3)
+        if (_myName == _whoseTurn)
         {
-            _myDamage += 10;
-            SpecialAttackMotion();
-            Debug.Log($"{_myName} Special Attack!");
-            _enemy.GetHit(_myDamage);
-            _myDamage -= 10;
-        }
-        else
-        {
-            AttackMotion();
-            _enemy.GetHit(_myDamage);
+            _randomAttack = Random.Range(0, 10);
+            if (_randomAttack < 3)
+            {
+                _myDamage += 10;
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+                _enemy.GetHit(_myDamage);
+                _myDamage -= 10;
+            }
+            else
+            {
+                AttackMotion();
+                _enemy.GetHit(_myDamage);
+            }
         }
     }
 

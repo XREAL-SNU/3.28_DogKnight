@@ -2,7 +2,7 @@ public interface Subject
 {
     void RoundNotify();
     void TurnNotify();
-    void EndNotify();
+    //void EndNotify();
     //public abstract void AddObserver(Observer o);
 }
 
