@@ -17,7 +17,9 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        GameManager
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
     }
 
     private void Awake()
@@ -31,7 +33,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if(!_enemy)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        }
     }
 
     /// <summary>
@@ -46,11 +51,38 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        _randomAttack = Random.Range(0, 10);
+        if (_myName == _whoseTurn)
+        {
+            if (_randomAttack <= 3)
+            {
+                GetHit(_myDamage + 10);
+                Attack();
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack");
+            }
+            else
+            {
+                GetHit(_myDamage);
+                Attack();
+                AttackMotion();
+            }
+        }
     }
 
     public override void GetHit(float damage)
     {
+        if(_myHp <= 0)
+        {
+            DeadMotion();
+            _enemy.EndNotify();
+
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
 
     }
 }

@@ -21,13 +21,14 @@ public class Character : MonoBehaviour, Observer
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +40,8 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if (_isFinished) return;
+       
     }
 
     /// <summary>
@@ -53,7 +55,8 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        
     }
 
     /// <summary>

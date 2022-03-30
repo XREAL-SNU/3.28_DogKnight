@@ -17,6 +17,9 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
@@ -30,7 +33,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if(!_player)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent(Player);
+        }
     }
 
     /// <summary>
@@ -40,7 +46,14 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-
+        if (_myName == _whoseTurn)
+        {
+            AttackMotion();
+        }
+        if (_gameRound == 10)
+        {
+            _myDamage = 200;
+        }
     }
 
     /// <summary>
@@ -51,7 +64,17 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        f(_myHp <= 0)
+        {
+            DeadMotion();
+            _player.EndNotify();
 
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 }
 

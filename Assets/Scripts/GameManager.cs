@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour, Subject
             {
                 GameManager container = new GameManager("Game Manager");
 
-                _instance = container.AddComponent<ScoreManager>();
+                _instance = container.AddComponent<GameManager>();
             }
         }
         return _instance;
