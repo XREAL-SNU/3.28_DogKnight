@@ -16,7 +16,7 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance.AddCharacter(this);
+        GameManager.Instance().AddCharacter(this);
         _myHp = 100;
         _myDamage = 20;
         _myName = "Player";

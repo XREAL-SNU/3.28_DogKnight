@@ -17,7 +17,7 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance.AddCharacter(this);
+        GameManager.Instance().AddCharacter(this);
         _myHp = 100;
         _myDamage = 10;
         _myName = "Enemy";

@@ -23,7 +23,8 @@ public class Character : MonoBehaviour, Observer
     {
         _gameRound = round;
         _whoseTurn = turn;
-     
+        
+
     }
 
     // 2. FinishUpdate: _isFinished update
@@ -42,10 +43,11 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-        if(_myName == _whoseTurn)
+        if (_myName == _whoseTurn)
         {
             AttackMotion();
             GetHit(_myDamage);
+        }
       
     }
 
@@ -64,7 +66,7 @@ public class Character : MonoBehaviour, Observer
         if(_myHp <= 0)
         {
             DeadMotion();
-            GameManager.Instance.EndNotify();
+            GameManager.Instance().EndNotify();
         }
         else
         {

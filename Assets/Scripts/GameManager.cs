@@ -6,8 +6,8 @@ public class GameManager : MonoBehaviour, Subject
 {
     // 1. Singleton Pattern: Instance() method
    
-    public static GameManager Instance;
-    /*public static GameManager Instance()
+    private static GameManager _instance;
+    public static GameManager Instance()
     {
         if(_instance == null)
         {
@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour, Subject
         return _instance;
     }
 
-    private void Init()
-    {
-        Instance = this;
-    }*/
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -31,7 +27,7 @@ public class GameManager : MonoBehaviour, Subject
     TurnHandler _turnHandler;
 
     delegate void FinishHandler(bool isFinish);
-    FinishHandler _finshHandler;
+    FinishHandler _finishHandler;
 
 
 
@@ -85,7 +81,7 @@ public class GameManager : MonoBehaviour, Subject
         _isEnd=true;
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
-        _finshHandler(_isEnd);
+        _finishHandler(_isEnd);
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
