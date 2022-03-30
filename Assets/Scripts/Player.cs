@@ -19,7 +19,7 @@ public class Player : Character//, Subject //내가 넣은 듯?
         base.Init();
         
         GameManager.Instance().AddCharacter(this);
-        this._myName = "Player"; this._myHp = 100; this._myDamage = 20;
+        _myName = "Player"; _myHp = 100; _myDamage = 20;
     }
 
 
@@ -54,24 +54,27 @@ public class Player : Character//, Subject //내가 넣은 듯?
 
     public override void Attack()
     {
-        _randomAttack = Random.Range(0, 10);
-        if (_randomAttack < 7)
+        if (_myHp > 0 && _myName == _whoseTurn)
         {
-            this.AttackMotion();
-            Debug.Log($"{_myName} Attack!");
-            _enemy.GetHit(_myDamage);
-        }
-        else
-        {
-            this.SpecialAttackMotion();
-            Debug.Log($"{_myName} Special Attack!");
-            _enemy.GetHit(_myDamage+10);
-        }
+            _randomAttack = Random.Range(0, 10);
+            if (_randomAttack < 7)
+            {
+                AttackMotion();
+                Debug.Log($"{_myName} Attack!");
+                _enemy.GetHit(_myDamage);
+            }
+            else
+            {
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+                _enemy.GetHit(_myDamage + 10);
+            }
+        }        
     }
 
     public override void GetHit(float damage)
     {
-
+        base.GetHit(damage);
     }
 
 
