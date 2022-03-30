@@ -5,7 +5,39 @@ using UnityEngine;
 public class GameManager : MonoBehaviour, Subject
 {
     // 1. Singleton Pattern: Instance() method
+    public static GameManager GetInstance()
+    {
+        if (_instance == null)
+        {
+            _instance = FindObjectOfType<GameManager>();
+
+            if (_instance == null)
+            {
+                GameManager container = new GameManager("Game Manager");
+
+                _instance = container.AddComponent<ScoreManager>();
+            }
+        }
+        return _instance;
+    }
     private static GameManager _instance;
+
+    void Awake()
+    {
+        _instance = this;
+    }
+
+    void Start()
+    {
+        if (_instance != null)
+        {
+            if (_instance != this)
+            {
+                Destroy(GameManager);
+            }
+        }
+    }
+
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -13,7 +45,13 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
+    delegate int TurnHandler(int round, string turn);
+    delegate int FinishHandler(bool isFinish);
 
+    TurnHandler _turnHandler;
+    FinishHandler _finishHandler;
+
+    
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -22,7 +60,12 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-
+        if (_isEnd) return 0;
+        if(_whoseTurn != "Enemy")
+        {
+            Debug.Log($"GameManager:Round{++_gameRound}.");
+        }
+        TurnNotify();
     }
 
     /// <summary>
@@ -33,7 +76,18 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-
+        if(_whoseTurn == "Enemy")
+        {
+            _whoseTurn == "Player";
+            Debug.Log($"GameManager:{_whoseTurn} turn.");
+        }
+        else if(_whoseTurn == "Player")
+        {
+            _whoseTurn == "Enemy";
+            Debug.Log($"GameManager:{_whoseTurn} turn.");
+        }
+        _turnhandler(_gameRound,_whoseTurn);
+        //turnHandler 호출남음
     }
 
     /// <summary>
@@ -45,12 +99,18 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
+        _isEnd = true;
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager:{_whoseTurn} is Win!");
+        _finishHandler(_isEnd);
 
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-
+        _turnHandler = character.TurnUpdate();
+        _finishHandler = character.FinishUpdate();
+        
     }
 }

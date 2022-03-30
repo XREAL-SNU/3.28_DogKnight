@@ -17,6 +17,7 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        GameManager
     }
 
     private void Awake()
