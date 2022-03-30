@@ -8,10 +8,6 @@ public class GameManager : MonoBehaviour, Subject
     private static GameManager _instance;
     public static GameManager Instance()
     {
-        if (_instance == null)
-        {
-            _instance = FindObjectOfType<GameManager>();
-        }
         return _instance;
     }
 
@@ -37,9 +33,9 @@ public class GameManager : MonoBehaviour, Subject
         if (_whoseTurn == "Enemy")
         {
             _gameRound++;
-            Debug.Log($"GameManager: Round {_gameRound}.");
         }
 
+        Debug.Log($"GameManager: Round {_gameRound}.");
         TurnNotify();
     }
 
@@ -82,9 +78,6 @@ public class GameManager : MonoBehaviour, Subject
     //음.. 여기에 그 observer를 등록해야 할 것 같기도?
     public void AddCharacter(Character character)
     {
-
-        _turnHandler -= character.TurnUpdate;
-        _finishHandler -= character.FinishUpdate;
         _turnHandler += new TurnHandler(character.TurnUpdate);
         _finishHandler += new FinishHandler(character.FinishUpdate);
     }

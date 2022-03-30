@@ -39,7 +39,10 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if (_myHp > 100&&_myName==_whoseTurn)
+        {
+            return;
+        }
     }
 
     /// <summary>
