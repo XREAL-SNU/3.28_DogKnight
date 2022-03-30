@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
+    
 
     /// <summary>
     /// 2. RoundNotify:
@@ -22,7 +23,12 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-
+        if (_whoseTurn == "Enemy") 
+        {
+            _gameRound++;
+            Debug.Log($"GameManager: Round {_gameRound}.");
+        }
+        TurnNotify();
     }
 
     /// <summary>
@@ -33,7 +39,15 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-
+        if (_whoseTurn == "Player")
+        {
+            _whoseTurn = "Enemy";
+        }
+        else 
+        {
+            _whoseTurn = "Player";
+        }
+        Debug.Log($"GameManager: {_whoseTurn} turn.");
     }
 
     /// <summary>
@@ -45,7 +59,9 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
-
+        this._isEnd = _isEnd;
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager: {_whoseTurn} is Win!");
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가

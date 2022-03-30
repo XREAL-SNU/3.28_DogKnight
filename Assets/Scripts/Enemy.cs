@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private Player _player;
+    private GameObject _player;
     private float _randomHeal;
 
     /// <summary>
@@ -17,6 +17,10 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        // subject에 observer로 등록
+        this._myName = "Enemy";
+        this._myHp = 100;
+        this._myDamage = 20;
     }
 
     private void Awake()
@@ -30,7 +34,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player");
+        }
     }
 
     /// <summary>
@@ -40,7 +47,13 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-
+        AttackMotion();
+        this._myDamage += 3;
+        if (this._gameRound == 10)
+        {
+            this._myDamage = this._myHp;
+        }
+        GetHit(_myDamage);
     }
 
     /// <summary>
@@ -51,7 +64,17 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        int _randomAttack = Random.Range(0, 10);
+        if (_randomAttack < 3)
+        {
+            GetHitMotion();
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
+        }
+        else
+        {
+            GetHitMotion();
+        }
     }
 }
 

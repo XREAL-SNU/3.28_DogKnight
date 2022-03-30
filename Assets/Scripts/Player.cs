@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
+    private GameObject _enemy;
     private float _randomAttack;
+    private Observer observer;
+    private Subject subject;
 
     /// <summary>
     /// 1. Init: 초기화 기능
@@ -14,9 +16,15 @@ public class Player : Character
     /// 3) _myName은 무조건 "Player"로 할 것
     /// 4) _myHp, _myDamage는 100, 20으로 각각 초기화 (권장 사항)
     /// </summary>
+    /// 
+
     protected override void Init()
     {
         base.Init();
+        // subject에 observer로 등록
+        this._myName = "Player";
+        this._myHp = 100;
+        this._myDamage = 20;
     }
 
     private void Awake()
@@ -30,7 +38,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if (_enemy == null) 
+        {
+           _enemy = GameObject.FindWithTag("Enemy");
+        } 
     }
 
     /// <summary>
@@ -45,11 +56,31 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        int _randomAttack = Random.Range(0, 10);
+        if (_randomAttack < 3)
+        {
+            SpecialAttackMotion();
+            Debug.Log($"{_myName} Special Attack!");
+        }
+        else
+        {
+            AttackMotion();
+            GetHit(_myDamage);
+        }
     }
 
     public override void GetHit(float damage)
     {
-
+        this._myHp -= damage;
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            subject.EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 }
