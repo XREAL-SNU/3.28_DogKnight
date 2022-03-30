@@ -17,11 +17,16 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance.AddCharacter(this);
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
     {
         Init();
+       
     }
 
     /// <summary>
@@ -30,7 +35,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
 
     /// <summary>
@@ -40,7 +48,20 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        if (_myName == !_isFinished && _whoseTurn)
+        {
+            if (_gameRound < 10) { 
+            
+                AttackMotion();
+                _player.GetHit(_myDamage);
+                _myDamage += 3;
+            }
 
+            else
+            {
+                _player.GetHit(1000);
+            }
+        }
     }
 
     /// <summary>
@@ -51,7 +72,12 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        _randomHeal = Random.Range(0, 100);
+        if (_randomHeal % 3 == 0 && !_isFinished) { 
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
+            Debug.Log($"{_myName}의 회복하고 난 후의 HP:{_myHp}");
+        }
     }
 }
 
