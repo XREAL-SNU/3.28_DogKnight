@@ -7,13 +7,31 @@ public class GameManager : MonoBehaviour, Subject
     // 1. Singleton Pattern: Instance() method
     private static GameManager _instance;
 
+    public static GameManager Instance()
+    {
+        if (_instance == null)
+        {
+            _instance = FindObjectOfType<GameManager>();
+            if (_instance == null)
+            {
+                GameObject obj = new GameObject("GameManager");
+                _instance = obj.AddComponent<GameManager>();
+            }
+        }
+        return _instance;
+    }
+
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
-    
+    delegate void TurnHandler(int round, string turn);
+    delegate void FinishHandler(bool isFInish);
+
+    TurnHandler _turnHandler;
+    FinishHandler _finishHandler;
 
     /// <summary>
     /// 2. RoundNotify:
@@ -25,7 +43,6 @@ public class GameManager : MonoBehaviour, Subject
     {
         if (_whoseTurn == "Enemy") 
         {
-            _gameRound++;
             Debug.Log($"GameManager: Round {_gameRound}.");
         }
         TurnNotify();
@@ -47,8 +64,11 @@ public class GameManager : MonoBehaviour, Subject
         {
             _whoseTurn = "Player";
         }
+
         Debug.Log($"GameManager: {_whoseTurn} turn.");
+        _turnHandler(_gameRound, _whoseTurn);
     }
+
 
     /// <summary>
     /// 4. EndNotify: 
@@ -59,14 +79,16 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
-        this._isEnd = _isEnd;
+        _isEnd = true;
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _finishHandler(true);
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-
+        _turnHandler += new TurnHandler(character.TurnUpdate);
+        _finishHandler += new FinishHandler(character.FinishUpdate);
     }
 }

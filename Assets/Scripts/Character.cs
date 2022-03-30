@@ -42,14 +42,14 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-        if (this._myName == this._whoseTurn)
+       /*if (this._myName == this._whoseTurn)
         {
             if (this._isFinished == false)
             {
                 AttackMotion();
                 GetHit(_myDamage);
             }
-        }
+        }*/
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public class Character : MonoBehaviour, Observer
         if (_myHp <= 0) 
         {
             DeadMotion();
-            subject.EndNotify();
+            GameManager.Instance().EndNotify();
         }
         else
         {

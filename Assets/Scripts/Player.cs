@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private GameObject _enemy;
+    private Enemy _enemy;
     private float _randomAttack;
-    private Observer observer;
-    private Subject subject;
 
     /// <summary>
     /// 1. Init: 초기화 기능
@@ -21,7 +19,7 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        // subject에 observer로 등록
+        GameManager.Instance().AddCharacter(this);
         this._myName = "Player";
         this._myHp = 100;
         this._myDamage = 20;
@@ -40,7 +38,7 @@ public class Player : Character
     {
         if (_enemy == null) 
         {
-           _enemy = GameObject.FindWithTag("Enemy");
+           _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>;
         } 
     }
 
@@ -56,31 +54,24 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        int _randomAttack = Random.Range(0, 10);
+        float _randomAttack = Random.Range(0, 10);
         if (_randomAttack < 3)
         {
+            _myDamage += 10;
             SpecialAttackMotion();
             Debug.Log($"{_myName} Special Attack!");
+            _enemy.GetHit(_myDamage);
+            _myDamage -= 10;
         }
         else
         {
             AttackMotion();
-            GetHit(_myDamage);
+            _enemy.GetHit(_myDamage);
         }
     }
 
     public override void GetHit(float damage)
     {
-        this._myHp -= damage;
-        if (_myHp <= 0)
-        {
-            DeadMotion();
-            subject.EndNotify();
-        }
-        else
-        {
-            GetHitMotion();
-            Debug.Log($"{_myName} HP: {_myHp}");
-        }
+        base.GetHit(damage);
     }
 }

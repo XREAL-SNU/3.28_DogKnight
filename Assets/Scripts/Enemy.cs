@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private GameObject _player;
+    private Player _player;
     private float _randomHeal;
 
     /// <summary>
@@ -17,7 +17,7 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-        // subject에 observer로 등록
+        GameManager.Instance().AddCharacter(this);
         this._myName = "Enemy";
         this._myHp = 100;
         this._myDamage = 20;
@@ -36,7 +36,7 @@ public class Enemy : Character
     {
         if (_player == null)
         {
-            _player = GameObject.FindWithTag("Player");
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>;
         }
     }
 
@@ -47,13 +47,17 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        AttackMotion();
-        this._myDamage += 3;
-        if (this._gameRound == 10)
+        if (_myName == _whoseTurn && !_isFinished)
         {
-            this._myDamage = this._myHp;
+            AttackMotion();
+            _player.GetHit(_myDamage);
+            _myDamage += 3;
         }
-        GetHit(_myDamage);
+
+        if (_gameRound >= 10)
+        {
+            _myDamage = _player._myHp;
+        }
     }
 
     /// <summary>
@@ -64,16 +68,11 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-        int _randomAttack = Random.Range(0, 10);
-        if (_randomAttack < 3)
+        int _randomHeal = Random.Range(0, 10);
+        if (_randomheal < 3)
         {
-            GetHitMotion();
             _myHp += 10;
             Debug.Log($"{_myName} Heal!");
-        }
-        else
-        {
-            GetHitMotion();
         }
     }
 }
