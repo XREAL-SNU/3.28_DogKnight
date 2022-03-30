@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour, Subject
+public class GameManager : MonoBehaviour, Subject//subject 클래스 
 {
     // 1. Singleton Pattern: Instance() method
     public static GameManager Instance()
@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
-    delegate int TurnHandler(int round, string turn);
-    delegate int FinishHandler(bool isFinish);
+    delegate void TurnHandler(int round, string turn);
+    delegate void FinishHandler(bool isFinish);
 
     TurnHandler _turnHandler ; 
     FinishHandler _finishHandler;
@@ -100,9 +100,9 @@ public class GameManager : MonoBehaviour, Subject
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-        _turnHandler = new TurnHandler(character.TurnUpdate);
+        _turnHandler += new TurnHandler(character.TurnUpdate);
 
-        FinishHandler _finishHandler = character.FinishUpdate(_isEnd); 
+        _finishHandler += new FinishHandler(character.FinishUpdate);
         
     }
 }

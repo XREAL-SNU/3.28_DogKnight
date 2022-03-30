@@ -18,7 +18,7 @@ public class Player : Character
     {
         base.Init();
 
-        //옵저버 등록하기
+        GameManager.Instance().AddCharacter(this);
         _myName = "Player";
         _myHp = 100;
         _myDamage = 20;

@@ -8,7 +8,7 @@ public enum AnimatorParameters
     IsAttack, IsSpecialAttack, GetHit, IsDead
 }
 
-public class Character : MonoBehaviour, Observer
+public class Character : MonoBehaviour, Observer//옵저버
 {
     public string _myName;
     public float _myHp;
@@ -21,7 +21,7 @@ public class Character : MonoBehaviour, Observer
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {   
-        _gameRound = round;
+        _gameRound = round; // update 박혀 있음->변화 감지
         _whoseTurn = turn;
     }
 
