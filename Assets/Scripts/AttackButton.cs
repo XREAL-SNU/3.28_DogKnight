@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class AttackButton : MonoBehaviour
 {
     /// <summary>
-    /// °ø°İ ¹× ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà ´Ù µÉ ¶§±îÁö AttackButton ºñÈ°¼ºÈ­ ÇÏ´Â ÄÚµå
-    /// ÀÌÇØÇÒ ÇÊ¿ä ¾øÀ½ + °Çµå¸®Áö ¸» °Í
+    /// ê³µê²© ë° í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰ ë‹¤ ë  ë•Œê¹Œì§€ AttackButton ë¹„í™œì„±í™” í•˜ëŠ” ì½”ë“œ
+    /// ì´í•´í•  í•„ìš” ì—†ìŒ + ê±´ë“œë¦¬ì§€ ë§ ê²ƒ
     /// </summary>
     public void Active()
     {
