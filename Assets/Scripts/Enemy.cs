@@ -46,13 +46,14 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        base.Attack();
+        if(_isFinished || _myName != _whoseTurn) return;
         if(_gameRound<10){
             _player.GetHit(3*_gameRound + _myDamage);
         }
         else{
             _player.GetHit(999);
         }
+        AttackMotion();
     }
 
     /// <summary>

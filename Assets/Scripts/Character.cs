@@ -40,7 +40,7 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-        if(_isFinished || _myName != _whoseTurn) return;
+        
     }
 
     /// <summary>

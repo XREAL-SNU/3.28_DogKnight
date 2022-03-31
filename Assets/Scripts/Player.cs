@@ -51,7 +51,7 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        base.Attack();
+        if(_isFinished || _myName != _whoseTurn) return;
         _randomAttack = Random.Range(0, 10);
         if(((int)_randomAttack)%3 == 0){
             _enemy.GetHit(_myDamage + 10);

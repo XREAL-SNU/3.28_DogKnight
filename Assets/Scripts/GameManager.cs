@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour, Subject
     {
         if(_whoseTurn == "Enemy"){
             _gameRound+=1;
-            Debug.Log($"GameManager: Round {_gameRound}.");
         }
+        Debug.Log($"GameManager: Round {_gameRound}.");
         TurnNotify();
     }
 
