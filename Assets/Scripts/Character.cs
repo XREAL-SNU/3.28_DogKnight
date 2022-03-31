@@ -9,7 +9,11 @@ public enum AnimatorParameters
 }
 
 public class Character : MonoBehaviour, Observer
+
+
+
 {
+    public GameObject attackbutton;
     public string _myName;
     public float _myHp;
     public float _myDamage;
@@ -21,13 +25,14 @@ public class Character : MonoBehaviour, Observer
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _whoseTurn = turn;
+        _gameRound = round;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +44,10 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if (_myName!&& !_isFinished == _whoseTurn)
+        {
+            AttackMotion();
+        }
     }
 
     /// <summary>
@@ -53,8 +61,23 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            attackButton.GetComponent<GameManager>().EndNotify();
 
+        }
+       
+        else if(_myHp>0)
+        {
+
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
+          
+        
     }
+
 
     /// <summary>
     /// 이 밑으로는 animation 관련 code, 이해할 필요 없음 (다음주 세션에서 할 것)
@@ -103,3 +126,4 @@ public class Character : MonoBehaviour, Observer
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 }
+
