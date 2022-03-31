@@ -16,7 +16,7 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance().AddCharacter(this);
+        GameManager.Instance().AddCharacter(this); // 도현이 도움
         _myHp = 100;
         _myDamage = 20;
         _myName = "Player";
@@ -54,7 +54,7 @@ public class Player : Character
     public override void Attack()
     {
         bool revisFinished = !_isFinished;
-        if (_myName == _whoseTurn && revisFinished)
+        if ((_myName == _whoseTurn) && revisFinished)
         {
             int _randomAttack = Random.Range(0, 10);
             if (_randomAttack >= 7)

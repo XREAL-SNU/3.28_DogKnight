@@ -50,18 +50,19 @@ public class Enemy : Character
     public override void Attack()
     {
         bool revisFinished = !_isFinished;
-        if (_myName == _whoseTurn && revisFinished)
+        if ((_myName == _whoseTurn) && revisFinished) // Character 부분에선 if ((_myName == _whoseTurn)&&(_gameRound <= 10))로 작성
         {
             if (_gameRound == 10)
             {
-                _myHp = 0;
+                _player.GetHit(123456789);
             }
             else
             {
+                AttackMotion();
+                _player.GetHit(_myDamage); 
                 _myDamage = _myDamage + 3;
             }
-            AttackMotion();
-            _player.GetHit(_myDamage);
+            
         }
     }
 

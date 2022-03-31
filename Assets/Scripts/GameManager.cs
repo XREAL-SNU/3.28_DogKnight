@@ -43,8 +43,9 @@ public class GameManager : MonoBehaviour, Subject
         {
             _gameRound = 1 + _gameRound;
             Debug.Log($"GameManager: Round {_gameRound}.");
-            TurnNotify();
-        }
+           
+        } 
+        TurnNotify();
     }
     
     /// <summary>
