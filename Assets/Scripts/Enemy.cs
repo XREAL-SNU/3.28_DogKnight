@@ -8,11 +8,11 @@ public class Enemy : Character
     private float _randomHeal;
 
     /// <summary>
-    /// 1. Init: �ʱ�ȭ ���
-    /// 1) Subject�� Observer�� ���
-    /// 2) _myName, _myHp, _myDamage �ʱ�ȭ
-    /// 3) _myName�� ������ "Enemy"�� �� ��
-    /// 4) _myHp, _myDamage�� 100, 10���� ���� �ʱ�ȭ (���� ����)
+    /// 1. Init: 초기화 기능
+    /// 1) Subject에 Observer로 등록
+    /// 2) _myName, _myHp, _myDamage 초기화
+    /// 3) _myName은 무조건 "Enemy"로 할 것
+    /// 4) _myHp, _myDamage는 100, 10으로 각각 초기화 (권장 사항)
     /// </summary>
     protected override void Init()
     {
@@ -29,8 +29,8 @@ public class Enemy : Character
     }
 
     /// <summary>
-    /// 1) _player�� �Ҵ��� �ȵƴٸ�,
-    /// 2) GameObject.FindWithTag �̿��ؼ� _player �Ҵ�
+    /// 1) _player가 할당이 안됐다면,
+    /// 2) GameObject.FindWithTag 이용해서 _player 할당
     /// </summary>
     private void Start()
     {
@@ -42,8 +42,8 @@ public class Enemy : Character
 
     /// <summary>
     /// Attack:
-    /// 1) _gameRound�� ���������� ������ 3�� ����
-    /// 2) _gameRound�� 10�� �Ǹ� ������ Player�� ���̵��� ������ ����
+    /// 1) _gameRound가 지날때마다 데미지 3씩 증가
+    /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가
     /// </summary>
     public override void Attack()
     {
@@ -64,9 +64,9 @@ public class Enemy : Character
 
     /// <summary>
     /// GetHit:
-    /// 1) Player�� _randomAttack�� ������ ���
-    /// 2) 30%�� Ȯ���� �ǰݽ� 10 ü�� ����
-    ///   + Debug.Log($"{_myName} Heal!"); �߰�
+    /// 1) Player의 _randomAttack과 동일한 기능
+    /// 2) 30%의 확률로 피격시 10 체력 증가
+    ///   + Debug.Log($"{_myName} Heal!"); 추가
     /// </summary>
     public override void GetHit(float damage)
     {
