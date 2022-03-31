@@ -16,6 +16,7 @@ public class Player : Character //자식클래스
     /// </summary>
     protected override void Init() //자식클래스에서 오버라이딩해서 초기화하는 것들.
     {
+        gameManager.GetComponent<GameManager>().AddCharacter(this);
         base.Init();
         _myHp = 100;
         _myDamage = 20;
@@ -33,7 +34,11 @@ public class Player : Character //자식클래스
     /// </summary>
     private void Start()
     {
+        if (_enemy==null)/// 1) _enemy가 할당이 안됐다면,
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>(); /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
 
+        }
     }
 
     /// <summary>
@@ -77,6 +82,6 @@ public class Player : Character //자식클래스
 
     public override void GetHit(float damage)
     {
-
+        base.GetHit(damage);
     }
 }

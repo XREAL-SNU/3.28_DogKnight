@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 애니메이팅 트리거 이름 열거형으로 저장 (이해할 필요 없음)
+
 public enum AnimatorParameters
 {
     IsAttack, IsSpecialAttack, GetHit, IsDead
@@ -13,6 +14,7 @@ public class Character : MonoBehaviour, Observer
 
 
 {
+    public GameObject gamemanager;
     public GameObject attackbutton;
     public string _myName;
     public float _myHp;
@@ -36,11 +38,17 @@ public class Character : MonoBehaviour, Observer
     }
 
     /// <summary>
+    /// 
     /// 3. Attack: 공격시 실행될 내용 중 Player와 Enemy 공통으로 실행될 기능 작성
+    /// 
     /// 이후 각 class에서 오버라이딩해서 작성
+    /// 
     /// 1) 게임이 끝나지 않았고 자신의 _myName와 _whoseTurn이 일치한다면,
+    /// 
     /// 2) AttackMotion() 호출해서 애니메이션 실행
+    /// 
     /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
+    /// 
     /// </summary>
     public virtual void Attack()
     {
