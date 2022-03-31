@@ -10,24 +10,28 @@ public enum AnimatorParameters
 
 public class Character : MonoBehaviour, Observer
 {
+    public Character other;
+    public Subject subject;
+
     public string _myName;
     public float _myHp;
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
-    protected bool _isFinished;
+    protected string _whoseTurn;
+    protected bool _isFinished =false;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +43,11 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if(!_isFinished && (_myName == _whoseTurn))
+        {
+            AttackMotion();
+            other.GetHit(_myDamage);
+        }
     }
 
     /// <summary>
@@ -53,7 +61,17 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if(_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager._instance.EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 
     /// <summary>
