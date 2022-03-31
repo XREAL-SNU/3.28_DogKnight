@@ -12,9 +12,15 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
+    //List<Observer> _observers = new List<Observer>();
+
     // delegate: TurnHandler, FinishHandler 선언
     delegate void TurnHandler();
     delegate void FinishHandler();
+
+    TurnHandler _turnHandler;
+    FinishHandler _finishHandler;
+
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -59,12 +65,16 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
-
+        _isEnd = true;
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _finishHandler();
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
+
 
     }
 }
