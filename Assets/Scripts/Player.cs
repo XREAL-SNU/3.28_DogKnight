@@ -14,9 +14,19 @@ public class Player : Character
     /// 3) _myName은 무조건 "Player"로 할 것
     /// 4) _myHp, _myDamage는 100, 20으로 각각 초기화 (권장 사항)
     /// </summary>
+    /// 
+
+
     protected override void Init()
     {
         base.Init();
+
+        GameManager.Instance().AddCharacter(this);
+
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
+
     }
 
     private void Awake()
@@ -30,7 +40,7 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
     }
 
     /// <summary>
@@ -45,11 +55,43 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            _randomAttack = Random.Range(0, 10);
 
+            if (_randomAttack < 3)
+            {
+               
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+
+                _enemy.GetHit(_myDamage + 10);
+
+            }
+            else {
+              
+                AttackMotion();
+                _enemy.GetHit(_myDamage);
+            }
+        }
+
+       
     }
 
     public override void GetHit(float damage)
     {
+        _myHp -= damage;
 
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 }

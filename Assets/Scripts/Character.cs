@@ -21,13 +21,14 @@ public class Character : MonoBehaviour, Observer
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +40,11 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if(!_isFinished && _myName == _whoseTurn)
+        {
+            AttackMotion();
+            
+        }
     }
 
     /// <summary>
@@ -53,6 +58,19 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
+        _myHp -= damage;
+        
+        if(_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
 
     }
 
@@ -93,13 +111,13 @@ public class Character : MonoBehaviour, Observer
 
     IEnumerator GetHitCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         _animator.SetTrigger(AnimatorParameters.GetHit.ToString());
     }
 
     IEnumerator DeadCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 }

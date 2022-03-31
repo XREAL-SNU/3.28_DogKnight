@@ -17,6 +17,13 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+
+        GameManager.Instance().AddCharacter(this);
+        
+
+        _myDamage = 10;
+        _myHp = 100;
+        _myName = "Enemy";
     }
 
     private void Awake()
@@ -30,7 +37,7 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     /// <summary>
@@ -40,6 +47,27 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+
+
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            if (_gameRound == 10)
+            {
+                _myDamage = _player._myHp;
+            }
+            else if (_gameRound != 1)
+            {
+                _myDamage += 3;
+            }
+
+            
+            _player.GetHit(_myDamage);
+            AttackMotion();
+            
+        }
+
+
+        
 
     }
 
@@ -51,7 +79,30 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        _myHp -= damage;
 
+
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+
+        }
+        else
+        {
+            GetHitMotion();
+           
+
+            _randomHeal = Random.Range(0, 10);
+
+            if (_randomHeal < 3)
+            {
+                _myHp += 10;
+                Debug.Log($"{_myName} Heal!");
+            }
+
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 }
 
