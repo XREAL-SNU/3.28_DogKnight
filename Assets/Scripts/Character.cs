@@ -15,20 +15,20 @@ public class Character : MonoBehaviour, Observer
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
-        Debug.Log("WhoseTurn : " + turn);
+        _gameRound = round;
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -40,7 +40,15 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if(_isFinished == false)
+        {
+            if(_myName == _whoseTurn)
+            {
+                AttackMotion();
+            }
+            ////// I don't know how to search another charcter
+            GetHit(_myDamage);
+        }
     }
 
     /// <summary>
@@ -54,7 +62,13 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if (_myHp < 0) DeadMotion();
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 
     /// <summary>

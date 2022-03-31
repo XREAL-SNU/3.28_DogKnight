@@ -17,6 +17,12 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+//        Observer obj = new Observer();
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
+
+
     }
 
     private void Awake()

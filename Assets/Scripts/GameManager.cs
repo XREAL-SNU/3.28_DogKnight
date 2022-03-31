@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
-
+    delegate void TurnHandler();
+    delegate void FinishHandler();
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -22,7 +23,12 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-
+        if(_whoseTurn == "Enemy")
+        {
+            _gameRound++;
+        }
+        Debug.Log($"GameManager: Round {_gameRound}");
+        TurnNotify();
     }
 
     /// <summary>
@@ -33,7 +39,15 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-
+        if(_whoseTurn=="Enemy")
+        {
+            _whoseTurn = "Player";
+        }
+        else
+        {
+            _whoseTurn = "Enemy";
+        }
+        Debug.Log($"GameManager : {_whoseTurn} turn.");
     }
 
     /// <summary>
