@@ -42,7 +42,7 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        if(_myName == _whoseTurn) {
+        if((!_isFinished) && (_myName == _whoseTurn)) {
             if (_gameRound != 1)
             {
                 _myDamage += 3;

@@ -35,10 +35,7 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-        if (!_isFinished)
-        {
-            AttackMotion();
-        }
+        AttackMotion(); 
     }
     /// <summary>
     /// 4. GetHit: 피격시 실행될 내용 3번과 동일하게 공통되는 기능 작성

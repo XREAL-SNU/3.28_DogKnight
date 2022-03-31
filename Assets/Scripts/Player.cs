@@ -47,7 +47,7 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        if(_myName == _whoseTurn) {
+        if((!_isFinished) && (_myName == _whoseTurn)) {
             _randomAttack = Random.Range(0, 10);
             if (_randomAttack < 3)
             {
