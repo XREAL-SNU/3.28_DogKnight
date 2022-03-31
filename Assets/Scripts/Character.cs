@@ -111,7 +111,7 @@ public class Character : MonoBehaviour, Observer
 
     IEnumerator GetHitCoroutine()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         _animator.SetTrigger(AnimatorParameters.GetHit.ToString());
     }
 
