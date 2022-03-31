@@ -17,7 +17,7 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance().AddCharacter(this);
+        GameManager.Instance().AddCharacter(gameObject.GetComponent<Enemy>());
         _myName = "Enemy";
         _myHp = 100;
         _myDamage = 10;
@@ -34,7 +34,7 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-        if(_player != null){
+        if(_player == null){
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
     }

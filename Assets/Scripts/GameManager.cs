@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour, Subject
     private TurnHandler _turnHandler;
     private FinishHandler _finishHandler;
 
+    void Awake(){
+        _instance = this;
+    }
+
     /// <summary>
     /// 2. RoundNotify:
     /// 1) ���� ���� Enemy�̸� ���� gameRound��
