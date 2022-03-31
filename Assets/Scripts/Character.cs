@@ -48,6 +48,9 @@ public class Character : MonoBehaviour, Observer
             }
             ////// I don't know how to search another charcter
             GetHit(_myDamage);
+            ///뭐지뭐지? 아직 캐릭터클래스 내에서는 상대방을 잡을 수 없는데
+            //어케하지? 뭐지? 그렇다고 gameobject is enemy || gamebobject is player이런걸로 다운 캐스팅으로 알 수 있지도 않는데...
+            //역시 난 코드아메바다 그냥 아주 미개하게 짜는가보다. 
         }
     }
 

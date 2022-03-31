@@ -36,7 +36,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if(_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").AddComponent<Enemy>();
+        }
     }
 
     /// <summary>
@@ -51,11 +54,27 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        _randomAttack = Random.Range(0, 10);
+        if(_randomAttack < 3.0f)
+        {
+            _enemy.GetHit(_myDamage + 10);
+            SpecialAttackMotion();
+        }
+        else
+        {
+            _enemy.GetHit(_myDamage);
+            AttackMotion();
+        }
     }
 
     public override void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if (_myHp < 0) DeadMotion();
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 }
