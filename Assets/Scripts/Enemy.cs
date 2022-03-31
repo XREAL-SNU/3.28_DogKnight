@@ -80,6 +80,7 @@ public class Enemy : Character
         {
             GetHitMotion();
             int _randomHeal = Random.Range(0,10);
+            
             if(_randomHeal < 3)
             {
                 _myHp += 10;
