@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
+    private GameObject _enemy;
     private float _randomAttack;
 
     /// <summary>
@@ -17,7 +17,9 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
 
 
 
@@ -26,6 +28,8 @@ public class Player : Character
     private void Awake()
     {
         Init();
+
+
     }
 
     /// <summary>
@@ -34,7 +38,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if (_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy");
+        }
     }
 
     /// <summary>
@@ -49,7 +56,12 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        _randomAttack = Random.Range(0, 10);
+        if (_randomAttack == 1| _randomAttack == 2| _randomAttack == 3)
+        {
+            _myDamage += 10;
+            SpecialAttackMotion();
+        }
     }
 
     public override void GetHit(float damage)

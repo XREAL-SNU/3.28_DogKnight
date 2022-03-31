@@ -15,19 +15,34 @@ public class Character : MonoBehaviour, Observer
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
+        round++;
+
+        if (turn == "Enemy")
+        {
+            turn = "Player";
+        }
+
+        else if(turn == "Player")
+        {
+            turn = "Enemy";
+        }
 
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        if (_myHp<0)
+        {
+            isFinish = true;
+      
+        }
     }
 
     /// <summary>
@@ -39,8 +54,26 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
+        if (_isFinished==false && _myName == _whoseTurn)
+        {
+            AttackMotion();
 
+            if (_myName=="Player")
+            {
+                Enemy enemy = FindObjectOfType<Enemy>();
+                enemy.GetHit(_myDamage);
+            }
+
+            else if (_myName == "Enemy")
+            {
+                Player player = FindObjectOfType<Player>();
+                player.GetHit(_myDamage);
+            }
+
+        }
     }
+
+
 
     /// <summary>
     /// 4. GetHit: 피격시 실행될 내용 3번과 동일하게 공통되는 기능 작성
@@ -53,7 +86,18 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if (_myHp<=0)
+        {
+            DeadMotion();
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            gameManager.EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}"); 
+        }
     }
 
     /// <summary>

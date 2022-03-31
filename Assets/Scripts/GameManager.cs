@@ -6,6 +6,37 @@ public class GameManager : MonoBehaviour, Subject
 {
     // 1. Singleton Pattern: Instance() method
     private static GameManager _instance;
+    public static GameManager Instance()
+    {
+        if (_instance == null)
+        {
+            _instance = FindObjectOfType<GameManager>();
+
+            if (_instance == null)
+            {
+                GameObject container = new GameObject("GameManager");
+                _instance = container.AddComponent<GameManager>();
+            }
+        }
+
+        return _instance;
+    }
+
+    void Start()
+    {
+        if (_instance != null)
+        {
+            if (_instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+
+
+
+
+
+    }
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -13,6 +44,13 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
+    public delegate void TurnHandler(int round, string turn);
+    TurnHandler _turnHandler;
+    public delegate void FinishHandler(bool isFiish);
+    FinishHandler _finishHandler;
+
+
+
 
     /// <summary>
     /// 2. RoundNotify:
@@ -22,7 +60,12 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-
+        if (_whoseTurn == "Enemy")
+        {
+            _gameRound++;
+            Debug.Log($"GameManager: Round {_gameRound}.");
+        }
+        TurnNotify();
     }
 
     /// <summary>
@@ -33,7 +76,10 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
+        _whoseTurn = "Player";
 
+        Debug.Log($"GameManager: {_whoseTurn} turn.");
+        _turnHandler(_gameRound, _whoseTurn);
     }
 
     /// <summary>
@@ -45,12 +91,16 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
+        _isEnd = true;
 
+        _finishHandler(_isEnd);
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-
+        Character characterScript = FindObjectOfType<Character>();
+        TurnHandler _turnHandler = characterScript.TurnUpdate;
+        FinishHandler _finishHandler = characterScript.FinishUpdate;
     }
 }

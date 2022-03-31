@@ -2,6 +2,7 @@ public interface Subject
 {
     void RoundNotify();
     void TurnNotify();
+
 }
 
 public interface Observer
