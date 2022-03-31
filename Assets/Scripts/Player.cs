@@ -54,26 +54,33 @@ public class Player : Character
     public override void Attack()
     {
         _randomAttack = Random.Range(0, 10);
-        if (_myName == _whoseTurn)
+        if (!_isFinished)
         {
-            if (_randomAttack <= 3)
+            if (_myName == _whoseTurn)
             {
-                GetHit(_myDamage + 10);
-                Attack();
-                SpecialAttackMotion();
-                Debug.Log($"{_myName} Special Attack");
-            }
-            else
-            {
-                GetHit(_myDamage);
-                Attack();
-                AttackMotion();
+                if (_randomAttack <= 3)
+                {
+                    
+                    _enemy.GetHit(_myDamage+10);
+                    _myDamage = 20;
+                  
+                    SpecialAttackMotion();
+                    Debug.Log($"{_myName} Special Attack");
+                }
+                else
+                {
+                    _enemy.GetHit(_myDamage);
+                    
+
+                    AttackMotion();
+                }
             }
         }
     }
 
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
         if(_myHp <= 0)
         {
             DeadMotion();
@@ -84,6 +91,7 @@ public class Player : Character
         {
             GetHitMotion();
             Debug.Log($"{_myName} HP: {_myHp}");
+
         }
 
     }

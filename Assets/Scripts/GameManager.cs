@@ -52,9 +52,9 @@ public class GameManager : MonoBehaviour, Subject//subject Å¬·¡½º
     public void RoundNotify()
     {
         if (_isEnd) return;
-        if(_whoseTurn != "Enemy")
+        if(_whoseTurn == "Enemy")
         {
-            Debug.Log($"GameManager:Round{++_gameRound}.");
+            Debug.Log($"GameManager:Round{_gameRound++}.");
         }
         TurnNotify();
     }

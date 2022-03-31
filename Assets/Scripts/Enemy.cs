@@ -47,16 +47,17 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        if (_gameRound == 10)
+        {
+            _myDamage = 200;
+        }
         if (_myName == _whoseTurn)
         {
             AttackMotion();
             _player.GetHit(_myDamage);
             _myDamage += 3;
         }
-        if (_gameRound == 10)
-        {
-            _myDamage = 200;
-        }
+        
     }
 
     /// <summary>
@@ -67,7 +68,8 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-        if(_myHp <= 0)
+        base.GetHit(damage);// 오버라이딩 해주어도 불러줘야한다는 것을 알게 됨.
+        if (_myHp <= 0)
         {
             DeadMotion();
             GameManager.Instance().EndNotify();
@@ -77,8 +79,10 @@ public class Enemy : Character
         {
             GetHitMotion();
             Debug.Log($"{_myName} HP: {_myHp}");
+            
         }
         _randomHeal = Random.Range(0, 10);
+        
         if (_randomHeal <= 3)
         {
             _myHp += 10;
