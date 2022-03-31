@@ -1,73 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-// ¾Ö´Ï¸ŞÀÌÆÃ Æ®¸®°Å ÀÌ¸§ ¿­°ÅÇüÀ¸·Î ÀúÀå (ÀÌÇØÇÒ ÇÊ¿ä ¾øÀ½)
+// ì• ë‹ˆë©”ì´íŒ… íŠ¸ë¦¬ê±° ì´ë¦„ ì—´ê±°í˜•ìœ¼ë¡œ ì €ì¥ (ì´í•´í•  í•„ìš” ì—†ìŒ)
 public enum AnimatorParameters
 {
     IsAttack, IsSpecialAttack, GetHit, IsDead
 }
-
 public class Character : MonoBehaviour, Observer
 {
     public string _myName;
     public float _myHp;
     public float _myDamage;
-
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
     protected bool _isFinished;
-
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
+        _gameRound = round;
+        _whoseTurn = turn;
 
     }
-
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = true;
     }
-
     /// <summary>
-    /// 3. Attack: °ø°İ½Ã ½ÇÇàµÉ ³»¿ë Áß Player¿Í Enemy °øÅëÀ¸·Î ½ÇÇàµÉ ±â´É ÀÛ¼º
-    /// ÀÌÈÄ °¢ class¿¡¼­ ¿À¹ö¶óÀÌµùÇØ¼­ ÀÛ¼º
-    /// 1) °ÔÀÓÀÌ ³¡³ªÁö ¾Ê¾Ò°í ÀÚ½ÅÀÇ _myName¿Í _whoseTurnÀÌ ÀÏÄ¡ÇÑ´Ù¸é,
-    /// 2) AttackMotion() È£ÃâÇØ¼­ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
-    /// 3) »ó´ë¹æÀÇ GetHit()¿¡ ÀÚ½ÅÀÇ _myDamage ³Ñ°Ü¼­ È£Ãâ
+    /// 3. Attack: ê³µê²©ì‹œ ì‹¤í–‰ë  ë‚´ìš© ì¤‘ Playerì™€ Enemy ê³µí†µìœ¼ë¡œ ì‹¤í–‰ë  ê¸°ëŠ¥ ì‘ì„±
+    /// ì´í›„ ê° classì—ì„œ ì˜¤ë²„ë¼ì´ë”©í•´ì„œ ì‘ì„±
+    /// 1) ê²Œì„ì´ ëë‚˜ì§€ ì•Šì•˜ê³  ìì‹ ì˜ _myNameì™€ _whoseTurnì´ ì¼ì¹˜í•œë‹¤ë©´,
+    /// 2) AttackMotion() í˜¸ì¶œí•´ì„œ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+    /// 3) ìƒëŒ€ë°©ì˜ GetHit()ì— ìì‹ ì˜ _myDamage ë„˜ê²¨ì„œ í˜¸ì¶œ
     /// </summary>
     public virtual void Attack()
     {
-
+        if(!_isFinished && _MyName == _whoseTurn
+        {
+            AttackMotion();
+            other.GetHit(_myDamage);
+            
+        }
     }
-
     /// <summary>
-    /// 4. GetHit: ÇÇ°İ½Ã ½ÇÇàµÉ ³»¿ë 3¹ø°ú µ¿ÀÏÇÏ°Ô °øÅëµÇ´Â ±â´É ÀÛ¼º
-    /// ÀÌÈÄ °¢ class¿¡¼­ ¿À¹ö¶óÀÌµùÇØ¼­ ÀÛ¼º
-    /// 1) ³Ñ°Ü ¹ŞÀº damage¸¸Å­ _myHp °¨¼Ò
-    /// 2) ¸¸¾à _myHp°¡ 0º¸´Ù ÀÛ°Å³ª °°´Ù¸é, DeadMotion() È£ÃâÇØ¼­ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
-    ///    + SubjectÀÇ EndNotify() È£Ãâ
-    /// 3) ¾ÆÁ÷ »ì¾ÆÀÖ´Ù¸é, GetHitMotion() È£ÃâÇØ¼­ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
-    ///    + Debug.Log($"{_myName} HP: {_myHp}"); Ãß°¡
+    /// 4. GetHit: í”¼ê²©ì‹œ ì‹¤í–‰ë  ë‚´ìš© 3ë²ˆê³¼ ë™ì¼í•˜ê²Œ ê³µí†µë˜ëŠ” ê¸°ëŠ¥ ì‘ì„±
+    /// ì´í›„ ê° classì—ì„œ ì˜¤ë²„ë¼ì´ë”©í•´ì„œ ì‘ì„±
+    /// 1) ë„˜ê²¨ ë°›ì€ damageë§Œí¼ _myHp ê°ì†Œ
+    /// 2) ë§Œì•½ _myHpê°€ 0ë³´ë‹¤ ì‘ê±°ë‚˜ ê°™ë‹¤ë©´, DeadMotion() í˜¸ì¶œí•´ì„œ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+    ///    + Subjectì˜ EndNotify() í˜¸ì¶œ
+    /// 3) ì•„ì§ ì‚´ì•„ìˆë‹¤ë©´, GetHitMotion() í˜¸ì¶œí•´ì„œ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
+    ///    + Debug.Log($"{_myName} HP: {_myHp}"); ì¶”ê°€
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if(_myHP <= 0)
+        {
+            DeadMOtion();
+            GameManager.Instance().EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
-
     /// <summary>
-    /// ÀÌ ¹ØÀ¸·Î´Â animation °ü·Ã code, ÀÌÇØÇÒ ÇÊ¿ä ¾øÀ½ (´ÙÀ½ÁÖ ¼¼¼Ç¿¡¼­ ÇÒ °Í)
-    /// ¿ø·¡´Â ¾Æ·¡Ã³·³ ¿©·¯ ¸Ş¼Òµå¸¦ ¸¸µé ÇÊ¿äµµ ¾øÁö¸¸ ¹è¿ìÁö ¾ÊÀº ³»¿ëÀÌ±â ¶§¹®¿¡
-    /// »ç¿ëÀÇ ÆíÀÇ¸¦ À§ÇØ 4°¡Áö ¸Ş¼Òµå¸¦ ÀÛ¼ºÇÏ¿´À½.
-    /// À§ÀÇ Attack, GetHit ¿À¹ö¶óÀÌµù½Ã, ¾Æ·¡ÀÇ ¸Ş¼Òµå¸¸ È£ÃâÇÏ¸é animation ½ÇÇàµÊ
+    /// ì´ ë°‘ìœ¼ë¡œëŠ” animation ê´€ë ¨ code, ì´í•´í•  í•„ìš” ì—†ìŒ (ë‹¤ìŒì£¼ ì„¸ì…˜ì—ì„œ í•  ê²ƒ)
+    /// ì›ë˜ëŠ” ì•„ë˜ì²˜ëŸ¼ ì—¬ëŸ¬ ë©”ì†Œë“œë¥¼ ë§Œë“¤ í•„ìš”ë„ ì—†ì§€ë§Œ ë°°ìš°ì§€ ì•Šì€ ë‚´ìš©ì´ê¸° ë•Œë¬¸ì—
+    /// ì‚¬ìš©ì˜ í¸ì˜ë¥¼ ìœ„í•´ 4ê°€ì§€ ë©”ì†Œë“œë¥¼ ì‘ì„±í•˜ì˜€ìŒ.
+    /// ìœ„ì˜ Attack, GetHit ì˜¤ë²„ë¼ì´ë”©ì‹œ, ì•„ë˜ì˜ ë©”ì†Œë“œë§Œ í˜¸ì¶œí•˜ë©´ animation ì‹¤í–‰ë¨
     /// 1. AttackMotion()
     /// 2. SpecialAttackMotion()
     /// 3. DeadMotion()
     /// 4. GetHitMotion()
     /// </summary>
     protected Animator _animator;
-
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
@@ -80,23 +88,19 @@ public class Character : MonoBehaviour, Observer
     {
         _animator.SetTrigger(AnimatorParameters.IsSpecialAttack.ToString());
     }
-
     protected void DeadMotion()
     {
         StartCoroutine(DeadCoroutine());
     }
-
     protected void GetHitMotion()
     {
         StartCoroutine(GetHitCoroutine());
     }
-
     IEnumerator GetHitCoroutine()
     {
         yield return new WaitForSeconds(1f);
         _animator.SetTrigger(AnimatorParameters.GetHit.ToString());
     }
-
     IEnumerator DeadCoroutine()
     {
         yield return new WaitForSeconds(1f);
