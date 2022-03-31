@@ -8,15 +8,19 @@ public class Player : Character
     private float _randomAttack;
 
     /// <summary>
-    /// 1. Init: ÃÊ±âÈ­ ±â´É
-    /// 1) Subject¿¡ Observer·Î µî·Ï
-    /// 2) _myName, _myHp, _myDamage ÃÊ±âÈ­
-    /// 3) _myNameÀº ¹«Á¶°Ç "Player"·Î ÇÒ °Í
-    /// 4) _myHp, _myDamage´Â 100, 20À¸·Î °¢°¢ ÃÊ±âÈ­ (±ÇÀå »çÇ×)
+    /// 1. Init: ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½
+    /// 1) Subjectï¿½ï¿½ Observerï¿½ï¿½ ï¿½ï¿½ï¿½
+    /// 2) _myName, _myHp, _myDamage ï¿½Ê±ï¿½È­
+    /// 3) _myNameï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "Player"ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
+    /// 4) _myHp, _myDamageï¿½ï¿½ 100, 20ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     /// </summary>
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Player";
+        _myHp = 100; 
+        _myDamage = 20;
     }
 
     private void Awake()
@@ -25,31 +29,61 @@ public class Player : Character
     }
 
     /// <summary>
-    /// 1) _enemy°¡ ÇÒ´çÀÌ ¾ÈµÆ´Ù¸é,
-    /// 2) GameObject.FindWithTag ÀÌ¿ëÇØ¼­ _enemy ÇÒ´ç
+    /// 1) _enemyï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ ï¿½ÈµÆ´Ù¸ï¿½,
+    /// 2) GameObject.FindWithTag ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ _enemy ï¿½Ò´ï¿½
     /// </summary>
     private void Start()
     {
-
+        if (_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        }
     }
 
     /// <summary>
     /// Attack:
-    /// 1) Player´Â 30%ÀÇ È®·ü·Î °ø°Ý·ÂÀÌ ´õ ³ôÀº °ø°ÝÀ» °¡ÇÒ °Í
-    /// 2) _randomAttack = Random.Range(0,10); À¸·Î ·£´ý º¯¼ö »ý¼º
-    ///   -> 0~9 ±îÁöÀÇ Á¤¼ö Áß ÇÏ³ª¸¦ ·£´ýÀ¸·Î ÇÒ´ç¹ÞÀ½.
-    /// 3) _randomAttack ÀÌ¿ëÇØ¼­ 30% È®·ü·Î ±âÁ¸ °ø°Ý·Âº¸´Ù 10 ³ôÀº °ø°Ý ½ÇÇà
-    /// 4) ÀÌ¶§´Â AttackMotion() ¸»°í SpecialAttackMotion() È£ÃâÇÒ °Í
-    ///    + Debug.Log($"{_myName} Special Attack!"); Ãß°¡
-    /// 5) 70% È®·ü·Î ÇÏ´Â ÀÏ¹Ý °ø°ÝÀº Character¿¡ ½áÀÖ´Â ÁÖ¼®°ú µ¿ÀÏ
+    /// 1) Playerï¿½ï¿½ 30%ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    /// 2) _randomAttack = Random.Range(0,10); ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ///   -> 0~9 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ï¿½.
+    /// 3) _randomAttack ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ 30% È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·Âºï¿½ï¿½ï¿½ 10 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    /// 4) ï¿½Ì¶ï¿½ï¿½ï¿½ AttackMotion() ï¿½ï¿½ï¿½ï¿½ SpecialAttackMotion() È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    ///    + Debug.Log($"{_myName} Special Attack!"); ï¿½ß°ï¿½
+    /// 5) 70% È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Characterï¿½ï¿½ ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public override void Attack()
     {
-
+        if(!_isFinished)
+        {
+            if (_myName == _whoseTurn)
+            {
+                int _randomAttack = Random.Range(0,10);
+                if(_randomAttack < 3)
+                {
+                    SpecialAttackMotion();
+                    Debug.Log($"{_myName} Special Attack!");
+                    _enemy.GetHit(_myDamage*10);
+                }
+                else
+                {
+                    AttackMotion();
+                    _enemy.GetHit(_myDamage);
+                }
+            }
+        }
     }
 
     public override void GetHit(float damage)
     {
-
+        _myHp -= damage; 
+        if(_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 }
