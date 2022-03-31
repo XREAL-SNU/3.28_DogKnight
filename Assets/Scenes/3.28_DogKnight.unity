@@ -218,7 +218,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 607758867}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Attack
         m_Mode: 1
@@ -230,7 +230,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2047800147}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
         m_MethodName: Attack
         m_Mode: 1
@@ -399,11 +399,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 128527306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f40b9d95d382cc4085ab5df39130696, type: 3}
+  m_Script: {fileID: 11500000, guid: 60a7ac9037ec40a478d654216cce532f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemey: {fileID: 2047800146}
-  player: {fileID: 607758866}
 --- !u!1 &607758866 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2066896392038628118, guid: 45288819fde2143449a96207b14db0bb, type: 3}
@@ -418,13 +416,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 607758866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b73c7d95a2a04440b66cebee09f400e, type: 3}
+  m_Script: {fileID: 11500000, guid: 784efd2c170a4374b8d0dc220283075c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _myName: 
   _myHp: 0
+  _myHpMax: 0
   _myDamage: 0
-  attackButton: {fileID: 16706858}
   gameManager: {fileID: 128527306}
 --- !u!1 &705507993
 GameObject:
@@ -904,11 +902,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2047800146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 702a6e5417576e245a9a91e717f6e521, type: 3}
+  m_Script: {fileID: 11500000, guid: a4157e4f3b9612e4596848e49d48ed0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _myName: 
   _myHp: 0
+  _myHpMax: 0
   _myDamage: 0
-  attackButton: {fileID: 16706858}
   gameManager: {fileID: 128527306}
