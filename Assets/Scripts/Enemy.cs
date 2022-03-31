@@ -8,15 +8,19 @@ public class Enemy : Character
     private float _randomHeal;
 
     /// <summary>
-    /// 1. Init: ÃÊ±âÈ­ ±â´É
-    /// 1) Subject¿¡ Observer·Î µî·Ï
-    /// 2) _myName, _myHp, _myDamage ÃÊ±âÈ­
-    /// 3) _myNameÀº ¹«Á¶°Ç "Enemy"·Î ÇÒ °Í
-    /// 4) _myHp, _myDamage´Â 100, 10À¸·Î °¢°¢ ÃÊ±âÈ­ (±ÇÀå »çÇ×)
+    /// 1. Init: ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½
+    /// 1) Subjectï¿½ï¿½ Observerï¿½ï¿½ ï¿½ï¿½ï¿½
+    /// 2) _myName, _myHp, _myDamage ï¿½Ê±ï¿½È­
+    /// 3) _myNameï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ "Enemy"ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
+    /// 4) _myHp, _myDamageï¿½ï¿½ 100, 10ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     /// </summary>
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
@@ -25,33 +29,48 @@ public class Enemy : Character
     }
 
     /// <summary>
-    /// 1) _player°¡ ÇÒ´çÀÌ ¾ÈµÆ´Ù¸é,
-    /// 2) GameObject.FindWithTag ÀÌ¿ëÇØ¼­ _player ÇÒ´ç
+    /// 1) _playerï¿½ï¿½ ï¿½Ò´ï¿½ï¿½ï¿½ ï¿½ÈµÆ´Ù¸ï¿½,
+    /// 2) GameObject.FindWithTag ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ _player ï¿½Ò´ï¿½
     /// </summary>
     private void Start()
     {
-
+        if(_player != null){
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
 
     /// <summary>
     /// Attack:
-    /// 1) _gameRound°¡ Áö³¯¶§¸¶´Ù µ¥¹ÌÁö 3¾¿ Áõ°¡
-    /// 2) _gameRound°¡ 10ÀÌ µÇ¸é ¹«Á¶°Ç Player¸¦ Á×ÀÌµµ·Ï µ¥¹ÌÁö Áõ°¡
+    /// 1) _gameRoundï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    /// 2) _gameRoundï¿½ï¿½ 10ï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Playerï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public override void Attack()
     {
-
+        base.Attack();
+        if(_gameRound<10){
+            _player.GetHit(3*_gameRound + _myDamage);
+        }
+        else{
+            _player.GetHit(999);
+        }
     }
 
     /// <summary>
     /// GetHit:
-    /// 1) PlayerÀÇ _randomAttack°ú µ¿ÀÏÇÑ ±â´É
-    /// 2) 30%ÀÇ È®·ü·Î ÇÇ°Ý½Ã 10 Ã¼·Â Áõ°¡
-    ///   + Debug.Log($"{_myName} Heal!"); Ãß°¡
+    /// 1) Playerï¿½ï¿½ _randomAttackï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+    /// 2) 30%ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½Ç°Ý½ï¿½ 10 Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ///   + Debug.Log($"{_myName} Heal!"); ï¿½ß°ï¿½
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        _randomHeal = Random.Range(0, 10);
+        if(((int)_randomHeal)%3 == 0){
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
+        }
+        else{
+            base.GetHit(damage);
+        }
     }
 }
 
