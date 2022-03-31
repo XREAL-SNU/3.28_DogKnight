@@ -6,19 +6,29 @@ public class GameManager : MonoBehaviour, Subject
 {
     // 1. Singleton Pattern: Instance() method
     private static GameManager _instance;
+    public static GameManager Instance()
+    {
+        return _instance;
+    }
+    
 
-    // ÃÊ±âÈ­ ¼³Á¤ ¹Ù²ÙÁö ¸» °Í
+    // ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
     private int _gameRound = 0;
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
-    // delegate: TurnHandler, FinishHandler ¼±¾ð
+    // delegate: TurnHandler, FinishHandler ï¿½ï¿½ï¿½ï¿½
+    delegate void TurnUpdate(int round, string turn);
+    TurnHandler _turnHandler
+
+    delegate void FinishUpdate(boo isFinish);
+    FinishHandler _finishHandler
 
     /// <summary>
     /// 2. RoundNotify:
-    /// 1) ÇöÀç ÅÏÀÌ EnemyÀÌ¸é ´ÙÀ½ gameRound·Î
+    /// 1) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Enemyï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ gameRoundï¿½ï¿½
     ///  + Debug.Log($"GameManager: Round {gameRound}.");
-    /// 2) TurnNotify() È£Ãâ
+    /// 2) TurnNotify() È£ï¿½ï¿½
     /// </summary>
     public void RoundNotify()
     {
@@ -29,7 +39,7 @@ public class GameManager : MonoBehaviour, Subject
     /// 3. TurnNotify:
     /// 1) whoseTurn update
     ///  + Debug.Log($"GameManager: {_whoseTurn} turn.");
-    /// 2) _turnHandler È£Ãâ
+    /// 2) _turnHandler È£ï¿½ï¿½
     /// </summary>
     public void TurnNotify()
     {
@@ -41,14 +51,14 @@ public class GameManager : MonoBehaviour, Subject
     /// 1) isEnd update
     ///  + Debug.Log("GameManager: The End");
     ///  + Debug.Log($"GameManager: {_whoseTurn} is Win!");
-    /// 2) _finishHandler È£Ãâ
+    /// 2) _finishHandler È£ï¿½ï¿½
     /// </summary>
     public void EndNotify()
     {
 
     }
 
-    // 5. AddCharacter: _turnHandler, _finishHandler °¢°¢¿¡ ¸Þ¼Òµå Ãß°¡
+    // 5. AddCharacter: _turnHandler, _finishHandler ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ ï¿½ß°ï¿½
     public void AddCharacter(Character character)
     {
 
