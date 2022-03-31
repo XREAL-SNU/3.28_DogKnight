@@ -33,6 +33,8 @@ public class Character : MonoBehaviour, Observer
             turn = "Enemy";
         }
 
+   
+
     }
 
     // 2. FinishUpdate: _isFinished update
@@ -90,8 +92,8 @@ public class Character : MonoBehaviour, Observer
         if (_myHp<=0)
         {
             DeadMotion();
-            GameManager gameManager = FindObjectOfType<GameManager>();
-            gameManager.EndNotify();
+            //GameManager gameManager = FindObjectOfType<GameManager>();
+            GameManager.Instance().EndNotify();
         }
         else
         {

@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour, Subject
         return _instance;
     }
 
+
+    private Character player;
+    private Character enemy;
+
     void Start()
     {
         if (_instance != null)
@@ -32,7 +36,8 @@ public class GameManager : MonoBehaviour, Subject
             }
         }
 
-
+        AddCharacter(player);
+        AddCharacter(enemy);
 
 
 
@@ -64,6 +69,7 @@ public class GameManager : MonoBehaviour, Subject
         {
             _gameRound++;
             Debug.Log($"GameManager: Round {_gameRound}.");
+
         }
         TurnNotify();
     }
@@ -76,8 +82,7 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-        _whoseTurn = "Player";
-
+       
         Debug.Log($"GameManager: {_whoseTurn} turn.");
         _turnHandler(_gameRound, _whoseTurn);
     }
@@ -102,5 +107,7 @@ public class GameManager : MonoBehaviour, Subject
         Character characterScript = FindObjectOfType<Character>();
         TurnHandler _turnHandler = characterScript.TurnUpdate;
         FinishHandler _finishHandler = characterScript.FinishUpdate;
+
+        Debug.Log("delegate-method connected");
     }
 }
