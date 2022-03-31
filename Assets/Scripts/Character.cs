@@ -22,6 +22,7 @@ public class Character : MonoBehaviour, Observer
     public void TurnUpdate(int round, string turn)
     {
 
+        Debug.Log("WhoseTurn : " + turn);
     }
 
     // 2. FinishUpdate: _isFinished update
