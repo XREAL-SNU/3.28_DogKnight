@@ -20,6 +20,7 @@ public class Enemy : Character
         _myName = "Enemy";
         _myHp = 100;
         _myDamage = 10;
+        GameManager.Instance().AddCharacter(this.GetComponent<Enemy>());
     }
 
     private void Awake()
@@ -44,11 +45,15 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        base.Attack();
-        _myDamage += 3;
-        if(_gameRound==10)
+        if (!_isFinished && (_myName == _whoseTurn))
         {
-            _myDamage = _player._myHp;
+            _myDamage += 3;
+            if (_gameRound >= 10)
+            {
+                _myDamage = _player._myHp;
+            }
+            AttackMotion();
+            other.GetHit(_myDamage);
         }
     }
 
@@ -61,12 +66,15 @@ public class Enemy : Character
     public override void GetHit(float damage)
     {
         base.GetHit(damage);
-        _randomHeal = Random.Range(0, 10);
-        if (_randomHeal < 3)
+        if(_myHp > 0)
         {
-            _myHp += 10;
-            Debug.Log($"{_myName} Heal!");
-        }
+            _randomHeal = Random.Range(0, 10);
+            if (_randomHeal < 3)
+            {
+                _myHp += 10;
+                Debug.Log($"{_myName} Heal!");
+            }
+        }   
     }
 }
 

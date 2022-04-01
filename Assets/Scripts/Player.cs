@@ -20,6 +20,7 @@ public class Player : Character
         _myName = "Player";
         _myHp = 100;
         _myDamage = 20;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>()); //인스턴스를 통해 접근 후 Addcharacter에 player할당하기
     }
 
     private void Awake()
@@ -59,13 +60,11 @@ public class Player : Character
             {
                 SpecialAttackMotion();
                 Debug.Log($"{_myName} Special Attack!");
-                _myDamage += 10;
-                other.GetHit(_myDamage);
+                other.GetHit(_myDamage+10);
             }
             else
             {
                 AttackMotion();
-                _myDamage = 20;
                 other.GetHit(_myDamage);
             }
         }            
