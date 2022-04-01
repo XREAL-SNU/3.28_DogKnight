@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : Character
 {
     // 1. _player 변수 삭제 -> GetCharacter로 접근할 거임
     //private Player _player;
     private float _randomHeal;
+    public GameObject _healUI;
 
     protected override void Init()
     {
@@ -57,8 +59,11 @@ public class Enemy : Character
     /// <returns></returns>
     IEnumerator HealCoroutine()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(2.0f);
         _myHp += 10;
         Debug.Log($"{_myName} Heal!");
+        _healUI.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        _healUI.SetActive(false);
     }
 }
