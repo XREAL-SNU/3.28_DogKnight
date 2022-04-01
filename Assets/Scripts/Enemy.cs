@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private GameObject _player;
+    private Player _player;
     private float _randomHeal;
 
     /// <summary>
@@ -40,9 +40,9 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-        if (_player==null)
+        if (_player == null)
         {
-            _player=GameObject.FindWithTag("Player");
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
     }
 
@@ -53,13 +53,35 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        while (_gameRound<10)
+        base.Attack();
+
+        //if (_isFinished == false && _myName == _whoseTurn)
+        if(_myName == _whoseTurn && !_isFinished)
+        
         {
+
+            AttackMotion();
+            _player.GetHit(_myDamage);
+
+            //ÀÌµ¿
             _myDamage += 3;
+
+
         }
-        if (_gameRound==10)
+
+        /*
+        while (_gameRound__changed < 10)
+        {
+           // _myDamage += 3;
+        }
+        if (_gameRound__changed >= 10)
         {
             _myDamage = 100;
+        }*/
+
+        if(_gameRound >= 10)
+        {
+            _myDamage = 1000;
         }
 
     }
@@ -72,11 +94,14 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
+
         _randomHeal = Random.Range(0, 10);
-        if (_randomHeal == 1 | _randomHeal == 2 | _randomHeal == 3)
+        if (_randomHeal <3 && !_isFinished)
         {
             _myHp += 10;
-            
+            Debug.Log($"{_myName} Heal!");
+
         }
     }
 }

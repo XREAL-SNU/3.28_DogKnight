@@ -492,6 +492,9 @@ MonoBehaviour:
   _myName: Enemy
   _myHp: 0
   _myDamage: 0
+  _gameRound: 0
+  _whoseTurn: 
+  _isFinished: 0
 --- !u!114 &11560641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,6 +510,9 @@ MonoBehaviour:
   _myName: Enemy
   _myHp: 0
   _myDamage: 0
+  _gameRound: 0
+  _whoseTurn: 
+  _isFinished: 0
 --- !u!1 &111252117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,6 +1167,9 @@ MonoBehaviour:
   _myName: Player
   _myHp: 0
   _myDamage: 0
+  _gameRound: 0
+  _whoseTurn: 
+  _isFinished: 0
 --- !u!114 &1078210668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,6 +1185,9 @@ MonoBehaviour:
   _myName: Player
   _myHp: 0
   _myDamage: 0
+  _gameRound: 0
+  _whoseTurn: 
+  _isFinished: 0
 --- !u!1 &1435876230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1442,6 +1454,30 @@ MonoBehaviour:
       - m_Target: {fileID: 111252119}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: RoundNotify
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1078210668}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 11560641}
+        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
+        m_MethodName: Attack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

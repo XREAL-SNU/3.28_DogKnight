@@ -14,37 +14,23 @@ public class Character : MonoBehaviour, Observer
     public float _myHp;
     public float _myDamage;
 
-    protected int _gameRound;
-    protected string _whoseTurn;
-    protected bool _isFinished;
+    public int _gameRound;
+    public string _whoseTurn;
+    public bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-        round++;
-
-        if (turn == "Enemy")
-        {
-            turn = "Player";
-        }
-
-        else if(turn == "Player")
-        {
-            turn = "Enemy";
-        }
-
-   
+        //변화된 round를 변수에 넣어주는 부분
+        _gameRound = round;
+        _whoseTurn = turn;
 
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-        if (_myHp<0)
-        {
-            isFinish = true;
-      
-        }
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -56,23 +42,7 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-        if (_isFinished==false && _myName == _whoseTurn)
-        {
-            AttackMotion();
-
-            if (_myName=="Player")
-            {
-                Enemy enemy = FindObjectOfType<Enemy>();
-                enemy.GetHit(_myDamage);
-            }
-
-            else if (_myName == "Enemy")
-            {
-                Player player = FindObjectOfType<Player>();
-                player.GetHit(_myDamage);
-            }
-
-        }
+  
     }
 
 
@@ -92,7 +62,7 @@ public class Character : MonoBehaviour, Observer
         if (_myHp<=0)
         {
             DeadMotion();
-            //GameManager gameManager = FindObjectOfType<GameManager>();
+            
             GameManager.Instance().EndNotify();
         }
         else

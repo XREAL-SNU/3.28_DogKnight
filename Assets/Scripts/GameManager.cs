@@ -23,25 +23,24 @@ public class GameManager : MonoBehaviour, Subject
     }
 
 
-    private Character player;
-    private Character enemy;
+    /*
+     Character player;
+     Character enemy;
+      
+     void Start()
+     {
+         if (_instance != null)
+         {
+             if (_instance != this)
+             {
+                 Destroy(this.gameObject);
+             }
+         }
 
-    void Start()
-    {
-        if (_instance != null)
-        {
-            if (_instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-        }
+     enemy = GameObject.FindObjectOfType<Enemy>();
+     player = GameObject.FindObjectOfType<Player>();
+     }*/
 
-        AddCharacter(player);
-        AddCharacter(enemy);
-
-
-
-    }
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -64,7 +63,9 @@ public class GameManager : MonoBehaviour, Subject
     /// 2) TurnNotify() 호출
     /// </summary>
     public void RoundNotify()
-    {
+    {   if (_isEnd) return; //??????
+
+
         if (_whoseTurn == "Enemy")
         {
             _gameRound++;
@@ -82,7 +83,16 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
-       
+        if (_whoseTurn == "Enemy")
+        {
+            _whoseTurn = "Player";
+        }
+
+        else if (_whoseTurn == "Player")
+        {
+            _whoseTurn = "Enemy";
+        }
+
         Debug.Log($"GameManager: {_whoseTurn} turn.");
         _turnHandler(_gameRound, _whoseTurn);
     }
@@ -97,17 +107,16 @@ public class GameManager : MonoBehaviour, Subject
     public void EndNotify()
     {
         _isEnd = true;
-
-        _finishHandler(_isEnd);
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _finishHandler(true); //////?????isEnd아닌가??
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-        Character characterScript = FindObjectOfType<Character>();
-        TurnHandler _turnHandler = characterScript.TurnUpdate;
-        FinishHandler _finishHandler = characterScript.FinishUpdate;
-
-        Debug.Log("delegate-method connected");
+        _turnHandler += new TurnHandler(character.TurnUpdate);
+        _finishHandler += new FinishHandler(character.FinishUpdate);
     }
 }
+
