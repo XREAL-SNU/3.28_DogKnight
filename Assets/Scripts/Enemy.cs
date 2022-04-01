@@ -1,57 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Enemy : Character
 {
     private Player _player;
     private float _randomHeal;
-
     /// <summary>
-    /// 1. Init: ÃÊ±âÈ­ ±â´É
-    /// 1) Subject¿¡ Observer·Î µî·Ï
-    /// 2) _myName, _myHp, _myDamage ÃÊ±âÈ­
-    /// 3) _myNameÀº ¹«Á¶°Ç "Enemy"·Î ÇÒ °Í
-    /// 4) _myHp, _myDamage´Â 100, 10À¸·Î °¢°¢ ÃÊ±âÈ­ (±ÇÀå »çÇ×)
+    /// 1. Init: ì´ˆê¸°í™” ê¸°ëŠ¥
+    /// 1) Subjectì— Observerë¡œ ë“±ë¡
+    /// 2) _myName, _myHp, _myDamage ì´ˆê¸°í™”
+    /// 3) _myNameì€ ë¬´ì¡°ê±´ "Enemy"ë¡œ í•  ê²ƒ
+    /// 4) _myHp, _myDamageëŠ” 100, 10ìœ¼ë¡œ ê°ê° ì´ˆê¸°í™” (ê¶Œì¥ ì‚¬í•­)
     /// </summary>
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Enemy";
+        _myHP = 100;
+        _myDamaage = 10;
     }
 
     private void Awake()
     {
         Init();
     }
-
     /// <summary>
-    /// 1) _player°¡ ÇÒ´çÀÌ ¾ÈµÆ´Ù¸é,
-    /// 2) GameObject.FindWithTag ÀÌ¿ëÇØ¼­ _player ÇÒ´ç
+    /// 1) _playerê°€ í• ë‹¹ì´ ì•ˆëë‹¤ë©´,
+    /// 2) GameObject.FindWithTag ì´ìš©í•´ì„œ _player í• ë‹¹
     /// </summary>
     private void Start()
     {
+        if(_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
 
     }
-
     /// <summary>
     /// Attack:
-    /// 1) _gameRound°¡ Áö³¯¶§¸¶´Ù µ¥¹ÌÁö 3¾¿ Áõ°¡
-    /// 2) _gameRound°¡ 10ÀÌ µÇ¸é ¹«Á¶°Ç Player¸¦ Á×ÀÌµµ·Ï µ¥¹ÌÁö Áõ°¡
+    /// 1) _gameRoundê°€ ì§€ë‚ ë•Œë§ˆë‹¤ ë°ë¯¸ì§€ 3ì”© ì¦ê°€
+    /// 2) _gameRoundê°€ 10ì´ ë˜ë©´ ë¬´ì¡°ê±´ Playerë¥¼ ì£½ì´ë„ë¡ ë°ë¯¸ì§€ ì¦ê°€
     /// </summary>
     public override void Attack()
     {
-
     }
-
     /// <summary>
     /// GetHit:
-    /// 1) PlayerÀÇ _randomAttack°ú µ¿ÀÏÇÑ ±â´É
-    /// 2) 30%ÀÇ È®·ü·Î ÇÇ°İ½Ã 10 Ã¼·Â Áõ°¡
-    ///   + Debug.Log($"{_myName} Heal!"); Ãß°¡
+    /// 1) Playerì˜ _randomAttackê³¼ ë™ì¼í•œ ê¸°ëŠ¥
+    /// 2) 30%ì˜ í™•ë¥ ë¡œ í”¼ê²©ì‹œ 10 ì²´ë ¥ ì¦ê°€
+    ///   + Debug.Log($"{_myName} Heal!"); ì¶”ê°€
     /// </summary>
     public override void GetHit(float damage)
     {
-
     }
 }
-
