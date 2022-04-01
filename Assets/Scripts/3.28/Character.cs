@@ -10,6 +10,8 @@ public class Character : MonoBehaviour, Observer
 {
     public string _myName;
     public float _myHp;
+    // 1. Hp UI bar ������ ���� HpMax �� �߰�
+    public float _myHpMax;
     public float _myDamage;
     protected int _gameRound;
     protected string _whoseTurn;
@@ -18,13 +20,13 @@ public class Character : MonoBehaviour, Observer
 
     public void TurnUpdate(int round, string turn)
     {
-        _gameRound = round;
-        _whoseTurn = turn;
+        this._gameRound = round;
+        this._whoseTurn = turn;
     }
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-        _isFinished = isFinish;
+        this._isFinished = isFinish;
     }
     /// <summary>
     /// 3. Attack: 공격시 실행될 내용 중 Player와 Enemy 공통으로 실행될 기능 작성
@@ -50,17 +52,8 @@ public class Character : MonoBehaviour, Observer
     {
         _myHp -= damage;
         if (_myHp <= 0)
-        {
-            DeadMotion();
-            GameManager.Instance().EndNotify();
-        }
-        else
-        {
-            GetHitMotion();
-            Debug.Log($"{_myName} HP: {_myHp}");
-        }
-    }
     /// <summary>
+    }
     /// 이 밑으로는 animation 관련 code, 이해할 필요 없음 (다음주 세션에서 할 것)
     /// 원래는 아래처럼 여러 메소드를 만들 필요도 없지만 배우지 않은 내용이기 때문에
     /// 사용의 편의를 위해 4가지 메소드를 작성하였음.
@@ -70,6 +63,7 @@ public class Character : MonoBehaviour, Observer
     /// 3. DeadMotion()
     /// 4. GetHitMotion()
     /// </summary>
+
     protected Animator _animator;
     protected virtual void Init()
     {
