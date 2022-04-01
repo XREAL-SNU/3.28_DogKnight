@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    // 1. _enemy º¯¼ö »èÁ¦ -> GetCharacter·Î Á¢±ÙÇÒ °ÅÀÓ
+    // 1. _enemy ë³€ìˆ˜ ì‚­ì œ -> GetCharacterë¡œ ì ‘ê·¼í•  ê±°ìž„
     //private Enemy _enemy;
     private float _randomAttack;
 
@@ -31,7 +31,7 @@ public class Player : Character
             if (_randomAttack < 7)
             {
                 AttackMotion();
-                // 1. GetCharacter·Î Enemy Á¢±Ù
+                // 1. GetCharacterë¡œ Enemy ì ‘ê·¼
                 GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
             }
             else

@@ -7,7 +7,7 @@ using XReal.XTown.UI;
 
 public class Item : UIBase
 {
-    // 1. enum ÀÚÀ¯·Ó°Ô ±¸¼º
+    // 1. enum ììœ ë¡­ê²Œ êµ¬ì„±
 
     private string _itemName;
 
@@ -16,7 +16,7 @@ public class Item : UIBase
         Init();
     }
 
-    // 2. Item Button¿¡ OnClick_ItemUse Bind
+    // 2. Item Buttonì— OnClick_ItemUse Bind
     public override void Init()
     {
         
@@ -24,9 +24,9 @@ public class Item : UIBase
 
     /// <summary>
     /// 3. OnClick_ItemUse
-    /// 1) ItemProperty.GetItemProperty°ú _itemName ÀÌ¿ëÇØ¼­ ItemProperty Á¢±Ù
-    /// 2) ¸¸¾à ÇØ´ç ¾ÆÀÌÅÛ °³¼ö°¡ 0º¸´Ù Å©´Ù¸é
-    /// 3) °³¼ö -1 & °´Ã¼ ÆÄ±«
+    /// 1) ItemProperty.GetItemPropertyê³¼ _itemName ì´ìš©í•´ì„œ ItemProperty ì ‘ê·¼
+    /// 2) ë§Œì•½ í•´ë‹¹ ì•„ì´í…œ ê°œìˆ˜ê°€ 0ë³´ë‹¤ í¬ë‹¤ë©´
+    /// 3) ê°œìˆ˜ -1 & ê°ì²´ íŒŒê´´
     /// 4) ItemAction();
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
@@ -36,17 +36,17 @@ public class Item : UIBase
 
     /// <summary>
     /// 4. ItemAction:
-    /// 1) switch ¹®À¸·Î itemProperty.PropertyType ÀÎ¼ö·Î ¹Ş°í
-    /// 2) ItemProperty.GetItemProperty°ú _itemName ÀÌ¿ëÇØ¼­ ItemProperty Á¢±ÙÇØ¼­
-    /// 3) Damage¶ó¸é, GameManager.Instance().GetCharacter("Player")·Î ÇÃ·¹ÀÌ¾î Á¢±ÙÇØ¼­ µ¥¹ÌÁö Ãß°¡
-    /// 4) HealÀÌ¶ó¸é µ¿ÀÏÇÏ°Ô Á¢±ÙÇØ¼­ Ã¼·Â Ãß°¡ + SceneUIÀÇ CharacterHP() È£Ãâ
+    /// 1) switch ë¬¸ìœ¼ë¡œ itemProperty.PropertyType ì¸ìˆ˜ë¡œ ë°›ê³ 
+    /// 2) ItemProperty.GetItemPropertyê³¼ _itemName ì´ìš©í•´ì„œ ItemProperty ì ‘ê·¼í•´ì„œ
+    /// 3) Damageë¼ë©´, GameManager.Instance().GetCharacter("Player")ë¡œ í”Œë ˆì´ì–´ ì ‘ê·¼í•´ì„œ ë°ë¯¸ì§€ ì¶”ê°€
+    /// 4) Healì´ë¼ë©´ ë™ì¼í•˜ê²Œ ì ‘ê·¼í•´ì„œ ì²´ë ¥ ì¶”ê°€ + SceneUIì˜ CharacterHP() í˜¸ì¶œ
     /// </summary>
     public void ItemAction()
     {
         
     }
 
-    // 5. SetInfo: itemNameÀ» _itemName¿¡ ÇÒ´ç
+    // 5. SetInfo: itemNameì„ _itemNameì— í• ë‹¹
     public void SetInfo(string itemName)
     {
 

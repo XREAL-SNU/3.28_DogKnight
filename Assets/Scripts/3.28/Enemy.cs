@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    // 1. _player º¯¼ö »èÁ¦ -> GetCharacter·Î Á¢±ÙÇÒ °ÅÀÓ
+    // 1. _player ë³€ìˆ˜ ì‚­ì œ -> GetCharacterë¡œ ì ‘ê·¼í•  ê±°ì„
     //private Player _player;
     private float _randomHeal;
 
@@ -28,7 +28,7 @@ public class Enemy : Character
         if(_myName.Equals(_whoseTurn) && !_isFinished)
         {
             _myDamage += 3;
-            // 1. GetCharacter·Î Player Á¢±Ù
+            // 1. GetCharacterë¡œ Player ì ‘ê·¼
             if (_gameRound >= 10) _myDamage = GameManager.Instance().GetCharacter("Player")._myHp;
             AttackMotion();
             GameManager.Instance().GetCharacter("Player").GetHit(_myDamage);
@@ -41,7 +41,7 @@ public class Enemy : Character
         if(_myHp > 0)
         {
             _randomHeal = Random.Range(0, 10);
-            if(_randomHeal < 5) // 50% È®·ü·Î Heal
+            if(_randomHeal < 5) // 50% í™•ë¥ ë¡œ Heal
             {
                 StartCoroutine(HealCoroutine());
             }
@@ -50,9 +50,9 @@ public class Enemy : Character
 
     /// <summary>
     /// HealCoroutine: 
-    /// 1) Player°¡ Enemy °ø°İ -> Hp ±ğÀÓ -> UI ¹İ¿µ
-    /// 2) Enemy È®·üÀûÀ¸·Î È¸º¹ -> Hp Âü -> UI ¹İ¿µ
-    /// 3) Áß°£¿¡ yield return ÇÏÁö ¾ÊÀ¸¸é ÇÑ¹ø¿¡ Ã³¸®µÅ¼­ ÇÇ°İ ÇÏ°í Heal ÇÏ´Â UI ¹İ¿µÀÌ Á¦´ë·Î ÀÌ·ç¾îÁöÁö ¾ÊÀ½.
+    /// 1) Playerê°€ Enemy ê³µê²© -> Hp ê¹ì„ -> UI ë°˜ì˜
+    /// 2) Enemy í™•ë¥ ì ìœ¼ë¡œ íšŒë³µ -> Hp ì°¸ -> UI ë°˜ì˜
+    /// 3) ì¤‘ê°„ì— yield return í•˜ì§€ ì•Šìœ¼ë©´ í•œë²ˆì— ì²˜ë¦¬ë¼ì„œ í”¼ê²© í•˜ê³  Heal í•˜ëŠ” UI ë°˜ì˜ì´ ì œëŒ€ë¡œ ì´ë£¨ì–´ì§€ì§€ ì•ŠìŒ.
     /// </summary>
     /// <returns></returns>
     IEnumerator HealCoroutine()
@@ -62,4 +62,3 @@ public class Enemy : Character
         Debug.Log($"{_myName} Heal!");
     }
 }
-
