@@ -16,7 +16,7 @@ public class Player : Character //자식클래스
     /// </summary>
     protected override void Init() //자식클래스에서 오버라이딩해서 초기화하는 것들.
     {
-        gameManager.GetComponent<GameManager>().AddCharacter(this);
+        gamemanager.GetComponent<GameManager>().AddCharacter(this);
         base.Init();
         _myHp = 100;
         _myDamage = 20;
@@ -65,7 +65,7 @@ public class Player : Character //자식클래스
         if (!_isFinished && _myName == _whoseTurn)
         {
             _randomAttack = Random.Range(0, 10);
-            if (0 <= _randomAttack< 3)//부모클래스와 다른 스페셜 어택일것임.
+            if (0 <= _randomAttack && _randomAttack < 3)//부모클래스와 다른 스페셜 어택일것임.
             {
                 SpecialAttackMotion();
                 damage = _myDamage + 10;//기존 공격력보다 10높아야!
@@ -76,7 +76,7 @@ public class Player : Character //자식클래스
                 damage = _myDamage;
             }
 
-            _enemy.GetHit(_damage);
+            _enemy.GetHit(damage);
         }
     }
 

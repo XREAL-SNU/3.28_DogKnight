@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour, Subject
     FinishHandler _finishHandler;
 
 
-    //싱글톤만들기
+  
     public GameObject enemey;
     public GameObject player;
     void Start()
@@ -50,12 +50,9 @@ public class GameManager : MonoBehaviour, Subject
 
             Debug.Log($"GameManager: Round {_gameRound}.");///  + Debug.Log($"GameManager: Round {gameRound}.");
         }
-        else   /// 2) TurnNotify() 호출
-        {
-            TurnNotify();
-        }
+        TurnNotify(); //whoseturn이 뭐건간에 turnnotify해야함. 
     }
-}
+
 
 /// <summary>
 /// 3. TurnNotify:///-완료!!!!!!!!!!!!!
@@ -69,7 +66,7 @@ public void TurnNotify()
     {
         _whoseTurn = "Player";
     }
-    else if(_whoseTurn = "Player")  /// 1) whoseTurn update
+    else if(_whoseTurn == "Player")  /// 1) whoseTurn update
     {
         _whoseTurn = "Enemy";
     }
@@ -99,8 +96,12 @@ public void EndNotify()///-완료!!!!!!!!!!!!!
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가 ///-완료!!!!!!!!!!!!!
     public void AddCharacter(Character character)
     {
-    _turnHandler = _turnHandler+ new TurnHandler(character.GetComponent<Character>().TurnUpdate);
-    _finishHandler = _finishHandler + new FinishHandler(character.GetComponent<Character>().FinishUpdate);
+        _turnHandler = _turnHandler + new TurnHandler(character.GetComponent<Character>().TurnUpdate);
+
+
+
+        _finishHandler = _finishHandler + new FinishHandler(character.GetComponent<Character>().FinishUpdate);
+    }
 }
 
 

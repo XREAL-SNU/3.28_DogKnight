@@ -50,11 +50,11 @@ public class Enemy : Character
     {
         if (_player == null)  /// 1) _player가 할당이 안됐다면,
         {
-            _player = GameObject.FindWithTag("Player").GetComponent<Player>(); 
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
             /// 2) GameObject.FindWithTag 이용해서 _player 할당
         }
     }
-}
+
 
     /// <summary>
     /// Attack:
@@ -68,26 +68,28 @@ public class Enemy : Character
     public override void Attack()
     {
 
-    if (!_isFinished && _myName == _whoseTurn)
-    {
-        AttackMotion();
-
-        if (!_gameRound == 10)
+        if (!_isFinished && _myName == _whoseTurn)
         {
-            _myDamage = _myDamage + 3;
-        }
-        
+            AttackMotion();
 
-        else if (_gameRound == 10)
-        {
-            _myDamage =playeris;
+           
+
+          if (_gameRound == 10)
+            {
+                _myDamage = playeris;
+            }
+            else
+            {
+                _myDamage = _myDamage + 3;
+            }
+
+
+            _player.GetHit(_myDamage);
+
         }
-        _player.GetHit(_myDamage);
+
 
     }
-
-
-}
 
     /// <summary>
     /// 
@@ -104,15 +106,16 @@ public class Enemy : Character
     public override void GetHit(float damage)
     {
 
-    base.GetHit(damage);
-    int _random = Random.Range(0, 10);
-    if (0 <= _random < 3)
-    {
-        playeris += 10;
-        Debug.Log($"{_myName} Heal!");
+        base.GetHit(damage);
+        int _random = Random.Range(0, 10);
+        if (0 <= _random && _random < 3)
+        {
+            playeris += 10;
+            Debug.Log($"{_myName} Heal!");
+        }
+
+
     }
 
 
 }
-
-
