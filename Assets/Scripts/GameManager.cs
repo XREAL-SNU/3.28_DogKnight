@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour, Subject
     delegate void FinisHandler(bool isFinish); //끝났는지 알려주는 피니쉬핸들러
     FinisHandler _finisHandler;
 
+    // 1. SceneUI가 GameManager 접근 할 수 있도록 캐릭터 딕셔너리 선언
+    private Dictionary<string, Character> _characterList = new Dictionary<string, Character>();
+
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -86,5 +89,13 @@ public class GameManager : MonoBehaviour, Subject
     {
         _turnHandler += new TurnHandler(character.TurnUpdate);
         _finisHandler += new FinisHandler(character.FinishUpdate);
+    }
+    public void AddUI(SceneUI ui)
+    {
+
+    }
+    public Character GetCharacter(string name)
+    {
+        return null;
     }
 }
