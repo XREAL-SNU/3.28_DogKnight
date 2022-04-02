@@ -9,7 +9,11 @@ using XReal.XTown.UI;
 public class Inventory : UIPopup
 {
     // 1. enum 자유롭게 구성
-
+    enum GameObjects{
+        Blocker,
+        Background,
+        CloseButton
+    }
     private void Start()
     {
         Init();
@@ -21,11 +25,27 @@ public class Inventory : UIPopup
     public override void Init()
     {
         base.Init();
+
+        Bind<GameObject>(typeof(GameObjects));
+
+        GameObject CloseButton = GetUIComponent<GameObject>((int)GameObjects.CloseButton);
+        CloseButton.BindEvent(OnClick_Close);
+       
+        //아이템 타입별 itemGroup itemcontentPanel밑에 생성
+        //1) item타입별 itemGroup instentiate
+        //2) item들 item Group에 넣기
+        GameObject contentPanel = UIUtils.FindUIChild(gameObject, "ContentPanel", true);
+        foreach (string typeName in Enum.GetNames(typeof(ItemPropertyType))){
+            ItemGroup _itemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
+            _itemGroup.SetInfo(typeName);
+        }
+
+        
     }
 
     // 5. OnClick_Close: Popup 닫기
     public void OnClick_Close(PointerEventData data)
     {
-
+        UIManager.UI.ClosePopupUI();
     }
 }

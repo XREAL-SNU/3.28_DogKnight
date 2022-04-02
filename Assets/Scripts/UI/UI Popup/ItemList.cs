@@ -11,7 +11,7 @@ public class ItemProperty
 {
     public static ItemProperty DamageItem_Flame = new ItemProperty(ItemPropertyType.Damage, "FlameItem", 4, 5f);
     public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "FireSpearItem", 3, 10f);
-    public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealStoneItem", 4, 20f);
+    public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealItem", 4, 20f);
 
 
     public static ItemProperty[] ItemProperties = new ItemProperty[]

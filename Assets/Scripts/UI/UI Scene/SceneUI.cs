@@ -55,6 +55,8 @@ public class SceneUI : UIScene
         GameObject AttackButton = GetUIComponent<GameObject>((int)GameObjects.AttackButton);
         AttackButton.BindEvent(OnClick_AttackButton);
 
+        GameObject InventoryButton = GetUIComponent<GameObject>((int)GameObjects.InventoryButton);
+        InventoryButton.BindEvent(OnClick_InventoryButton);
     }
 
     /// <summary>
@@ -86,7 +88,10 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-
+        if(_whoseTurn == _enemy._myName)
+        {
+            UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
+        }
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트

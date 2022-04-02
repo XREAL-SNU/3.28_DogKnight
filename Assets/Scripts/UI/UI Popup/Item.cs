@@ -8,7 +8,7 @@ using XReal.XTown.UI;
 public class Item : UIBase
 {
     // 1. enum 자유롭게 구성
-
+    enum GameObjects { Image }
     private string _itemName;
 
     private void Start()
@@ -19,7 +19,9 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
-
+        Bind<GameObject>(typeof(GameObjects));
+        GameObject image = GetUIComponent<GameObject>((int)GameObjects.Image);
+        image.BindEvent(OnClick_ItemUse);
     }
 
     /// <summary>
@@ -31,7 +33,11 @@ public class Item : UIBase
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
     {
-
+        ItemProperty itemProperty = ItemProperty.GetItemProperty(_itemName);
+        if (itemProperty.ItemNumber > 0)
+            itemProperty.ItemNumber--;
+        Destroy(gameObject);
+        ItemAction();
     }
 
     /// <summary>
@@ -43,12 +49,34 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
-
+        Character Player = GameManager.Instance().GetCharacter("Player");
+        System.Random rand = new System.Random();
+        switch (_itemName)
+        {
+            case "HealItem":
+                if(Player._myHp < Player._myHpMax)
+                {
+                    Player._myHp += (Player._myHpMax- Player._myHp)<10? (Player._myHpMax - Player._myHp): 10;
+                }
+                UIManager.UI._sceneUI.GetComponent<SceneUI>().CharacterHp();
+                break;
+            case "FireSpearItem": // player damage up by random
+                if (rand.Next(0,10) < 5)
+                {
+                    Player._myDamage += 3; 
+                }
+                break;
+            case "FlameItem":// player damage up
+                Player._myDamage += 1;
+                break;
+            default:
+                break;
+        }
     }
 
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        _itemName = itemName;
     }
 }

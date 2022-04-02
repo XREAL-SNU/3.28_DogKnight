@@ -23,6 +23,8 @@ namespace XReal.XTown.UI
             }
 
             DontDestroyOnLoad(gameObject);
+
+            ShowSceneUI<UIScene>("SceneUI");
         }
 
         // sorting order
@@ -30,7 +32,7 @@ namespace XReal.XTown.UI
 
         // references to the two types of UI.
         Stack<UIPopup> _popupStack = new Stack<UIPopup>();
-        UIScene _sceneUI = null;
+        public UIScene _sceneUI = null;
 
         // used for sorting order of UI.
         public GameObject Root

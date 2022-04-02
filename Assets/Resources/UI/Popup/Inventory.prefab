@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 3129717068193360134}
   - component: {fileID: 2412591961092580511}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -355,13 +355,13 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
-  m_Spacing: {x: 20, y: 20}
+  m_CellSize: {x: 1400, y: 500}
+  m_Spacing: {x: 1, y: 20}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 1
 --- !u!1 &3943559876584405473
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -753,7 +753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43e9488319440d14582dd14c3749aa3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemNum: 30
 --- !u!1 &9207272122298298914
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +764,7 @@ GameObject:
   - component: {fileID: 7274601791174579860}
   - component: {fileID: 1443209563090214067}
   - component: {fileID: 4673326491702793750}
+  - component: {fileID: 4271369344214677926}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -829,3 +829,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4271369344214677926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9207272122298298914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdaef320b28d45246a8c1020e37e0ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
