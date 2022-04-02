@@ -50,7 +50,7 @@ public class Character : MonoBehaviour, Observer
         } else
         {
             GetHitMotion();
-            Debug.Log($"{_myName} HP: {_myHp}");
+            
         }
     }
 
