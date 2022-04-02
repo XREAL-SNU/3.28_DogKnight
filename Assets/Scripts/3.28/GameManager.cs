@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
+    public GameObject gameRoundText;
+
     // delegate: TurnHandler, FinishHandler 선언
     delegate void TurnHandler(int round, string turn);
     delegate void FinishHandler(bool isFinish);
@@ -25,11 +27,27 @@ public class GameManager : MonoBehaviour, Subject
     TurnHandler _turnHandler;
     FinishHandler _finishHandler;
 
-    void Start()
+    private void Awake()
     {
-      
-        
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            if (this != _instance)
+            {
+                Destroy(this.gameObject);
+            }
+        }
     }
+
+    private Dictionary<string, Character> _characterList = new Dictionary<string, Character>();
+    // 2. UIHandler 선언 (이번에는 round, turn, isFinish 모두 받는다)
+    private delegate void UIHandler(int round, string turn, bool isFinish);
+    private UIHandler _uiHandler;
+
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -41,7 +59,8 @@ public class GameManager : MonoBehaviour, Subject
         if(_whoseTurn == "Enemy")
         {
             _gameRound += 1;
-            Debug.Log($"GameManager: Round {_gameRound}.");
+            gameRoundText.GetComponent<UnityEngine.UI.Text>().text = "GameRound" + _gameRound;
+           
         }
         TurnNotify();
     }
@@ -89,6 +108,7 @@ public class GameManager : MonoBehaviour, Subject
     {
         _turnHandler += new TurnHandler(character.GetComponent<Character>().TurnUpdate);
         _finishHandler += new FinishHandler(character.GetComponent<Character>().FinishUpdate);
+        // 1. _characterList에 추가
     }
 
     // 3. AddUI: SceneUI 옵저버로 등록
