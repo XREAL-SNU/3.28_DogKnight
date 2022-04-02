@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
-    public GameObject gameRoundText;
+    private GameObject gameRoundText;
 
     // delegate: TurnHandler, FinishHandler ¼±¾ð
     delegate void TurnHandler(int round, string turn);
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour, Subject
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
+            gameRoundText = GameObject.FindGameObjectWithTag("GameRoundText");
         }
         else
         {

@@ -166,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a7ac9037ec40a478d654216cce532f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameRoundText: {fileID: 1808466790}
 --- !u!1 &317479924
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,11 +452,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1808466790 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5759088833902990442, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
-  m_PrefabInstance: {fileID: 1880458182485492194}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1880458182485492194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -580,6 +574,26 @@ PrefabInstance:
     - target: {fileID: 3642248109598190827, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.000061035156
+      objectReference: {fileID: 0}
+    - target: {fileID: 5759088833902990442, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+      propertyPath: m_TagString
+      value: GameRoundText
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410598657550620207, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6410598657550620207, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012857572877115976, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7012857572877115976, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
