@@ -74,7 +74,8 @@ public class Enemy : Character
     public override void GetHit(float damage)
     {
         base.GetHit(damage);
-        SetHpOfChracters.
+        SetHpOfChracters.updateEnemyHp(_myHp);
+
         int _randomHealOrNot = Random.Range(0, 10);
 
         if(0 <= _randomHealOrNot && _randomHealOrNot < SPECIAL_HEAL_MAX_VALUE)
