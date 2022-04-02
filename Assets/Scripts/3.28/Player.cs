@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    // 1. _enemy ?? ?? -> GetCharacter? ??? ??
+    // 1. _enemy 변수 삭제 -> GetCharacter로 접근할 거임
     //private Enemy _enemy;
     private float _randomAttack;
 
