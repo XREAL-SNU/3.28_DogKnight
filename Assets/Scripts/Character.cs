@@ -12,6 +12,7 @@ public class Character : MonoBehaviour, Observer//可历滚
 {
     public string _myName;
     public float _myHp;
+    public float _myHpMax;
     public float _myDamage;
 
     protected int _gameRound;
@@ -56,7 +57,17 @@ public class Character : MonoBehaviour, Observer//可历滚
     public virtual void GetHit(float damage)
     {
         _myHp -= damage;
-        
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
+
     }
 
     /// <summary>

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
+   
     private float _randomAttack;
 
     /// <summary>
@@ -18,9 +18,10 @@ public class Player : Character
     {
         base.Init();
 
-        GameManager.Instance().AddCharacter(this);
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
         _myName = "Player";
         _myHp = 100;
+        _myHp = _myHpMax;
         _myDamage = 20;
     }
 
@@ -29,17 +30,6 @@ public class Player : Character
         Init();
     }
 
-    /// <summary>
-    /// 1) _enemy가 할당이 안됐다면,
-    /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
-    /// </summary>
-    private void Start()
-    {
-        if(!_enemy)
-        {
-            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
-        }
-    }
 
     /// <summary>
     /// Attack:
@@ -60,19 +50,16 @@ public class Player : Character
             {
                 if (_randomAttack <= 3)
                 {
-                    
-                    _enemy.GetHit(_myDamage+10);
-                    _myDamage = 20;
-                  
                     SpecialAttackMotion();
                     Debug.Log($"{_myName} Special Attack");
+                    GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage+10);
+                    
                 }
                 else
                 {
-                    _enemy.GetHit(_myDamage);
-                    
-
                     AttackMotion();
+                    GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
+                    
                 }
             }
         }

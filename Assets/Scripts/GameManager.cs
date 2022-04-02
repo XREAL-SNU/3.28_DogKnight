@@ -27,8 +27,6 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
         _instance = this;
     }
 
-    
-
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -42,7 +40,15 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
     TurnHandler _turnHandler ; 
     FinishHandler _finishHandler;
 
-    
+
+    // 1. SceneUI가 GameManager 접근 할 수 있도록 캐릭터 딕셔너리 선언
+    private Dictionary<string, Character> _characterList = new Dictionary<string, Character>();
+
+    // 2. UIHandler 선언 (이번에는 round, turn, isFinish 모두 받는다)
+    private delegate void UIHandler(int round, string turn, bool isFinish);
+    private UIHandler _uiHandler;
+
+
     /// <summary>
     /// 2. RoundNotify:
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
@@ -104,5 +110,22 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
 
         _finishHandler += new FinishHandler(character.FinishUpdate);
         
+    }
+
+    // 3. AddUI: SceneUI 옵저버로 등록
+    public void AddUI(SceneUI ui)
+    {
+
+    }
+
+    /// <summary>
+    /// 4. GetChracter: 넘겨 받은 name의 Character가 있다면 해당 캐릭터 반환
+    /// 1) _characterList 순회하며
+    /// 2) if 문과 ContainsKey(name) 이용
+    /// 3) 없다면 null 반환
+    /// </summary>
+    public Character GetCharacter(string name)
+    {
+        return null;
     }
 }
