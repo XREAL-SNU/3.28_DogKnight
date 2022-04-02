@@ -7,16 +7,16 @@ using XReal.XTown.UI;
 
 public class SceneUI : UIScene
 {
-    // 1. enum ÀÚÀ¯·Ó°Ô ±¸¼º
+    // 1. enum ììœ ë¡­ê²Œ êµ¬ì„±
 
-    // ¼­ºêÁ§Æ®¿¡°Ô ³Ñ°Ü¹ŞÀ» º¯¼öµé
+    // ì„œë¸Œì íŠ¸ì—ê²Œ ë„˜ê²¨ë°›ì„ ë³€ìˆ˜ë“¤
     private bool _isEnd;
     private int _gameRound;
     private string _whoseTurn;
     private Character _player;
     private Character _enemy;
 
-    // Attack ¹öÆ° ÀÌÁß Å¬¸¯ ¹æÁö bool º¯¼ö
+    // Attack ë²„íŠ¼ ì´ì¤‘ í´ë¦­ ë°©ì§€ bool ë³€ìˆ˜
     private bool _isClicked = false;
 
 
@@ -25,14 +25,14 @@ public class SceneUI : UIScene
         Init();
         _player = GameManager.Instance().GetCharacter("Player");
         _enemy = GameManager.Instance().GetCharacter("Enemy");
-        // 1. ¿ÉÀú¹ö µî·Ï: AddUI(this);
-        // 1. Game Ending µÆÀ» ¶§ ¶ß´Â UI ºñÈ°¼ºÈ­
+        // 1. ì˜µì €ë²„ ë“±ë¡: AddUI(this);
+        // 1. Game Ending ëì„ ë•Œ ëœ¨ëŠ” UI ë¹„í™œì„±í™”
     }
 
     /// <summary>
-    /// 2. Init: °¢ ¿ä¼Ò¿¡ ÇÔ¼ö ¹ÙÀÎµù
-    /// 1) Attack Button¿¡ OnClick_AttackButton Bind
-    /// 2) ÀÎº¥Åä¸® Ã¢ ¿©´Â ¹öÆ°¿¡ OnClick_InventoryButton Bind
+    /// 2. Init: ê° ìš”ì†Œì— í•¨ìˆ˜ ë°”ì¸ë”©
+    /// 1) Attack Buttonì— OnClick_AttackButton Bind
+    /// 2) ì¸ë²¤í† ë¦¬ ì°½ ì—¬ëŠ” ë²„íŠ¼ì— OnClick_InventoryButton Bind
     /// </summary>
     public override void Init()
     {
@@ -41,52 +41,52 @@ public class SceneUI : UIScene
 
     /// <summary>
     /// 3. OnClick_AttackButton
-    /// 1) ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà ÁßÀÌ ¾Æ´Ï¶ó¸é(!_isClicked)
-    /// 2) ¼­ºêÁ§Æ®¿¡°Ô RoundNotify·Î ¿ÉÀú¹öµé¿¡°Ô ÀÌº¥Æ® ¹ßÇà
+    /// 1) ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰ ì¤‘ì´ ì•„ë‹ˆë¼ë©´(!_isClicked)
+    /// 2) ì„œë¸Œì íŠ¸ì—ê²Œ RoundNotifyë¡œ ì˜µì €ë²„ë“¤ì—ê²Œ ì´ë²¤íŠ¸ ë°œí–‰
     /// 3) GameRoundText();
-    /// 4) ÇÃ·¹ÀÌ¾î °ø°İ (_player.Attack)
-    /// 5) Àû °ø°İ (_enemy.Attack)
+    /// 4) í”Œë ˆì´ì–´ ê³µê²© (_player.Attack)
+    /// 5) ì  ê³µê²© (_enemy.Attack)
     /// 6) StartCoroutine(GetDamageCoroutine());
     /// </summary>
     public void OnClick_AttackButton(PointerEventData data)
     {
-        
+
     }
 
     /// <summary>
     /// 4. OnClick_InventoryButton: 
-    /// 1) Player ÅÏÀÌ¶ó¸é
-    /// 2) Inventory UIPopup ¶ç¿ì±â (ShowPopupUI)
+    /// 1) Player í„´ì´ë¼ë©´
+    /// 2) Inventory UIPopup ë„ìš°ê¸° (ShowPopupUI)
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        
+
     }
 
-    // 5. GameRoundText: GameRound ¶ç¿ì´Â UIÀÇ text ¾÷µ¥ÀÌÆ®
+    // 5. GameRoundText: GameRound ë„ìš°ëŠ” UIì˜ text ì—…ë°ì´íŠ¸
     public void GameRoundText()
     {
-        
+
     }
 
-    // 6. CharacterHp: CharacterHp UI ¾÷µ¥ÀÌÆ® -> fillAmount °ª ÀÌ¿ë
+    // 6. CharacterHp: CharacterHp UI ì—…ë°ì´íŠ¸ -> fillAmount ê°’ ì´ìš©
     public void CharacterHp()
     {
-        
+
     }
 
     /// <summary>
     /// 7. GameEnd:
-    /// 1) °ÔÀÓÀÌ ³¡³µ´Ù¸é,
-    /// 2) GameEnd UI È°¼ºÈ­
-    /// 3) ÀÌ±ä Ä³¸¯ÅÍ ÀÌ¸§ Text ¾÷µ¥ÀÌÆ®
+    /// 1) ê²Œì„ì´ ëë‚¬ë‹¤ë©´,
+    /// 2) GameEnd UI í™œì„±í™”
+    /// 3) ì´ê¸´ ìºë¦­í„° ì´ë¦„ Text ì—…ë°ì´íŠ¸
     /// </summary>
     public void GameEnd()
     {
-        
+
     }
 
-    // 7. GetDamageCoroutine: °¢ Ä³¸¯ÅÍµéÀÇ °ø°İ/ÇÇ°İ ¾Ö´Ï¸ŞÀÌ¼Ç¿¡ ¸ÂÃß¾î UI Ç¥ÇöÀÌ ÀÚ¿¬½º·¯¿ï ¼ö ÀÖµµ·Ï
+    // 7. GetDamageCoroutine: ê° ìºë¦­í„°ë“¤ì˜ ê³µê²©/í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ì— ë§ì¶”ì–´ UI í‘œí˜„ì´ ìì—°ìŠ¤ëŸ¬ìš¸ ìˆ˜ ìˆë„ë¡
     IEnumerator GetDamageCoroutine()
     {
         yield return new WaitForSeconds(1.2f);
@@ -94,12 +94,12 @@ public class SceneUI : UIScene
         yield return new WaitForSeconds(1.2f);
         GameEnd();
         CharacterHp();
-        // 7. ´Ù½Ã ¹öÆ° ´­¸± ¼ö ÀÖµµ·Ï _isClicked Á¶Àı
+        // 7. ë‹¤ì‹œ ë²„íŠ¼ ëˆŒë¦´ ìˆ˜ ìˆë„ë¡ _isClicked ì¡°ì ˆ
     }
 
-    // 8. UIUpdate: ¼­ºêÁ§Æ® µ¨¸®°ÔÀÌÆ®¿¡ µî·ÏµÉ ¿ÉÀú¹ö ¾÷µ¥ÀÌÆ® ÇÔ¼ö -> º¯¼ö ¾÷µ¥ÀÌÆ®
+    // 8. UIUpdate: ì„œë¸Œì íŠ¸ ë¸ë¦¬ê²Œì´íŠ¸ì— ë“±ë¡ë  ì˜µì €ë²„ ì—…ë°ì´íŠ¸ í•¨ìˆ˜ -> ë³€ìˆ˜ ì—…ë°ì´íŠ¸
     public void UIUpdate(int round, string turn, bool isFinish)
     {
-        
+
     }
 }

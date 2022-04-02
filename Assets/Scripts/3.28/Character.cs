@@ -12,7 +12,7 @@ public class Character : MonoBehaviour, Observer
 {
     public string _myName;
     public float _myHp;
-    // 1. Hp UI bar ������ ���� HpMax �� �߰�
+    // 1. Hp UI bar 구현을 위해 HpMax 값 추가
     public float _myHpMax;
     public float _myDamage;
 
@@ -31,20 +31,20 @@ public class Character : MonoBehaviour, Observer
         this._isFinished = isFinish;
     }
 
-    
+
     public virtual void Attack()
     {
-        if(!_isFinished && _myName == _whoseTurn)
+        if (!_isFinished && _myName == _whoseTurn)
         {
             AttackMotion();
-          
+
         }
     }
 
     public virtual void GetHit(float damage)
     {
         _myHp -= damage;
-        if(_myHp <= 0)
+        if (_myHp <= 0)
         {
             DeadMotion();
             GameManager.Instance().EndNotify();

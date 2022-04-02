@@ -8,7 +8,7 @@ using System;
 
 public class ItemGroup : UIBase
 {
-    // 1. enum ÀÚÀ¯·Ó°Ô ±¸¼º
+    // 1. enum ììœ ë¡­ê²Œ êµ¬ì„±
 
     private string _itemGroupName;
 
@@ -17,17 +17,17 @@ public class ItemGroup : UIBase
         Init();
     }
 
-    // 2. ÅØ½ºÆ® UI¿¡ _itemGroupNameÀ¸·Î update
-    // 3. ÇöÀç ÇÒ´çµÈ Å¸ÀÔ¿¡ ÇØ´çÇÏ´Â ¾ÆÀÌÅÛµéÀ»(Item) subtiemÀ¸·Î »ı¼ºÇÒ °Í
-    // 4. »ı¼ºÇÒ ¶§, ItemÀÇ SetInfo¿¡ _itemName ÇÒ´çÇØ¼­ Á¤º¸ ³Ñ°ÜÁÙ °Í
+    // 2. í…ìŠ¤íŠ¸ UIì— _itemGroupNameìœ¼ë¡œ update
+    // 3. í˜„ì¬ í• ë‹¹ëœ íƒ€ì…ì— í•´ë‹¹í•˜ëŠ” ì•„ì´í…œë“¤ì„(Item) subtiemìœ¼ë¡œ ìƒì„±í•  ê²ƒ
+    // 4. ìƒì„±í•  ë•Œ, Itemì˜ SetInfoì— _itemName í• ë‹¹í•´ì„œ ì •ë³´ ë„˜ê²¨ì¤„ ê²ƒ
     public override void Init()
     {
 
     }
 
-    // 5. SetInfo: itemtypeÀ» _itemGroupName¿¡ ÇÒ´ç
+    // 5. SetInfo: itemtypeì„ _itemGroupNameì— í• ë‹¹
     public void SetInfo(string itemtype)
     {
-        
+
     }
 }

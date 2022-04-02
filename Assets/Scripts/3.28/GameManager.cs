@@ -30,14 +30,14 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
-    // 1. SceneUI°¡ GameManager Á¢±Ù ÇÒ ¼ö ÀÖµµ·Ï Ä³¸¯ÅÍ µñ¼Å³Ê¸® ¼±¾ğ
+    // 1. SceneUIê°€ GameManager ì ‘ê·¼ í•  ìˆ˜ ìˆë„ë¡ ìºë¦­í„° ë”•ì…”ë„ˆë¦¬ ì„ ì–¸
     private Dictionary<string, Character> _characterList = new Dictionary<string, Character>();
 
     private delegate void TurnHandler(int round, string turn);
     private TurnHandler _turnHandler;
     private delegate void FinishHandler(bool isFinish);
     private FinishHandler _finishHandler;
-    // 2. UIHandler ¼±¾ğ (ÀÌ¹ø¿¡´Â round, turn, isFinish ¸ğµÎ ¹Ş´Â´Ù)
+    // 2. UIHandler ì„ ì–¸ (ì´ë²ˆì—ëŠ” round, turn, isFinish ëª¨ë‘ ë°›ëŠ”ë‹¤)
     private delegate void UIHandler(int round, string turn, bool isFinish);
     private UIHandler _uiHandler;
 
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour, Subject
     {
         if (!_isEnd)
         {
-            if(_whoseTurn == "Enemy")
+            if (_whoseTurn == "Enemy")
             {
                 _gameRound++;
                 Debug.Log($"GameManager: Round {_gameRound}.");
@@ -59,14 +59,14 @@ public class GameManager : MonoBehaviour, Subject
         _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy";
         Debug.Log($"GameManager: {_whoseTurn} turn.");
         _turnHandler(_gameRound, _whoseTurn);
-        // 2. _uiHandler È£Ãâ
+        // 2. _uiHandler í˜¸ì¶œ
     }
 
     public void EndNotify()
     {
         _isEnd = true;
         _finishHandler(_isEnd);
-        // 2. _uiHandler È£Ãâ
+        // 2. _uiHandler í˜¸ì¶œ
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
     }
@@ -75,20 +75,20 @@ public class GameManager : MonoBehaviour, Subject
     {
         _turnHandler += new TurnHandler(character.TurnUpdate);
         _finishHandler += new FinishHandler(character.FinishUpdate);
-        // 1. _characterList¿¡ Ãß°¡
+        // 1. _characterListì— ì¶”ê°€
     }
 
-    // 3. AddUI: SceneUI ¿ÉÀú¹ö·Î µî·Ï
+    // 3. AddUI: SceneUI ì˜µì €ë²„ë¡œ ë“±ë¡
     public void AddUI(SceneUI ui)
     {
-    
+
     }
 
     /// <summary>
-    /// 4. GetChracter: ³Ñ°Ü ¹ŞÀº nameÀÇ Character°¡ ÀÖ´Ù¸é ÇØ´ç Ä³¸¯ÅÍ ¹İÈ¯
-    /// 1) _characterList ¼øÈ¸ÇÏ¸ç
-    /// 2) if ¹®°ú ContainsKey(name) ÀÌ¿ë
-    /// 3) ¾ø´Ù¸é null ¹İÈ¯
+    /// 4. GetChracter: ë„˜ê²¨ ë°›ì€ nameì˜ Characterê°€ ìˆë‹¤ë©´ í•´ë‹¹ ìºë¦­í„° ë°˜í™˜
+    /// 1) _characterList ìˆœíšŒí•˜ë©°
+    /// 2) if ë¬¸ê³¼ ContainsKey(name) ì´ìš©
+    /// 3) ì—†ë‹¤ë©´ null ë°˜í™˜
     /// </summary>
     public Character GetCharacter(string name)
     {

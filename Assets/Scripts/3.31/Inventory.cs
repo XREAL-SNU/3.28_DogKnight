@@ -8,22 +8,22 @@ using XReal.XTown.UI;
 
 public class Inventory : UIPopup
 {
-    // 1. enum ÀÚÀ¯·Ó°Ô ±¸¼º
+    // 1. enum ììœ ë¡­ê²Œ êµ¬ì„±
 
     private void Start()
     {
         Init();
     }
 
-    // 2. Popup UI ´İ´Â ¹öÆ°¿¡ OnClick_Close ¹ÙÀÎµå
-    // 3. ItemListÀÇ ItemPropertyType Âü°íÇØ¼­ °¢ÀÚÀÇ ¹æ½ÄÀ¸·Î ItemGroup subitem ¸¸µé¾î º¼ °Í
-    // 4. »ı¼ºÇÒ ¶§, ItemGroupÀÇ SetInfo¿¡ ItemPropertyType ÇÒ´çÇØ¼­ Á¤º¸ ³Ñ°ÜÁÙ °Í
+    // 2. Popup UI ë‹«ëŠ” ë²„íŠ¼ì— OnClick_Close ë°”ì¸ë“œ
+    // 3. ItemListì˜ ItemPropertyType ì°¸ê³ í•´ì„œ ê°ìì˜ ë°©ì‹ìœ¼ë¡œ ItemGroup subitem ë§Œë“¤ì–´ ë³¼ ê²ƒ
+    // 4. ìƒì„±í•  ë•Œ, ItemGroupì˜ SetInfoì— ItemPropertyType í• ë‹¹í•´ì„œ ì •ë³´ ë„˜ê²¨ì¤„ ê²ƒ
     public override void Init()
     {
         base.Init();
     }
 
-    // 5. OnClick_Close: Popup ´İ±â
+    // 5. OnClick_Close: Popup ë‹«ê¸°
     public void OnClick_Close(PointerEventData data)
     {
 

@@ -13,14 +13,14 @@ public class ItemProperty
     public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "FireSpearItem", 3, 10f);
     public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealStoneItem", 4, 20f);
 
-    
+
     public static ItemProperty[] ItemProperties = new ItemProperty[]
     {
         DamageItem_Flame, DamageItem_FireSpear,
         HealItem_HealStone
     };
 
-    // ÀÌ¸§À¸·Î ItemProperties ¾È¿¡ ÇØ´ç ÀÌ¸§ÀÇ ItemPropertyÀÌ ÀÖ´ÂÁö ¾ø´ÂÁö ÀÖÀ¸¸é ÀÎ½ºÅÏ½º ¹İÈ¯ 
+    // ì´ë¦„ìœ¼ë¡œ ItemProperties ì•ˆì— í•´ë‹¹ ì´ë¦„ì˜ ItemPropertyì´ ìˆëŠ”ì§€ ì—†ëŠ”ì§€ ìˆìœ¼ë©´ ì¸ìŠ¤í„´ìŠ¤ ë°˜í™˜ 
     public static ItemProperty GetItemProperty(string name)
     {
         foreach (ItemProperty item in ItemProperties)
@@ -41,8 +41,8 @@ public class ItemProperty
         this.ItemAction = action;
     }
 
-    public string PropertyType; // ¾ÆÀÌÅÛ Á¾·ù
-    public string ItemName; // ¾ÆÀÌÅÛ ÀÌ¸§
-    public int ItemNumber; // ¾ÆÀÌÅÛ °³¼ö
-    public float ItemAction; // ¾ÆÀÌÅÛ Å¬¸¯½Ã È°¿ëÇÒ º¯¼ö
+    public string PropertyType; // ì•„ì´í…œ ì¢…ë¥˜
+    public string ItemName; // ì•„ì´í…œ ì´ë¦„
+    public int ItemNumber; // ì•„ì´í…œ ê°œìˆ˜
+    public float ItemAction; // ì•„ì´í…œ í´ë¦­ì‹œ í™œìš©í•  ë³€ìˆ˜
 }
