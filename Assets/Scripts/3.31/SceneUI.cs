@@ -18,7 +18,8 @@ public class SceneUI : UIScene
     private string _whoseTurn;
     private Character _player;
     private Character _enemy;
-    private GameObject attackButton;
+    private Image attackBtnImg;
+    private Image invenBtnImg;
     // Attack 버튼 이중 클릭 방지 bool 변수
     private bool _isClicked = false;
 
@@ -48,9 +49,13 @@ public class SceneUI : UIScene
         base.Init();
 
         Bind<GameObject>(typeof(UIComponents));
-        attackButton = GetUIComponent<GameObject>((int)UIComponents.AttackButton);
+        GameObject attackButton = GetUIComponent<GameObject>((int)UIComponents.AttackButton);
         attackButton.BindEvent(OnClick_AttackButton);
-        GetObject((int)UIComponents.InventoryButton).BindEvent(OnClick_InventoryButton);
+        attackBtnImg = attackButton.GetComponent<Image>();
+
+        GameObject inventoryButton = GetUIComponent<GameObject>((int)UIComponents.InventoryButton);
+        inventoryButton.BindEvent(OnClick_InventoryButton);
+        invenBtnImg = inventoryButton.GetComponent<Image>();
     }
 
     /// <summary>
@@ -67,7 +72,8 @@ public class SceneUI : UIScene
         if (!_isClicked)
         {
             _isClicked = true;
-            attackButton.GetComponent<SpriteRenderer>().sprite = btnBlocked;
+            attackBtnImg.sprite = btnBlocked;
+            attackBtnImg.raycastTarget = false;
             GameManager.Instance().RoundNotify();
             GameRoundText();
             _player.Attack();
@@ -131,10 +137,12 @@ public class SceneUI : UIScene
         CharacterHp();
         yield return new WaitForSeconds(1.2f);
         GameEnd();
-        CharacterHp();
+
         // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
         _isClicked = false;
-        attackButton.GetComponent<SpriteRenderer>().sprite = btnNonBlocked;
+
+        attackBtnImg.sprite = btnNonBlocked;
+        attackBtnImg.raycastTarget = true;
     }
 
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
@@ -143,5 +151,17 @@ public class SceneUI : UIScene
         _gameRound = round;
         _whoseTurn = turn;
         _isEnd = isFinish;
+
+        if (_whoseTurn == "Enemy")
+        {
+
+            invenBtnImg.sprite = btnNonBlocked;
+            invenBtnImg.raycastTarget = true;
+        }
+        else
+        {
+            invenBtnImg.sprite = btnBlocked;
+            invenBtnImg.raycastTarget = false;
+        }
     }
 }
