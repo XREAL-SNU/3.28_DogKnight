@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour, Subject
 {
@@ -18,7 +19,8 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
-    private GameObject gameRoundText;
+    public Text gameRoundText;
+    public Button attackButton;
 
     // delegate: TurnHandler, FinishHandler ¼±¾ð
     delegate void TurnHandler(int round, string turn);
@@ -33,7 +35,6 @@ public class GameManager : MonoBehaviour, Subject
         {
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
-            gameRoundText = GameObject.FindGameObjectWithTag("GameRoundText");
         }
         else
         {
@@ -57,15 +58,29 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-        if(_whoseTurn == "Enemy")
-        {
-            _gameRound += 1;
-            gameRoundText.GetComponent<UnityEngine.UI.Text>().text = "GameRound" + _gameRound;
-           
-        }
-        TurnNotify();
+        StartCoroutine("roundNotify");
     }
 
+    private IEnumerator roundNotify()
+    {
+        attackButton.enabled = false;
+        attackButton.interactable = false;
+        Debug.Log("false");
+      
+
+        if (_whoseTurn == "Enemy")
+        {
+            _gameRound += 1;
+            gameRoundText.text = "GameRound" + _gameRound;
+
+        }
+        TurnNotify();
+
+        yield return new WaitForSeconds(2);
+        attackButton.enabled = true;
+        attackButton.interactable = true;
+     
+    }
     /// <summary>
     /// 3. TurnNotify:
     /// 1) whoseTurn update
@@ -83,7 +98,7 @@ public class GameManager : MonoBehaviour, Subject
         }
         
         _turnHandler(_gameRound, _whoseTurn);
-        Debug.Log($"GameManager: {_whoseTurn} turn.");
+      
 
         
     }
