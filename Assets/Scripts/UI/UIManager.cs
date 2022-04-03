@@ -109,7 +109,7 @@ namespace XReal.XTown.UI
         public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UIBase
         {
             if (string.IsNullOrEmpty(name)) name = typeof(T).Name;
-
+            Debug.Log(UIPathPrefix + $"SubItem/{name}");
             GameObject go = Instantiate(Resources.Load<GameObject>(UIPathPrefix + $"SubItem/{name}"));
 
             if (parent is null)

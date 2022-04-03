@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour, Subject
 
     private IEnumerator roundNotify()
     {
-        attackButton.enabled = false;
+        
         attackButton.interactable = false;
         Debug.Log("false");
       
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour, Subject
         TurnNotify();
 
         yield return new WaitForSeconds(2);
-        attackButton.enabled = true;
+        
         attackButton.interactable = true;
      
     }

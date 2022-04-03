@@ -49,6 +49,6 @@ public class Item : UIBase
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        _itemName = itemName;
     }
 }

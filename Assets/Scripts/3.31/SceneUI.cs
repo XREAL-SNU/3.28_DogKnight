@@ -8,6 +8,10 @@ using XReal.XTown.UI;
 public class SceneUI : UIScene
 {
     // 1. enum 자유롭게 구성
+    enum GameObjects
+    {
+        InventoryButton
+    }
 
     // 서브젝트에게 넘겨받을 변수들
     private bool _isEnd;
@@ -37,6 +41,31 @@ public class SceneUI : UIScene
     public override void Init()
     {
         base.Init();
+
+        Bind<GameObject>(typeof(GameObjects));
+
+        GameObject inventoryButton = GetUIComponent<GameObject>((int)GameObjects.InventoryButton);
+        inventoryButton.BindEvent(OnClick_Inventory);
+        inventoryButton.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
+
+
+    }
+
+    public void OnClick_Inventory(PointerEventData data)
+    {
+        Debug.Log("Click InventoryButton");
+        UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
+    }
+
+    public void OnClick_Minimap(PointerEventData data)
+    {
+        Debug.Log("Click MinimapButton");
+        UIManager.UI.ShowPopupUI<UIPopup>("Minimap");
+    }
+
+    public void OnButtonEnter(PointerEventData data)
+    {
+        Debug.Log(data.pointerEnter.name + " Enter!");
     }
 
     /// <summary>
