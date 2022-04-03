@@ -10,6 +10,7 @@ public enum AnimatorParameters
 
 public class Character : MonoBehaviour, Observer
 {
+ 
     public string _myName;
     public float _myHp;
     // 1. Hp UI bar ������ ���� HpMax �� �߰�
@@ -25,7 +26,8 @@ public class Character : MonoBehaviour, Observer
     {
         _gameRound = round;
         _whoseTurn = turn;
-        Attack();
+
+        StartCoroutine("Attack");
     }
 
     public void FinishUpdate(bool isFinish)
@@ -34,9 +36,9 @@ public class Character : MonoBehaviour, Observer
     }
 
     
-    public virtual void Attack()
+    public virtual IEnumerator Attack()
     {
-       
+        yield return null;
     }
 
     public virtual void GetHit(float damage)

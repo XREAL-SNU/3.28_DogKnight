@@ -47,11 +47,10 @@ public class Player : Character
     ///    + Debug.Log($"{_myName} Special Attack!"); 추가
     /// 5) 70% 확률로 하는 일반 공격은 Character에 써있는 주석과 동일
     /// </summary>
-    public override void Attack()
+    public override IEnumerator Attack()
     {
         float _damage = 0;
 
-        Debug.Log("Attack");
         if (!_isFinished && _myName == _whoseTurn)
         {
             int _randomAttack = Random.Range(0, 10);
@@ -59,20 +58,23 @@ public class Player : Character
             {
                 SpecialAttackMotion();
                 _damage = _myDamage + SPECIAL_ATTACK_ADDITIOANL_VALUE;
-                Debug.Log($"{_myName} Special Attack!");
             } else
             {
                 AttackMotion();
                 _damage = _myDamage;
             }
 
+            yield return null;
+
             _enemy.GetHit(_damage);
+
         }
     }
 
     public override void GetHit(float damage)
     {
         base.GetHit(damage);
+        SetHpOfChracters.updatePlayerHp(_myHp);
 
     }
 }
