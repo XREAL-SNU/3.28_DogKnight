@@ -8,7 +8,10 @@ using XReal.XTown.UI;
 public class SceneUI : UIScene
 {
     // 1. enum 자유롭게 구성
-
+    public enum UIComponents
+    {
+        GameOverPanel, AttackButton
+    }
     // 서브젝트에게 넘겨받을 변수들
     private bool _isEnd;
     private int _gameRound;
@@ -26,7 +29,9 @@ public class SceneUI : UIScene
         _player = GameManager.Instance().GetCharacter("Player");
         _enemy = GameManager.Instance().GetCharacter("Enemy");
         // 1. 옵저버 등록: AddUI(this);
+        GameManager.Instance().AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
+        this.gameObject.transform.FindChild("GameOverPanel").gameObject.SetActive(false);
     }
 
     /// <summary>
