@@ -10,7 +10,12 @@ public class SceneUI : UIScene
     // 1. enum 자유롭게 구성
     public enum UIComponents
     {
-        GameOverPanel, AttackButton, InventoryButton, GameRound, PlayerHp, EnemyHp
+        GameEndPanel,
+        AttackButton,
+        InventoryButton,
+        GameRound,
+        PlayerHp,
+        EnemyHp
     }
     // 서브젝트에게 넘겨받을 변수들
     private bool _isEnd;
@@ -35,7 +40,7 @@ public class SceneUI : UIScene
         // 1. 옵저버 등록: AddUI(this);
         GameManager.Instance().AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
-        this.gameObject.transform.Find(UIComponents.GameOverPanel.ToString())
+        this.gameObject.transform.Find(UIComponents.GameEndPanel.ToString())
             .gameObject.SetActive(false);
     }
 
@@ -90,6 +95,7 @@ public class SceneUI : UIScene
     public void OnClick_InventoryButton(PointerEventData data)
     {
         Debug.Log("Inventory clicked");
+
         UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
     }
 
@@ -126,7 +132,9 @@ public class SceneUI : UIScene
     {
         if (_isEnd)
         {
-
+            GameObject gameEnd = this.gameObject.transform.Find(UIComponents.GameEndPanel.ToString()).gameObject;
+            gameEnd.SetActive(true);
+            gameEnd.GetComponentInChildren<Text>().text = _whoseTurn + " win!";
         }
     }
 

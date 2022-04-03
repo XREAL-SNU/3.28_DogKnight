@@ -422,6 +422,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2104497451644074818, guid: 09aa2a88b8f724d0d83e9c727c875cb6, type: 3}
+      propertyPath: m_Text
+      value: GAME END
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104497451965667550, guid: 09aa2a88b8f724d0d83e9c727c875cb6, type: 3}
+      propertyPath: m_Name
+      value: GameEndPanel
+      objectReference: {fileID: 0}
     - target: {fileID: 2104497452643984607, guid: 09aa2a88b8f724d0d83e9c727c875cb6, type: 3}
       propertyPath: m_Name
       value: SceneUI
