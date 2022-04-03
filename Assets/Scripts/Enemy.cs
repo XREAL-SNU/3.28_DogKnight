@@ -7,19 +7,7 @@ public class Enemy : Character
     private Player _player;
     private float _randomHeal;
 
-    //GameManager GM;
-    //public Enemy(GameManager GM)
-    //{
-    //    this.GM = GM;
-    //}
-
-    /// <summary>
-    /// 1. Init: 초기화 기능
-    /// 1) Subject에 Observer로 등록
-    /// 2) _myName, _myHp, _myDamage 초기화
-    /// 3) _myName은 무조건 "Enemy"로 할 것
-    /// 4) _myHp, _myDamage는 100, 10으로 각각 초기화 (권장 사항)
-    /// </summary>
+    public bool isHeal;
     protected override void Init()
     {
         base.Init();
@@ -49,11 +37,7 @@ public class Enemy : Character
 
     }
 
-    /// <summary>
-    /// Attack:
-    /// 1) _gameRound가 지날때마다 데미지 3씩 증가
-    /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가
-    /// </summary>
+
     public override void Attack()
     {
 
@@ -67,23 +51,24 @@ public class Enemy : Character
         if (_gameRound >= 10) _myDamage = _player._myHp;
     }
 
-    /// <summary>
-    /// GetHit:
-    /// 1) Player의 _randomAttack과 동일한 기능
-    /// 2) 30%의 확률로 피격시 10 체력 증가
-    ///   + Debug.Log($"{_myName} Heal!"); 추가
-    /// </summary>
+ 
     public override void GetHit(float damage)
     {
         base.GetHit(damage);
         _randomHeal = Random.Range(0, 10);
         if (_randomHeal % 3 == 0 && !_isFinished)
         {
-            _myHp += 10;
-            Debug.Log($"{_myName} Heal!");
-            Debug.Log($"{_myName}의 회복하고 난 후의 HP:{_myHp}");
+            isHeal = true;
+            StartCoroutine(GetHeal()); 
         }
   
 
+    }
+    IEnumerator GetHeal()
+    {
+        yield return new WaitForSeconds(2.3f);
+        _myHp += 10;
+        yield return new WaitForSeconds(0.6f);
+        isHeal = false;
     }
 }
