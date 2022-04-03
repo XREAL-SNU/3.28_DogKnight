@@ -16,12 +16,22 @@ public class Enemy : Character
     /// </summary>
     protected override void Init()
     {
+
+
         base.Init();
+
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
     {
         Init();
+
+
+
+
     }
 
     /// <summary>
@@ -30,7 +40,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
 
     /// <summary>
@@ -40,6 +53,36 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        base.Attack();
+
+        //if (_isFinished == false && _myName == _whoseTurn)
+        if(_myName == _whoseTurn && !_isFinished)
+        
+        {
+
+            AttackMotion();
+            _player.GetHit(_myDamage);
+
+            //¿Ãµø
+            _myDamage += 3;
+
+
+        }
+
+        /*
+        while (_gameRound__changed < 10)
+        {
+           // _myDamage += 3;
+        }
+        if (_gameRound__changed >= 10)
+        {
+            _myDamage = 100;
+        }*/
+
+        if(_gameRound >= 10)
+        {
+            _myDamage = 1000;
+        }
 
     }
 
@@ -51,7 +94,15 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
 
+        _randomHeal = Random.Range(0, 10);
+        if (_randomHeal <3 && !_isFinished)
+        {
+            _myHp += 10;
+            Debug.Log($"{_myName} Heal!");
+
+        }
     }
 }
 

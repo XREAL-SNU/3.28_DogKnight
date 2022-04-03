@@ -6,6 +6,41 @@ public class GameManager : MonoBehaviour, Subject
 {
     // 1. Singleton Pattern: Instance() method
     private static GameManager _instance;
+    public static GameManager Instance()
+    {
+        if (_instance == null)
+        {
+            _instance = FindObjectOfType<GameManager>();
+
+            if (_instance == null)
+            {
+                GameObject container = new GameObject("GameManager");
+                _instance = container.AddComponent<GameManager>();
+            }
+        }
+
+        return _instance;
+    }
+
+
+    /*
+     Character player;
+     Character enemy;
+      
+     void Start()
+     {
+         if (_instance != null)
+         {
+             if (_instance != this)
+             {
+                 Destroy(this.gameObject);
+             }
+         }
+
+     enemy = GameObject.FindObjectOfType<Enemy>();
+     player = GameObject.FindObjectOfType<Player>();
+     }*/
+
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
@@ -13,6 +48,13 @@ public class GameManager : MonoBehaviour, Subject
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
+    public delegate void TurnHandler(int round, string turn);
+    TurnHandler _turnHandler;
+    public delegate void FinishHandler(bool isFiish);
+    FinishHandler _finishHandler;
+
+
+
 
     /// <summary>
     /// 2. RoundNotify:
@@ -21,8 +63,16 @@ public class GameManager : MonoBehaviour, Subject
     /// 2) TurnNotify() 호출
     /// </summary>
     public void RoundNotify()
-    {
+    {   if (_isEnd) return; //??????
 
+
+        if (_whoseTurn == "Enemy")
+        {
+            _gameRound++;
+            Debug.Log($"GameManager: Round {_gameRound}.");
+
+        }
+        TurnNotify();
     }
 
     /// <summary>
@@ -33,7 +83,18 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void TurnNotify()
     {
+        if (_whoseTurn == "Enemy")
+        {
+            _whoseTurn = "Player";
+        }
 
+        else if (_whoseTurn == "Player")
+        {
+            _whoseTurn = "Enemy";
+        }
+
+        Debug.Log($"GameManager: {_whoseTurn} turn.");
+        _turnHandler(_gameRound, _whoseTurn);
     }
 
     /// <summary>
@@ -45,12 +106,17 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
-
+        _isEnd = true;
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _finishHandler(true); //////?????isEnd아닌가??
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
     public void AddCharacter(Character character)
     {
-
+        _turnHandler += new TurnHandler(character.TurnUpdate);
+        _finishHandler += new FinishHandler(character.FinishUpdate);
     }
 }
+
