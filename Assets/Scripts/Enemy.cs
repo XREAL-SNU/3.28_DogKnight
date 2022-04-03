@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Enemy : Character
 {
-    private Player _player;
+    //private Player _player;
     private float _randomHeal;
 
     /// <summary>
@@ -32,13 +32,13 @@ public class Enemy : Character
     /// 1) _player가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _player 할당
     /// </summary>
-    private void Start()
+    /*private void Start()
     {
         if(_player == null)
         {
             _player = GameObject.FindWithTag("Player").GetComponent<Player>();
         }
-    }
+    }*/
 
     /// <summary>
     /// Attack:
@@ -54,7 +54,7 @@ public class Enemy : Character
                 _myDamage = 100;
             }
             AttackMotion();
-            _player.GetHit(_myDamage);
+            GameManager.Instance().GetCharacter("Player").GetHit(_myDamage);
             _myDamage += 3;
         }
     }
@@ -67,16 +67,22 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-        _randomHeal = Random.Range(0, 10);
-        if(_randomHeal > 6)
+        base.GetHit(damage);
+        if(_myHp > 0)
         {
-            Debug.Log($"{_myName} Heal!");
-            base.GetHit(damage - 10);
+            _randomHeal = Random.Range(0, 10);
+            if(_randomHeal < 5)
+            {
+                StartCoroutine(HealCoroutine());
+            }
         }
-        else
-        {
-            base.GetHit(damage);
-        }
+    }
+    
+    IEnumerator HealCoroutine()
+    {
+        yield return new WaitForSeconds(1.3f);
+        _myHp += 10;
+        Debug.Log($"{_myName} Heal!");
     }
 }
 

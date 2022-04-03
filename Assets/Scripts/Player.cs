@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
+    //private Enemy _enemy;
+    
     private float _randomAttack;
 
     /// <summary>
@@ -17,10 +18,11 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance().AddCharacter(this);
         _myName = "Player";
-        _myHp = 100;
+        _myHpMax = 100;
+        _myHp = _myHpMax;
         _myDamage = 20;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
     }
 
     private void Awake()
@@ -32,13 +34,14 @@ public class Player : Character
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
     /// </summary>
-    private void Start()
+    
+    /*private void Start()
     {
         if(_enemy == null)
         {
             _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
         }
-    }
+    }*/
 
     /// <summary>
     /// Attack:
@@ -57,15 +60,15 @@ public class Player : Character
             _randomAttack = Random.Range(0, 10);
             if (_randomAttack > 6)
             {
-                this.SpecialAttackMotion();
+                SpecialAttackMotion();
                 Debug.Log($"{_myName} Special Attack!");
-                _enemy.GetHit(_myDamage + 10);
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage + 10);
             }
             else
             {
-                this.AttackMotion();
+                AttackMotion();
                 Debug.Log($"{_myName} Attack!");
-                _enemy.GetHit(_myDamage);
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
             }
         }            
     }

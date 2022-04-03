@@ -20,11 +20,18 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
+    //SceneUI가 GameManager에 접근할 수 있도록 캐릭터 딕셔너리 선언
+    private Dictionary<string, Character> _characterList = new Dictionary<string, Character>();
+
     // delegate: TurnHandler, FinishHandler 선언
     delegate void TurnHandler(int round, string turn);
     delegate void FinishHandler(bool isFinish);
     TurnHandler _turnHandler;
     FinishHandler _finishHandler;
+
+    //delegate: UIHandler 선언
+    delegate void UIHandler(int round, string turn, bool isFinish);
+    UIHandler _uiHandler;
 
     /// <summary>
     /// 2. RoundNotify:
@@ -34,7 +41,7 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void RoundNotify()
     {
-        if(_whoseTurn == "Enemy" && !_isEnd)
+        if(!_isEnd && _whoseTurn == "Enemy")
         {
             _gameRound += 1;
             Debug.Log($"GameManager: Round {_gameRound}.");
@@ -52,16 +59,10 @@ public class GameManager : MonoBehaviour, Subject
     {
         if(!_isEnd)
         {
-            if (_whoseTurn == "Enemy")
-            {
-                _whoseTurn = "Player";
-            }
-            else
-            {
-                _whoseTurn = "Enemy";
-            }
+            _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy";
             Debug.Log($"GameManager: {_whoseTurn} turn.");
             _turnHandler(_gameRound, _whoseTurn);
+            _uiHandler(_gameRound, _whoseTurn, _isEnd);
         }
     }
 
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour, Subject
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
         _finishHandler(_isEnd);
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
@@ -85,5 +87,19 @@ public class GameManager : MonoBehaviour, Subject
     {
         _turnHandler += character.TurnUpdate;
         _finishHandler += character.FinishUpdate;
+        _characterList.Add(character._myName, character);
+    }
+
+    public void AddUI(SceneUI ui)
+    {
+        _uiHandler += ui.UIUpdate;
+    }
+
+    public Character GetCharacter(string name)
+    {
+        if (_characterList.ContainsKey(name))
+            return _characterList[name];
+        else
+            return null;
     }
 }
