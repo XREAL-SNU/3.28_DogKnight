@@ -10,7 +10,7 @@ public class SceneUI : UIScene
     // 1. enum 자유롭게 구성
     public enum UIComponents
     {
-        GameOverPanel, AttackButton, InventoryButton
+        GameOverPanel, AttackButton, InventoryButton, GameRound, PlayerHp, EnemyHp
     }
     // 서브젝트에게 넘겨받을 변수들
     private bool _isEnd;
@@ -18,9 +18,12 @@ public class SceneUI : UIScene
     private string _whoseTurn;
     private Character _player;
     private Character _enemy;
-
+    private GameObject attackButton;
     // Attack 버튼 이중 클릭 방지 bool 변수
     private bool _isClicked = false;
+
+    public Sprite btnNonBlocked;
+    public Sprite btnBlocked;
 
 
     private void Start()
@@ -45,7 +48,7 @@ public class SceneUI : UIScene
         base.Init();
 
         Bind<GameObject>(typeof(UIComponents));
-        GameObject attackButton = GetUIComponent<GameObject>((int)UIComponents.AttackButton);
+        attackButton = GetUIComponent<GameObject>((int)UIComponents.AttackButton);
         attackButton.BindEvent(OnClick_AttackButton);
         GetObject((int)UIComponents.InventoryButton).BindEvent(OnClick_InventoryButton);
     }
@@ -61,7 +64,16 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_AttackButton(PointerEventData data)
     {
-
+        if (!_isClicked)
+        {
+            _isClicked = true;
+            attackButton.GetComponent<SpriteRenderer>().sprite = btnBlocked;
+            GameManager.Instance().RoundNotify();
+            GameRoundText();
+            _player.Attack();
+            _enemy.Attack();
+            StartCoroutine(GetDamageCoroutine());
+        }
     }
 
     /// <summary>
@@ -78,12 +90,23 @@ public class SceneUI : UIScene
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
     public void GameRoundText()
     {
-
+        GameObject gameRound = GetUIComponent<GameObject>((int)UIComponents.GameRound);
+        gameRound.GetComponentInChildren<Text>().text = "Round " + _gameRound;
     }
 
     // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용
     public void CharacterHp()
     {
+        if (_whoseTurn == "Enemy")
+        {
+            GameObject playerHp = GetUIComponent<GameObject>((int)UIComponents.PlayerHp);
+            playerHp.GetComponentInChildren<Image>().fillAmount = _player._myHp / _player._myHpMax;
+        }
+        else
+        {
+            GameObject enemyHp = GetUIComponent<GameObject>((int)UIComponents.EnemyHp);
+            enemyHp.GetComponentInChildren<Image>().fillAmount = _enemy._myHp / _enemy._myHpMax;
+        }
 
     }
 
@@ -95,7 +118,10 @@ public class SceneUI : UIScene
     /// </summary>
     public void GameEnd()
     {
+        if (_isEnd)
+        {
 
+        }
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
@@ -107,11 +133,15 @@ public class SceneUI : UIScene
         GameEnd();
         CharacterHp();
         // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
+        _isClicked = false;
+        attackButton.GetComponent<SpriteRenderer>().sprite = btnNonBlocked;
     }
 
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
     public void UIUpdate(int round, string turn, bool isFinish)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
+        _isEnd = isFinish;
     }
 }

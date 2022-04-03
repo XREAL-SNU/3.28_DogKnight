@@ -9,10 +9,15 @@ using XReal.XTown.UI;
 public class Inventory : UIPopup
 {
     // 1. enum 자유롭게 구성
+    enum UIComponents
+    {
+        CloseButton, Panel
+    }
 
     private void Start()
     {
         Init();
+
     }
 
     // 2. Popup UI 닫는 버튼에 OnClick_Close 바인드
@@ -21,11 +26,15 @@ public class Inventory : UIPopup
     public override void Init()
     {
         base.Init();
+        Bind<GameObject>(typeof(UIComponents));
+
+        GetObject((int)UIComponents.CloseButton).BindEvent(OnClick_Close);
+
     }
 
     // 5. OnClick_Close: Popup 닫기
     public void OnClick_Close(PointerEventData data)
     {
-
+        ClosePopup();
     }
 }
