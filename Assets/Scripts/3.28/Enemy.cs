@@ -60,7 +60,7 @@ public class Enemy : Character
                 _myDamage = _myDamage + DAMAGE_INCREASE;
             }
 
-            yield return null;
+            yield return new WaitForSeconds((float)0.8);
 
             _player.GetHit(_myDamage);
         }

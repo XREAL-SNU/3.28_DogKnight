@@ -57,6 +57,7 @@ public class Player : Character
             if(0 <= _randomAttack && _randomAttack < SPECIAL_ATTACK_MAX_VALUE)
             {
                 SpecialAttackMotion();
+
                 _damage = _myDamage + SPECIAL_ATTACK_ADDITIOANL_VALUE;
             } else
             {
@@ -64,8 +65,7 @@ public class Player : Character
                 _damage = _myDamage;
             }
 
-            yield return null;
-
+            yield return new WaitForSeconds((float) 0.8);
             _enemy.GetHit(_damage);
 
         }

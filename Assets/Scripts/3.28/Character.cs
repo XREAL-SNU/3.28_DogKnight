@@ -66,6 +66,7 @@ public class Character : MonoBehaviour, Observer
     protected void AttackMotion()
     {
         _animator.SetTrigger(AnimatorParameters.IsAttack.ToString());
+
     }
     protected void SpecialAttackMotion()
     {
