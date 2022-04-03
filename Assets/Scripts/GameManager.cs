@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour, Subject
 
     // 초기화 설정 바꾸지 말 것
     private int _gameRound = 0;
-    private string _whoseTurn = "Enemy";
+    private string _whoseTurn = "Player";
     private bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
@@ -60,8 +60,7 @@ public class GameManager : MonoBehaviour, Subject
     public void EndNotify()
     {
         _isEnd = true;
-        //Debug.Log("GameManager: The End");
-        //Debug.Log($"GameManager: {_whoseTurn} is Win!");
+
         _finisHandler(true);
         // 2. _uiHandler 호출
         _uiHandler(_gameRound, _whoseTurn, _isEnd);

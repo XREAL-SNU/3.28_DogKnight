@@ -18,7 +18,7 @@ public class SceneUI : UIScene
     
     private bool _isEnd;
     private int _gameRound;
-    private string _whoseTurn = "Player";
+    private string _whoseTurn;
     private Character _player;
     private Character _enemy;
 
@@ -88,8 +88,7 @@ public class SceneUI : UIScene
     }
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        print(_whoseTurn);
-        if(_whoseTurn == "Player")
+        if(_whoseTurn == "Enemy") //로직꼬여서 이너미일땨 해야 맞음
         {
             UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
         }

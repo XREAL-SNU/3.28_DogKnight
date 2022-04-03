@@ -13,6 +13,7 @@ public class Character : MonoBehaviour, Observer
     public string _myName;
     public float _myHp;
     public float _myDamage;
+    public bool isDoubleAttack;
     protected int _gameRound;
     protected string _whoseTurn; //int -> string
     protected bool _isFinished;

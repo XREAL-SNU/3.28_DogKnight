@@ -630,6 +630,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8161520941181228549, guid: d4d73f153469f554d875b9cf5ffb4a82, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9073277289336903140, guid: d4d73f153469f554d875b9cf5ffb4a82, type: 3}
       propertyPath: m_Pivot.x
       value: 0

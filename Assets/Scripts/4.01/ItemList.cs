@@ -9,16 +9,20 @@ public enum ItemPropertyType
 
 public class ItemProperty
 {
+    private ItemProperty(ItemPropertyType type, string name, int num, float action)
+    {
+        this.PropertyType = type.ToString();
+        this.ItemName = name;
+        this.ItemNumber = num;
+        this.ItemAction = action;
+    }
+
     public static ItemProperty DamageItem_Flame = new ItemProperty(ItemPropertyType.Damage, "FlameItem", 4, 5f);
     public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "FireSpearItem", 3, 10f);
     public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealStoneItem", 4, 20f);
 
 
-    public static ItemProperty[] ItemProperties = new ItemProperty[]
-    {
-        DamageItem_Flame, DamageItem_FireSpear,
-        HealItem_HealStone
-    };
+    public static ItemProperty[] ItemProperties = new ItemProperty[]{ DamageItem_Flame, DamageItem_FireSpear, HealItem_HealStone };
 
     // 이름으로 ItemProperties 안에 해당 이름의 ItemProperty이 있는지 없는지 있으면 인스턴스 반환 
     public static ItemProperty GetItemProperty(string name)
@@ -33,13 +37,6 @@ public class ItemProperty
         return null;
     }
 
-    private ItemProperty(ItemPropertyType type, string name, int num, float action)
-    {
-        this.PropertyType = type.ToString();
-        this.ItemName = name;
-        this.ItemNumber = num;
-        this.ItemAction = action;
-    }
 
     public string PropertyType; // 아이템 종류
     public string ItemName; // 아이템 이름
