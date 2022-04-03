@@ -31,7 +31,7 @@ public class Character : MonoBehaviour, Observer
         this._isFinished = isFinish;
     }
 
-    
+
     public virtual void Attack()
     {
 
@@ -40,7 +40,7 @@ public class Character : MonoBehaviour, Observer
     public virtual void GetHit(float damage)
     {
         _myHp -= damage;
-        if(_myHp <= 0)
+        if (_myHp <= 0)
         {
             DeadMotion();
             GameManager.Instance().EndNotify();

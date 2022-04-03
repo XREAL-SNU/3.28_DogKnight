@@ -67,7 +67,10 @@ public class SceneUI : UIScene
     {
         if(!_isClicked)
         {
-            //_isClicked = true;
+            _isClicked = true;
+            Button attackButton = UIUtils.FindUIChild<Button>(gameObject, "AttackButton", true);
+            attackButton.interactable = false;
+
             GameManager.Instance().RoundNotify();
             GameRoundText();
             _player.Attack();
@@ -92,8 +95,8 @@ public class SceneUI : UIScene
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
     public void GameRoundText()
     {
-        Text gameRoundText = GetUIComponent<Text>((int)GameObjects.GameRound);
-        gameRoundText.text = $"GameRound{_gameRound}";
+        Text _gameRoundText = UIUtils.FindUIChild<Text>(gameObject, "GameRoundText", true);
+        _gameRoundText.text = $"GameRound {_gameRound}";
     }
 
     // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용  --> 이때는 HP bar를 image로 넣어야 함.
@@ -121,9 +124,9 @@ public class SceneUI : UIScene
         {
             GameObject gameEnd = GetUIComponent<GameObject>((int)GameObjects.GameEnd);
             gameEnd.SetActive(true);
-            Text gameEndText = GetUIComponent<Text>((int)GameObjects.GameEnd);
+            Text _gameEndText = UIUtils.FindUIChild<Text>(gameObject, "GameEndText", true);
             string _winner = _player._myHp == 0 ? "Enemy" : "Player";
-            gameEndText.text = $"Game Over! {_winner} win!";
+            _gameEndText.text = $"Game Over!\n{_winner} win!";
         }
     }
 
@@ -136,7 +139,9 @@ public class SceneUI : UIScene
         GameEnd();
         CharacterHp();
         // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
-        _isClicked = false;
+        _isClicked = false; 
+        Button attackButton = UIUtils.FindUIChild<Button>(gameObject, "AttackButton", true);
+        attackButton.interactable = true;
     }
 
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
