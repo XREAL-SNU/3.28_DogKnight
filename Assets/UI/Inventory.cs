@@ -9,6 +9,10 @@ using XReal.XTown.UI;
 public class Inventory : UIPopup
 {
     // 1. enum 자유롭게 구성
+    enum Inventories
+    {
+        CloseButton
+    }
 
     private void Start()
     {
@@ -16,16 +20,25 @@ public class Inventory : UIPopup
     }
 
     // 2. Popup UI 닫는 버튼에 OnClick_Close 바인드
-    // 3. ItemList의 ItemPropertyType 참고해서 각자의 방식으로 ItemGroup subitem 만들어 볼 것
+    // 3. Item
+    // 의 ItemPropertyType 참고해서 각자의 방식으로 ItemGroup subitem 만들어 볼 것
     // 4. 생성할 때, ItemGroup의 SetInfo에 ItemPropertyType 할당해서 정보 넘겨줄 것
     public override void Init()
     {
         base.Init();
+        Bind<GameObject>(typeof(Inventories));
+
+        GameObject closeButton = GetUIComponent<GameObject>((int)Inventories.CloseButton);
+        closeButton.BindEvent(OnClick_Close);
+
+
+
+
     }
 
     // 5. OnClick_Close: Popup 닫기
     public void OnClick_Close(PointerEventData data)
     {
-
+        UIManager.Instance().ClosePopupUI(this);
     }
 }

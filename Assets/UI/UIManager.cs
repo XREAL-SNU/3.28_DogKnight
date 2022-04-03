@@ -5,8 +5,12 @@ namespace XReal.XTown.UI
 {
     public class UIManager : MonoBehaviour
     {
-        // singleton, and UIManager must persist across scenes. right? I guess...
+        // singleton, and UIManager must persist across scenes.
         static UIManager _UIManager;
+        public static UIManager Instance()
+        {
+            return _UIManager;
+        }
         public static UIManager UI
         {
             get => _UIManager;

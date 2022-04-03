@@ -52,7 +52,7 @@ public class Enemy : Character
     /// HealCoroutine: 
     /// 1) Player가 Enemy 공격 -> Hp 깎임 -> UI 반영
     /// 2) Enemy 확률적으로 회복 -> Hp 참 -> UI 반영
-    /// 3) 중간에 yield return 하지 않으면 한번에 처리돼서 피격 하고 Heal 하는 UI 반영이 제대로 이루어지지 않음.
+    /// 3) 중간에 yield return 하지 않으면 한번에 처리돼서 피격 하고 Heal 하는 UI 반영이 제대로 이루어지지 않음. //UI 반영은 아직 넣지 않았음.
     /// </summary>
     /// <returns></returns>
     IEnumerator HealCoroutine()
@@ -60,5 +60,7 @@ public class Enemy : Character
         yield return new WaitForSeconds(1.3f);
         _myHp += 10;
         Debug.Log($"{_myName} Heal!");
+        yield return new WaitForSeconds(1.3f);
+
     }
 }
