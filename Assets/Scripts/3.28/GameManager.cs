@@ -62,13 +62,6 @@ public class GameManager : MonoBehaviour, Subject
         StartCoroutine("roundNotify");
     }
 
-    public void showInventory()
-    {
-        if (_whoseTurn == "Player")
-        {
-            Inventory.SetActive(true);
-        }
-    }
     private IEnumerator roundNotify()
     {
         
@@ -106,9 +99,9 @@ public class GameManager : MonoBehaviour, Subject
         }
         
         _turnHandler(_gameRound, _whoseTurn);
-      
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
 
-        
+
     }
 
     /// <summary>
@@ -121,8 +114,7 @@ public class GameManager : MonoBehaviour, Subject
     public void EndNotify()
     {
         _isEnd = true;
-        Debug.Log("GameManager: The End");
-        Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
         _finishHandler(_isEnd);
 
     }
