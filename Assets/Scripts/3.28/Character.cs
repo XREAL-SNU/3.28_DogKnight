@@ -91,7 +91,7 @@ public class Character : MonoBehaviour, Observer
 
     IEnumerator DeadCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 }

@@ -111,9 +111,7 @@ public class SceneUI : UIScene
 
         GameObject.FindGameObjectWithTag("GameOver").GetComponent<Image>().color = new Color32(255, 255, 255, 100);
         GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().color = new Color32(0, 0, 0, 100);
-        GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().text += _whoseTurn + "  win!";
-           
-        
+        GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().text += _whoseTurn + "  win!";        
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
