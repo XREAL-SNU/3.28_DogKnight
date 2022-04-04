@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Character //자식클래스 
+   
 {
     private Enemy _enemy; //Enemy에서의 변수_enemy니깐.
-    private float _randomAttack;
+     private float _randomAttack;
 
     /// <summary>
     /// 1. Init: 초기화 기능
@@ -16,7 +17,7 @@ public class Player : Character //자식클래스
     /// </summary>
     protected override void Init() //자식클래스에서 오버라이딩해서 초기화하는 것들.
     {
-        gamemanager.GetComponent<GameManager>().AddCharacter(this);
+        
         base.Init();
         _myHp = 100;
         _myDamage = 20;
@@ -26,20 +27,18 @@ public class Player : Character //자식클래스
     private void Awake()
     {
         Init();
+        if (_enemy ==null)/// 1) _enemy가 할당이 안됐다면,
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>(); /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
+
+        }
     }
 
     /// <summary>
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
     /// </summary>
-    private void Start()
-    {
-        if (_enemy==null)/// 1) _enemy가 할당이 안됐다면,
-        {
-            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>(); /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
 
-        }
-    }
 
     /// <summary>
     /// Attack:
@@ -60,8 +59,11 @@ public class Player : Character //자식클래스
     /// 
     public override void Attack()
     {
-        int _randomAttack;
-        float damage;
+        float damage = 0;
+
+
+        Debug.Log("Attack");
+
         if (!_isFinished && _myName == _whoseTurn)
         {
             _randomAttack = Random.Range(0, 10);
@@ -71,8 +73,10 @@ public class Player : Character //자식클래스
                 damage = _myDamage + 10;//기존 공격력보다 10높아야!
                 Debug.Log($"{_myName} Special Attack!");
             }
-            else if(_randomAttack>3)//70% 확률로 하는 일반 공격은 Character에 써있는 주석과 동일
+            else if(_randomAttack>=3)//70% 확률로 하는 일반 공격은 Character에 써있는 주석과 동일
             {
+
+                AttackMotion();
                 damage = _myDamage;
             }
 

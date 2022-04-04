@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    public GameObject gamemanager;
+  
     private Player _player;
     private int playeris = 100;
     private float _randomHeal;
@@ -30,13 +30,18 @@ public class Enemy : Character
         _myDamage = 10;           /// 2) _myName, _myHp, _myDamage 초기화
                                   /// 4) _myHp, _myDamage는 100, 10으로 각각 초기화 (권장 사항)
                                   ///  /// 3) _myName은 무조건 "Enemy"로 할 것
-        gamemanager.GetComponent<GameManager>().AddCharacter(this);/// 1) Subject에 Observer로 등록
+       
 
     }
 
     private void Awake()
     {
         Init();
+        if (_player ==null)  /// 1) _player가 할당이 안됐다면,
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+            /// 2) GameObject.FindWithTag 이용해서 _player 할당
+        }
     }
 
     /// <summary>
@@ -48,11 +53,7 @@ public class Enemy : Character
     /// 
     private void Start()
     {
-        if (_player == null)  /// 1) _player가 할당이 안됐다면,
-        {
-            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
-            /// 2) GameObject.FindWithTag 이용해서 _player 할당
-        }
+        
     }
 
 
