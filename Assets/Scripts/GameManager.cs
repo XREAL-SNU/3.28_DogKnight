@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour, Subject
 {
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour, Subject
             if (_whoseTurn == "Enemy")
             {
                 _gameRound++;
-                Debug.Log($"GameManager: Round {_gameRound}.");
+                UIManager.Instance().roundText.text = "Round"+_gameRound.ToString();
             }
             TurnNotify();
         }
@@ -90,7 +91,9 @@ public class GameManager : MonoBehaviour, Subject
     {
         _isEnd = true;
         _finishHandler(_isEnd);
-        Debug.Log("GameManager: The End");
+        UIManager.Instance().GameOverImage.SetActive(true);
+        UIManager.Instance().GameOverImage.GetComponentInChildren<Text>().text = $"{ _whoseTurn} is Win!";
+         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
     }
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 // 애니메이팅 트리거 이름 열거형으로 저장 (이해할 필요 없음)
 public enum AnimatorParameters
 {
@@ -12,7 +12,7 @@ public class Character : MonoBehaviour, Observer
 {
     public Character other;
     public Subject subject;
-
+    public Slider HpBar;
     public string _myName;
     public float _myHp;
     public float _myDamage;
@@ -55,9 +55,18 @@ public class Character : MonoBehaviour, Observer
     /// 3) 아직 살아있다면, GetHitMotion() 호출해서 애니메이션 실행
     ///    + Debug.Log($"{_myName} HP: {_myHp}"); 추가
     /// </summary>
-    public virtual void GetHit(float damage)
+    public virtual void GetHit(Slider HpBar, float damage)
     {
+        if (_gameRound==1)
+        {
+            HpBar.minValue = 0;
+            HpBar.maxValue = _myHp;
+        }
+        
+
         _myHp -= damage;
+
+        HpBar.value = _myHp;
         if(_myHp <= 0)
         {
             DeadMotion();
@@ -85,6 +94,7 @@ public class Character : MonoBehaviour, Observer
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
+
     }
     protected void AttackMotion()
     {

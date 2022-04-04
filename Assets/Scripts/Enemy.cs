@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : Character
 {
@@ -53,7 +54,7 @@ public class Enemy : Character
                 _myDamage = _player._myHp;
             }
             AttackMotion();
-            other.GetHit(_myDamage);
+            other.GetHit(UIManager.Instance().playerHpBar, _myDamage);
         }
     }
 
@@ -63,15 +64,16 @@ public class Enemy : Character
     /// 2) 30%의 확률로 피격시 10 체력 증가
     ///   + Debug.Log($"{_myName} Heal!"); 추가
     /// </summary>
-    public override void GetHit(float damage)
+    public override void GetHit(Slider hpBar, float damage)
     {
-        base.GetHit(damage);
+        base.GetHit(hpBar, damage);
         if(_myHp > 0)
         {
             _randomHeal = Random.Range(0, 10);
             if (_randomHeal < 3)
             {
                 _myHp += 10;
+                hpBar.value = _myHp;
                 Debug.Log($"{_myName} Heal!");
             }
         }   

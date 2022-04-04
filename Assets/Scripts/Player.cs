@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -60,18 +61,18 @@ public class Player : Character
             {
                 SpecialAttackMotion();
                 Debug.Log($"{_myName} Special Attack!");
-                other.GetHit(_myDamage+10);
+                other.GetHit(UIManager.Instance().enemyHpBar,_myDamage+10);
             }
             else
             {
                 AttackMotion();
-                other.GetHit(_myDamage);
+                other.GetHit(UIManager.Instance().enemyHpBar,_myDamage);
             }
         }            
     }
 
-    public override void GetHit(float damage)
+    public override void GetHit(Slider hpBar, float damage)
     {
-        base.GetHit(damage);
+        base.GetHit(hpBar, damage);
     }
 }
