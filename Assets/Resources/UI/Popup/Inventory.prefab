@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 3207023180937267435}
   - component: {fileID: 966584429567532097}
   - component: {fileID: 4647521254202406337}
-  - component: {fileID: 8228730613352867852}
+  - component: {fileID: 3774351052278228085}
   m_Layer: 5
   m_Name: ContentPanel
   m_TagString: Untagged
@@ -836,7 +836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 1
---- !u!114 &8228730613352867852
+--- !u!114 &3774351052278228085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -845,18 +845,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 8664419786270142773}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 25
-    m_Right: 0
-    m_Top: 25
-    m_Bottom: 25
+    m_Left: 10
+    m_Right: 10
+    m_Top: 30
+    m_Bottom: 30
   m_ChildAlignment: 0
-  m_StartCorner: 0
-  m_StartAxis: 0
-  m_CellSize: {x: 200, y: 200}
-  m_Spacing: {x: 40, y: 40}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Spacing: 30
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0

@@ -27,8 +27,17 @@ public class Inventory : UIPopup
     {
         base.Init();
         Bind<GameObject>(typeof(UIComponents));
+        GetUIComponent<GameObject>((int)UIComponents.CloseButton)
+            .BindEvent(OnClick_Close);
 
-        GetObject((int)UIComponents.CloseButton).BindEvent(OnClick_Close);
+        GameObject contentPanel = UIUtils.FindUIChild(gameObject, "ContentPanel", true);
+        foreach (string typeName in Enum.GetNames(typeof(ItemPropertyType)))
+        {
+            ItemGroup _itemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
+            _itemGroup.SetInfo(typeName);
+        }
+
+
 
     }
 

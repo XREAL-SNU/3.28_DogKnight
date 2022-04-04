@@ -19,6 +19,7 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
+        this.gameObject.BindEvent(OnClick_ItemUse);
 
     }
 
@@ -31,7 +32,13 @@ public class Item : UIBase
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
     {
-
+        ItemProperty item = ItemProperty.GetItemProperty(_itemName);
+        if (item.ItemNumber > 0)
+        {
+            item.ItemNumber -= 1;
+            Destroy(this.gameObject);
+            ItemAction();
+        }
     }
 
     /// <summary>
@@ -43,12 +50,24 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
+        ItemProperty item = ItemProperty.GetItemProperty(_itemName);
+        Character player = GameManager.Instance().GetCharacter("Player") as Player;
+        switch (item.PropertyType)
+        {
+            case "Damage":
+                player._myDamage += 10;
+                break;
 
+            case "Heal":
+                player._myHp += 10;
+                GameObject.Find("SceneUI").GetComponent<SceneUI>().CharacterHp();
+                break;
+        }
     }
 
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        _itemName = itemName;
     }
 }
