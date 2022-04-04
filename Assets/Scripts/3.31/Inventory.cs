@@ -32,7 +32,8 @@ public class Inventory : UIPopup
 
         Bind<GameObject>(typeof(GameObjects));
 
-        GetObject((int)GameObjects.CloseButton).BindEvent(OnClick_Close);
+        GameObject closeButton = GetUIComponent<GameObject>((int)GameObjects.CloseButton);
+        closeButton.BindEvent(OnClick_Close);
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
 
         // flame item Ãß°¡

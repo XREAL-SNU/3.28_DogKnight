@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour, Subject
     // 1. Singleton Pattern: Instance() method
     
     private static GameManager _instance;
-
     public static GameManager Instance()
     {
         return _instance;
@@ -50,6 +49,7 @@ public class GameManager : MonoBehaviour, Subject
     // 2. UIHandler 선언 (이번에는 round, turn, isFinish 모두 받는다)
     private delegate void UIHandler(int round, string turn, bool isFinish);
     private UIHandler _uiHandler;
+    private SceneUI sceneUI;
 
     /// <summary>
     /// 2. RoundNotify:
@@ -64,7 +64,10 @@ public class GameManager : MonoBehaviour, Subject
 
     public void showInventory()
     {
-        Inventory.SetActive(true);
+        if (_whoseTurn == "Player")
+        {
+            Inventory.SetActive(true);
+        }
     }
     private IEnumerator roundNotify()
     {
@@ -136,10 +139,9 @@ public class GameManager : MonoBehaviour, Subject
     // 3. AddUI: SceneUI 옵저버로 등록
     public void AddUI(SceneUI ui)
     {
-
+        sceneUI = ui;
+        _uiHandler += ui.UIUpdate;
     }
-
-
 
     /// <summary>
     /// 4. GetChracter: 넘겨 받은 name의 Character가 있다면 해당 캐릭터 반환

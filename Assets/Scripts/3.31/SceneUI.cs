@@ -23,12 +23,12 @@ public class SceneUI : UIScene
     // Attack 버튼 이중 클릭 방지 bool 변수
     private bool _isClicked = false;
 
-
     private void Start()
     {
         Init();
         _player = GameManager.Instance().GetCharacter("Player");
         _enemy = GameManager.Instance().GetCharacter("Enemy");
+        GameManager.Instance().AddUI(this);
         // 1. 옵저버 등록: AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
     }
@@ -47,7 +47,6 @@ public class SceneUI : UIScene
         GameObject inventoryButton = GetUIComponent<GameObject>((int)GameObjects.InventoryButton);
         inventoryButton.BindEvent(OnClick_Inventory);
         inventoryButton.BindEvent(OnButtonEnter, UIEvents.UIEvent.Enter);
-
 
     }
 
@@ -112,7 +111,10 @@ public class SceneUI : UIScene
     /// </summary>
     public void GameEnd()
     {
-        
+        if(this._isEnd)
+        {
+
+        }
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
@@ -129,6 +131,8 @@ public class SceneUI : UIScene
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
     public void UIUpdate(int round, string turn, bool isFinish)
     {
-        
+        this._gameRound = round;
+        this._whoseTurn = turn;
+        this._isEnd = isFinish;
     }
 }
