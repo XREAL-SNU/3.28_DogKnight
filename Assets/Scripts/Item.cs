@@ -8,6 +8,10 @@ using XReal.XTown.UI;
 public class Item : UIBase
 {
     // 1. enum 자유롭게 구성
+    enum GameObjects
+    {
+        Image
+    }
 
     private string _itemName;
 
@@ -49,6 +53,6 @@ public class Item : UIBase
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        _itemName = itemName;
     }
 }

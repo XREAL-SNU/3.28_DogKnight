@@ -86,9 +86,9 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        if(_whoseTurn == "Player")
+        if (_whoseTurn == "Player")
         {
-            
+            UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
         }
     }
 
