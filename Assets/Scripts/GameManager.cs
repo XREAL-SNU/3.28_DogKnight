@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
+<<<<<<< HEAD
     // 1. SceneUI가 GameManager 접근 할 수 있도록 캐릭터 딕셔너리 선언
     private Dictionary<string, Character> _characterList = new Dictionary<string, Character>();
 
@@ -40,9 +41,20 @@ public class GameManager : MonoBehaviour, Subject
     // 2. UIHandler 선언 (이번에는 round, turn, isFinish 모두 받는다)
     private delegate void UIHandler(int round, string turn, bool isFinish);
     private UIHandler _uiHandler;
+=======
+    //List<Observer> _observers = new List<Observer>();
+
+    // delegate: TurnHandler, FinishHandler 선언
+    delegate void TurnHandler();
+    delegate void FinishHandler();
+
+    TurnHandler _turnHandler;
+    FinishHandler _finishHandler;
+>>>>>>> 067d66f7be68ffe936c82a1071b28b66ead05353
 
     public void RoundNotify()
     {
+<<<<<<< HEAD
         if (!_isEnd)
         {
             if (_whoseTurn == "Enemy")
@@ -52,25 +64,51 @@ public class GameManager : MonoBehaviour, Subject
             }
             TurnNotify();
         }
+=======
+        if(_whoseTurn == "Enemy")
+        {
+            _gameRound++;
+        }
+        Debug.Log($"GameManager: Round {_gameRound}");
+        TurnNotify();
+>>>>>>> 067d66f7be68ffe936c82a1071b28b66ead05353
     }
 
     public void TurnNotify()
     {
+<<<<<<< HEAD
         _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy";
         Debug.Log($"GameManager: {_whoseTurn} turn.");
         _turnHandler(_gameRound, _whoseTurn);
         // 2. _uiHandler 호출
         _uiHandler(_gameRound, _whoseTurn, _isEnd);
+=======
+        if(_whoseTurn=="Enemy")
+        {
+            _whoseTurn = "Player";
+        }
+        else
+        {
+            _whoseTurn = "Enemy";
+        }
+        Debug.Log($"GameManager : {_whoseTurn} turn.");
+>>>>>>> 067d66f7be68ffe936c82a1071b28b66ead05353
     }
 
     public void EndNotify()
     {
         _isEnd = true;
+<<<<<<< HEAD
         _finishHandler(_isEnd);
         // 2. _uiHandler 호출
         _uiHandler(_gameRound, _whoseTurn, _isEnd);
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
+=======
+        Debug.Log("GameManager: The End");
+        Debug.Log($"GameManager: {_whoseTurn} is Win!");
+        _finishHandler();
+>>>>>>> 067d66f7be68ffe936c82a1071b28b66ead05353
     }
 
     public void AddCharacter(Character character)
@@ -81,6 +119,7 @@ public class GameManager : MonoBehaviour, Subject
         _characterList.Add(character._myName, character);
     }
 
+<<<<<<< HEAD
     // 3. AddUI: SceneUI 옵저버로 등록
     public void AddUI(SceneUI ui)
     {
@@ -103,5 +142,8 @@ public class GameManager : MonoBehaviour, Subject
             return _character;
         }
         return null;
+=======
+
+>>>>>>> 067d66f7be68ffe936c82a1071b28b66ead05353
     }
 }
