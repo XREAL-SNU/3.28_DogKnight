@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
     // 2. UIHandler 선언 (이번에는 round, turn, isFinish 모두 받는다)
     private delegate void UIHandler(int round, string turn, bool isFinish);
     private UIHandler _uiHandler;
+    
 
 
     /// <summary>
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
             Debug.Log($"GameManager:{_whoseTurn} turn.");
         }
         _turnHandler(_gameRound,_whoseTurn);
-        
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
     }
 
     /// <summary>
@@ -97,9 +98,11 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
     public void EndNotify()
     {
         _isEnd = true;
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager:{_whoseTurn} is Win!");
         _finishHandler(_isEnd);
+
 
     }
 
@@ -109,13 +112,15 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
         _turnHandler += new TurnHandler(character.TurnUpdate);
 
         _finishHandler += new FinishHandler(character.FinishUpdate);
+        _characterList.Add(character._myName, character);
+        
         
     }
 
     // 3. AddUI: SceneUI 옵저버로 등록
     public void AddUI(SceneUI ui)
     {
-
+        _uiHandler += ui.UIUpdate;
     }
 
     /// <summary>
@@ -126,6 +131,10 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
     /// </summary>
     public Character GetCharacter(string name)
     {
+        if (_characterList.ContainsKey(name))
+        {
+            return _characterList[name];
+        }
         return null;
     }
 }

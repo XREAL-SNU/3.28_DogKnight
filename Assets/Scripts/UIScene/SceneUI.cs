@@ -43,6 +43,15 @@ public class SceneUI : UIScene
     public override void Init()
     {
         base.Init();
+
+        Bind<GameObject>(typeof(GameObjects));
+
+        GameObject AttackButton = GetUIComponent<GameObject>((int)GameObjects.AttackButton);
+        GameObject InventoryButton = GetUIComponent<GameObject>((int)GameObjects.InventoryButton);
+
+        AttackButton.BindEvent(OnClick_AttackButton);
+        InventoryButton.BindEvent(OnClick_InventoryButton);
+
     }
 
     /// <summary>
@@ -56,7 +65,15 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_AttackButton(PointerEventData data)
     {
-
+        if (!_isClicked)
+        {
+            GameManager.Instance().RoundNotify();
+            _isClicked = true;
+            GameRoundText();
+            _player.Attack();
+            _enemy.Attack();
+            StartCoroutine(GetDamageCoroutine());
+        }
     }
 
     /// <summary>
@@ -66,18 +83,30 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-
+        if(_whoseTurn == "Player")
+        {
+            UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
+        }
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
     public void GameRoundText()
     {
-
+        Text textgameRound = UIUtils.FindUIChild<Text>(gameObject, "GameRoundText", true);
+        textgameRound.text = $"Round {_gameRound}";
     }
 
-    // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용
+    // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용 
     public void CharacterHp()
     {
+        float _playerHpPercentage = _player._myHp / _player._myHpMax;
+        float _enemyHpPercentage = _enemy._myHp / _enemy._myHpMax;
+
+        Slider _playerHpSlider = UIUtils.FindUIChild<Slider>(gameObject, "MyHp", true);
+        Slider _enemyHpSlider = UIUtils.FindUIChild<Slider>(gameObject, "EnemyHp", true);
+
+        _playerHpSlider.value = _playerHpPercentage;
+        _enemyHpSlider.value = _enemyHpPercentage;
 
     }
 
@@ -101,11 +130,14 @@ public class SceneUI : UIScene
         GameEnd();
         CharacterHp();
         // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
+        _isClicked = false;
     }
 
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
     public void UIUpdate(int round, string turn, bool isFinish)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
+        _isEnd = isFinish;
     }
 }

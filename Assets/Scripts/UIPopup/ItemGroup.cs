@@ -9,6 +9,11 @@ using System;
 public class ItemGroup : UIBase
 {
     // 1. enum 자유롭게 구성
+    enum GameObjects
+    {
+        DamageItem_Flame, DamageItem_FireSpear,
+        HealItem_HealStone
+    }
 
     private string _itemGroupName;
 
@@ -22,12 +27,13 @@ public class ItemGroup : UIBase
     // 4. 생성할 때, Item의 SetInfo에 _itemName 할당해서 정보 넘겨줄 것
     public override void Init()
     {
-
+        string nameItemType = _itemGroupName;
     }
 
     // 5. SetInfo: itemtype을 _itemGroupName에 할당
     public void SetInfo(string itemtype)
     {
-
+        _itemGroupName = itemtype;
     }
+    
 }

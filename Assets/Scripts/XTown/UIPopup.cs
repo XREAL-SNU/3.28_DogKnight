@@ -14,6 +14,6 @@ namespace XReal.XTown.UI
         public virtual void ClosePopup()
         {
             UIManager.UI.ClosePopupUI(this);
-        }
+        } 
     }
 }
