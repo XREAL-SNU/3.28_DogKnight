@@ -11,8 +11,11 @@ public class Inventory : UIPopup
     // 1. enum 자유롭게 구성
     enum Inventories
     {
+        Blocker, ScrollRect,Scrollbar,ContentPanel,
         CloseButton
     }
+
+    public int ItemNum = 30;
 
     private void Start()
     {
@@ -27,13 +30,17 @@ public class Inventory : UIPopup
     {
         base.Init();
         Bind<GameObject>(typeof(Inventories));
-
         GameObject closeButton = GetUIComponent<GameObject>((int)Inventories.CloseButton);
         closeButton.BindEvent(OnClick_Close);
+        GameObject contentPanel = GetUIComponent<GameObject>((int)Inventories.ContentPanel);
 
-
-
-
+        for (int i = 0; i < ItemNum; i++)
+        {
+            string name = "Item" + i;
+            GameObject item = UIManager.UI.MakeSubItem<Item>(contentPanel.transform).gameObject;
+            Item itemscript = item.GetOrAddComponent<Item>();
+            itemscript.SetInfo(ItemProperty.GetItemProperty(name).PropertyType);
+        }
     }
 
     // 5. OnClick_Close: Popup 닫기

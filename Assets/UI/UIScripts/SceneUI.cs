@@ -18,6 +18,7 @@ public class SceneUI : UIScene
         PlayerSlider,
         EnemySlider,
 
+        GameRound, GameRoundText,
         GameEnd
     }
 
@@ -79,6 +80,7 @@ public class SceneUI : UIScene
     {
         if (!_isClicked)
         {
+            _isClicked = true;
             GameManager.Instance().RoundNotify();
             GameRoundText();
             _player.Attack();
@@ -104,8 +106,8 @@ public class SceneUI : UIScene
     public void GameRoundText()
     {
         //this.GetComponent<InputField>();
-        InputField inputField = UIUtils.FindUIChild<InputField>(gameObject, "InputField", true);
-        inputField.text= $"GameRound{_gameRound}";
+        Text gameRoundText = UIUtils.FindUIChild<Text>(gameObject, "GameRoundText", true);
+        gameRoundText.text= $"GameRound{_gameRound}";
     }
 
     // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용 0
