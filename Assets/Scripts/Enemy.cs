@@ -36,7 +36,7 @@ public class Enemy : Character
     /// </summary>
     public override void Attack(Character target) {
         strength = 0.5f + 0.15f * _gameRound;
-        if (_gameRound >= 10) strength = 99f;
+        if (_gameRound >= 15) strength = 99f;
         base.Attack(target);
 
         if (hp < maxHp - 1 && Random.Range(0f, 1f) < 0.3f) {

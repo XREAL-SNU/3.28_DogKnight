@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour, Subject
@@ -31,6 +32,9 @@ public class GameManager : MonoBehaviour, Subject
 
     public List<Character> deadPlayers = new List<Character>();
     public List<Character> deadEnemies = new List<Character>();
+
+    public GameObject gameEndDialog;
+    public TextMeshProUGUI gameEndText;
 
     /// <summary>
     /// 2. RoundNotify:
@@ -102,10 +106,22 @@ public class GameManager : MonoBehaviour, Subject
         string t = plw ? "Player" : "Enemy";
         _isEnd = true;
         Debug.Log("GameManager: The End");
-        if(plw && enw) Debug.Log("GameManager: Tie!");
-        else Debug.Log($"GameManager: {t} team won!");
+        if(plw && enw) {
+            gameEndText.text = "Tie!";
+            gameEndText.color = Color.white;
+        }
+        else if (plw) {
+            gameEndText.text = "You win!";
+        }
+        else {
+            gameEndText.text = "You lose...";
+            gameEndText.color = Color.red;
+        }
 
         FinishEvent(_isEnd);
+
+        gameEndDialog.SetActive(true);
+        gameEndDialog.transform.SetAsLastSibling();
     }
 
     public void DeadNotify(Character c) {

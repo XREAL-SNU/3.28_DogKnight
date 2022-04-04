@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FinalSmashAttack
   m_EditorClassIdentifier: 
   damage: 5
-  extraDamage: 3
+  extraDamage: 20
   strengthMultiplier: 1
   duration: 1
   animTrigger: IsSpecialAttack
@@ -22,3 +22,4 @@ MonoBehaviour:
   animSpacingTrigger: IsFastAttack
   hitFx: {fileID: 7819638651085767881, guid: 1abb80549ae77e84bb0cd7739ad15d28, type: 3}
   fxOffset: 0.15
+  fxHeight: 0.5

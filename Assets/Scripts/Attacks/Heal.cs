@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Heal", menuName = "Attacks/Heal")]
+[CreateAssetMenu(fileName = "Heal", menuName = "Attacks/Heal", order = 3)]
 public class Heal : Attack {
+    public float strengthBuff = 0f;
+
     public override void At(Character c, Character target) {
         if (target == null) {
             GameManager.Instance().TeamMember(GameManager.Instance().TeamMember(true).Contains(c)).ForEach(m => {
@@ -23,6 +25,7 @@ public class Heal : Attack {
         yield return new WaitForSeconds(duration);
 
         target.Heal(GetDamage(c));
+        target.strength += strengthBuff;
     }
 
     IEnumerator EndEnum(Character c) {

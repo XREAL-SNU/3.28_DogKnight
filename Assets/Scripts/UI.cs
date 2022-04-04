@@ -18,7 +18,7 @@ public class UI : MonoBehaviour {
         else
             main = this;
 
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
     }
 
     public static void ClearChildren(GameObject o) {

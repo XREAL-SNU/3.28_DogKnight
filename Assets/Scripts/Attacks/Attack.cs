@@ -17,6 +17,7 @@ public class Attack : ScriptableObject {
 
     public GameObject hitFx = null;
     public float fxOffset = 0.2f;
+    public float fxHeight = 0.5f;
 
     public virtual void At(Character c, Character target) {
         if (!animTrigger.Equals("")) {
@@ -38,7 +39,7 @@ public class Attack : ScriptableObject {
 
     public virtual void OnHit(Character c, Character target, float damage) {
         if (hitFx != null) {
-            Instantiate(hitFx, target.transform.position + new Vector3(Random.Range(-fxOffset, fxOffset), 0.5f + Random.Range(-fxOffset, fxOffset), Random.Range(-fxOffset, fxOffset)), Quaternion.identity);
+            Instantiate(hitFx, target.transform.position + new Vector3(Random.Range(-fxOffset, fxOffset), fxHeight + Random.Range(-fxOffset, fxOffset), Random.Range(-fxOffset, fxOffset)), Quaternion.identity);
         }
         target.GetHit(GetDamage(c));
     }

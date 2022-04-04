@@ -62,6 +62,7 @@ public class Player : Character
         meditated = true;
         StartCoroutine(MeditateEnum(Mathf.Min(maxMp - mp, 10 * (1 << meditation))));
         meditation++;
+        if (meditation > 3) meditation = 3;
     }
 
     public override void GetHit(float damage)
