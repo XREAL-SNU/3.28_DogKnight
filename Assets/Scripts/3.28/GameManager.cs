@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour, Subject
 
     public Text gameRoundText;
     public Button attackButton;
+    public GameObject Inventory;
 
     // delegate: TurnHandler, FinishHandler 선언
     delegate void TurnHandler(int round, string turn);
@@ -61,6 +62,10 @@ public class GameManager : MonoBehaviour, Subject
         StartCoroutine("roundNotify");
     }
 
+    public void showInventory()
+    {
+        Inventory.SetActive(true);
+    }
     private IEnumerator roundNotify()
     {
         
@@ -133,6 +138,8 @@ public class GameManager : MonoBehaviour, Subject
     {
 
     }
+
+
 
     /// <summary>
     /// 4. GetChracter: 넘겨 받은 name의 Character가 있다면 해당 캐릭터 반환
