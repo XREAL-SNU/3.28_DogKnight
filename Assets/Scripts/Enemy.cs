@@ -20,11 +20,6 @@ public class Enemy : Character
         GameManager.Instance().AddCharacter(this, false);
     }
 
-    private void Awake()
-    {
-        Init();
-    }
-
     /// <summary>
     /// 1) _player가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _player 할당
@@ -40,11 +35,11 @@ public class Enemy : Character
     /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가
     /// </summary>
     public override void Attack() {
+        strength = 0.5f + 0.15f * _gameRound;
+        if (_gameRound >= 10) strength = 99f;
         base.Attack();
-        Character target = Target();
-        target.GetHit(_gameRound >= 10 ? target._myHp : _myDamage + 3 * _gameRound);
 
-        if (Random.Range(0f, 1f) < 0.3f) {
+        if (hp < maxHp - 1 && Random.Range(0f, 1f) < 0.3f) {
             Heal(10);
             Debug.Log($"{_myName} Heal!");
         }

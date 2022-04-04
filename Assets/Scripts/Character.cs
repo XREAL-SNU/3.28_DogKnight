@@ -11,13 +11,20 @@ public enum AnimatorParameters
 public class Character : MonoBehaviour, Observer
 {
     public string _myName;
-    public float _myHp, maxHp;
-    public float _myDamage;
+    public float hp, maxHp;
+
+    public Attack baseAttack;
+    public float strength = 1f;
+    public bool dead = false;
 
     protected int _gameRound;
     protected string _whoseTurn;
     protected bool myturn = false;
     protected bool _isFinished;
+
+    void Awake() {
+        Init();
+    }
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn, Character character)
@@ -40,9 +47,12 @@ public class Character : MonoBehaviour, Observer
     /// 2) AttackMotion() 호출해서 애니메이션 실행
     /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
     /// </summary>
-    public virtual void Attack()
-    {
-        AttackMotion();
+    public virtual void Attack() {
+        baseAttack.At(this, Target());
+    }
+
+    public virtual void EndAttack() {
+        GameManager.Instance().TurnEnd();
     }
 
     /// <summary>
@@ -56,20 +66,24 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-        _myHp -= damage;
-        if(_myHp <= 0) {
+        hp -= damage;
+        UI.Damage(transform, Mathf.CeilToInt(damage));
+        if(hp <= 0) {
+            dead = true;
             DeadMotion();
+            GameManager.Instance().DeadNotify(this);
             GameManager.Instance().EndNotify();
         }
         else {
             GetHitMotion();
-            Debug.Log($"{_myName} HP: {_myHp}");
+            Debug.Log($"{_myName} HP: {hp}");
         }
     }
 
     public virtual void Heal(float hp) {
-        _myHp += hp;
-        if(_myHp > maxHp) _myHp = maxHp;
+        hp = Mathf.Min(hp, maxHp - this.hp);
+        this.hp += hp;
+        UI.Damage(transform, -Mathf.CeilToInt(hp));
     }
 
     public virtual Character Target() {
@@ -90,10 +104,14 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     protected Animator _animator;
 
+    public void Animate(string animation) {
+        _animator.SetTrigger(animation);
+    }
+
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
-        _myHp = maxHp;
+        hp = maxHp;
     }
     protected void AttackMotion()
     {
@@ -106,12 +124,12 @@ public class Character : MonoBehaviour, Observer
 
     protected void DeadMotion()
     {
-        StartCoroutine(DeadCoroutine());
+        _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 
     protected void GetHitMotion()
     {
-        StartCoroutine(GetHitCoroutine());
+        _animator.SetTrigger(AnimatorParameters.GetHit.ToString());
     }
 
     IEnumerator GetHitCoroutine()

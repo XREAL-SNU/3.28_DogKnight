@@ -35,7 +35,13 @@ public class CameraControl : MonoBehaviour {
     }
 
     public void Turn(int round, string turn, Character character) {
-        StartCoroutine(_LookAt(GameManager.Instance().NextCharacter().transform));
+        if(GameManager.Instance().NextPlayerTurn()) StartCoroutine(_LookAt(GameManager.Instance().NextCharacter().transform));
+        else {
+            ConstraintSource c = new ConstraintSource();
+            c.sourceTransform = center;
+            c.weight = 0;
+            look.AddSource(c);
+        }
     }
 
     IEnumerator _LookAt(Transform t) {

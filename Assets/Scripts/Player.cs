@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
+    public static float mp = 0f, maxMp = 100f;
     private Enemy _enemy;
     private float _randomAttack;
 
@@ -19,12 +20,6 @@ public class Player : Character
         base.Init();
         GameManager.Instance().AddCharacter(this, true);
     }
-
-    private void Awake()
-    {
-        Init();
-    }
-
     /// <summary>
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
@@ -46,16 +41,7 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-        Character target = Target();
-        if (Random.Range(0f, 1f) < 0.3f) {
-            SpecialAttackMotion();
-            target.GetHit(_myDamage + 10);
-            Debug.Log($"{_myName} Special Attack!");
-        }
-        else {
-            AttackMotion();
-            target.GetHit(_myDamage);
-        }
+        base.Attack();
     }
 
     public override void GetHit(float damage)

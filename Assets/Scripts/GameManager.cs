@@ -13,18 +13,23 @@ public class GameManager : MonoBehaviour, Subject
 
     // 초기화 설정 바꾸지 말 것
     public int _gameRound = 0;
-    public string _whoseTurn = "Enemy"; //team turn (Player or Enemy)
+    public string _whoseTurn = "Player"; //team turn (Player or Enemy)
     public bool _isEnd = false;
 
     // delegate: TurnHandler, FinishHandler 선언
     public delegate void TurnHandler(int round, string turn, Character character);
     public delegate void FinishHandler(bool end);
+    public delegate void TurnEndHandler();
     public TurnHandler TurnEvent;
     public FinishHandler FinishEvent;
+    public TurnEndHandler TurnEndEvent;
 
     public List<Character> players = new List<Character>();
     public List<Character> enemies = new List<Character>();
-    public int turn = 0; //member turn
+    public int turn = -1; //member turn
+
+    public List<Character> deadPlayers = new List<Character>();
+    public List<Character> deadEnemies = new List<Character>();
 
     /// <summary>
     /// 2. RoundNotify:
@@ -58,8 +63,17 @@ public class GameManager : MonoBehaviour, Subject
             Debug.Log($"GameManager: {_whoseTurn} team's turn.");
         }
 
-        TurnEvent(_gameRound, _whoseTurn, CurrentCharacter());
-        CurrentCharacter().Attack();
+        if (CurrentCharacter().dead) {
+            RoundNotify();//move to next character
+        }
+        else {
+            TurnEvent(_gameRound, _whoseTurn, CurrentCharacter());
+            CurrentCharacter().Attack();
+        }
+    }
+
+    public void TurnEnd() {
+        TurnEndEvent();
     }
 
     /// <summary>
@@ -71,11 +85,30 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public void EndNotify()
     {
+        //first, check if each team has a survivor
+        bool plw = enemies.Count <= 0, enw = players.Count <= 0;
+
+        if (!plw && !enw) return;
+
+        string t = plw ? "Player" : "Enemy";
         _isEnd = true;
         Debug.Log("GameManager: The End");
-        Debug.Log($"GameManager: {_whoseTurn} team won!");
+        if(plw && enw) Debug.Log("GameManager: Tie!");
+        else Debug.Log($"GameManager: {t} team won!");
 
         FinishEvent(_isEnd);
+    }
+
+    public void DeadNotify(Character c) {
+        if (!c.dead) c.dead = true;
+        if (players.Contains(c)) {
+            players.Remove(c);
+            deadPlayers.Add(c);
+        }
+        else {
+            enemies.Remove(c);
+            deadEnemies.Add(c);
+        }
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
@@ -85,6 +118,8 @@ public class GameManager : MonoBehaviour, Subject
         FinishEvent += character.FinishUpdate;
         if(playerTeam) players.Add(character);
         else enemies.Add(character);
+
+        UI.AddCharacterUI(character, !playerTeam);
     }
 
     // enum으로 갈아치우고 싶은 마음을 다스리며.
@@ -104,12 +139,27 @@ public class GameManager : MonoBehaviour, Subject
         return PlayerTurn() ? players[turn] : enemies[turn];
     }
 
+    public bool NextPlayerTurn() {
+        if (turn >= TeamMember(PlayerTurn()).Count - 1) {
+            if (TeamMember(!PlayerTurn()).Count == 0) return PlayerTurn();
+            return !PlayerTurn();
+        }
+        return PlayerTurn();
+    }
+
     public Character NextCharacter() {
-        if(turn >= TeamMember(PlayerTurn()).Count - 1) return TeamMember(!PlayerTurn())[0];
+        if (turn >= TeamMember(PlayerTurn()).Count - 1) {
+            if(TeamMember(!PlayerTurn()).Count == 0) return TeamMember(PlayerTurn())[0];
+            return TeamMember(!PlayerTurn())[0];
+        }
         return TeamMember(PlayerTurn())[turn + 1];
     }
 
     public List<Character> TeamMember(bool player) {
         return player ? players : enemies;
+    }
+
+    public List<Character> DeadMember(bool player) {
+        return player ? deadPlayers : deadEnemies;
     }
 }
