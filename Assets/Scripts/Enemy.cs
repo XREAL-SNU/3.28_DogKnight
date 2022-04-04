@@ -17,6 +17,11 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     private void Awake()
@@ -30,7 +35,7 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     /// <summary>
@@ -40,6 +45,28 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+       
+
+        if (_whoseTurn == _myName && _isFinished == false)
+        {
+            if (_gameRound == 10)
+            {
+                _myDamage = 1000;
+            }
+
+            else
+            {
+                _myDamage += 3;
+            }
+
+            _player.GetHit(_myDamage);
+            AttackMotion();
+
+        }
+
+        
+
+
 
     }
 
@@ -51,7 +78,62 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        
+
+        if (_isFinished == false)
+        {
+            _randomHeal = Random.Range(0, 10);
+            if (_randomHeal < 3)
+            {
+                _myHp += 10;
+                Debug.Log($"{_myName} Heal!");
+                Debug.Log($"{_myName} HP: {_myHp}");
+
+                StartCoroutine(HpBarDelay());
+                
+
+
+            }
+
+            else
+            {
+                base.GetHit(damage);
+                StartCoroutine(HpBarDelay());
+                
+
+            }
+        }
 
     }
+
+
+
+
+    //HP bar UI
+
+    public delegate void HpHandler(float hp);
+    HpHandler _hpHandler;
+
+
+    public void AddObserver(HpInterface characterHpBar)
+    {
+        _hpHandler += characterHpBar.HpOnNotify;
+    }
+
+    public void HpNotify(float hp)
+    {
+        _hpHandler(hp);
+    }
+
+    IEnumerator HpBarDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        HpNotify(_myHp);
+
+    }
+
+
+
+
 }
 

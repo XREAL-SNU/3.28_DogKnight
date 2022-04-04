@@ -15,19 +15,21 @@ public class Character : MonoBehaviour, Observer
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _gameRound = round;
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = true;
+        
     }
 
     /// <summary>
@@ -39,7 +41,11 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
+        
+        
+      //상대방의 GetHit를 호출하는건 scene에서 각 class를 불러와야 하므로 Player, Enemy에서 구현
 
+            
     }
 
     /// <summary>
@@ -52,8 +58,24 @@ public class Character : MonoBehaviour, Observer
     ///    + Debug.Log($"{_myName} HP: {_myHp}"); 추가
     /// </summary>
     public virtual void GetHit(float damage)
-    {
 
+    {
+        if (_isFinished == false)
+        {
+            _myHp -= damage;
+
+            if (_myHp <= 0)
+            {
+                GameManager.Instance().EndNotify();
+                DeadMotion();
+            }
+
+            else
+            {
+                GetHitMotion();
+                Debug.Log($"{_myName} HP: {_myHp}");
+            }
+        }
     }
 
     /// <summary>

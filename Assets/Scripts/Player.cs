@@ -17,6 +17,11 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+
+        GameManager.Instance().AddCharacter(this);
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
     }
 
     private void Awake()
@@ -30,7 +35,8 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        //내가 필요한건 Enemy의 GetHit이므로, getComponent해서 Enemy까지 접근해야 함
+        _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
     }
 
     /// <summary>
@@ -45,11 +51,68 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
+        
 
+        if (_whoseTurn == _myName && _isFinished == false)
+        {
+            _randomAttack = Random.Range(0, 10);
+            if (_randomAttack < 3)
+            {
+                _myDamage += 10;
+                Debug.Log($"{_myName} Special Attack!");
+                _enemy.GetHit(_myDamage);
+                SpecialAttackMotion();
+                
+
+            }
+
+            else
+            {
+                _enemy.GetHit(_myDamage);
+                AttackMotion();
+            }
+        }
     }
 
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
+
+        StartCoroutine(HpBarDelay());
+        
+        
+    }
+
+
+    //HP bar UI
+
+    public delegate void HpHandler(float hp);
+    HpHandler _hpHandler;
+
+
+    public void AddObserver(HpInterface characterHpBar)
+    {
+        _hpHandler += characterHpBar.HpOnNotify;
+    }
+
+    public void HpNotify(float hp)
+    {
+        _hpHandler(hp);
+    }
+
+
+
+    IEnumerator HpBarDelay()
+    {
+
+        yield return new WaitForSeconds(2f);
+        HpNotify(_myHp);
 
     }
+
+
+
+
+
+
 }
