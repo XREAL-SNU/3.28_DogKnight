@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAttack", menuName = "Attacks/Attack", order = 2)]
 public class Attack : ScriptableObject {
     public float damage = 20f;
+    public float extraDamage = 0f;
     public float strengthMultiplier = 1f;
 
     public float duration = 1f; //duration until first hit
@@ -32,14 +33,14 @@ public class Attack : ScriptableObject {
     }
 
     public virtual float GetDamage(Character c) {
-        return damage * Mathf.Lerp(1f, c.strength, strengthMultiplier);
+        return (damage + Random.Range(0, extraDamage)) * Mathf.Lerp(1f, c.strength, strengthMultiplier);
     }
 
     public virtual void OnHit(Character c, Character target, float damage) {
         if (hitFx != null) {
             Instantiate(hitFx, target.transform.position + new Vector3(Random.Range(-fxOffset, fxOffset), 0.5f + Random.Range(-fxOffset, fxOffset), Random.Range(-fxOffset, fxOffset)), Quaternion.identity);
         }
-        target.GetHit(damage);
+        target.GetHit(GetDamage(c));
     }
 
     IEnumerator Hitter(Character c, Character target, float damage, float speed) {

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Player : Character
 {
-    public static float mp = 0f, maxMp = 100f;
+    public static float mp = 0f, maxMp = 250f;
+
+    public Skill[] skills;
     public int meditation = 0;
     private bool meditated = false;
 

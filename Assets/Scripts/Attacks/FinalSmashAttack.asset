@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b3b6f5722c4e7c42861ed8d554fbb3d, type: 3}
-  m_Name: MagicAttack
+  m_Name: FinalSmashAttack
   m_EditorClassIdentifier: 
-  damage: 8
-  extraDamage: 8
+  damage: 5
+  extraDamage: 3
   strengthMultiplier: 1
   duration: 1
   animTrigger: IsSpecialAttack
-  shots: 4
-  spacing: 0.25
-  animSpacingTrigger: 
-  hitFx: {fileID: 7819638651085767881, guid: 459ac26def793c242828b96bab58f856, type: 3}
+  shots: 30
+  spacing: 0.05
+  animSpacingTrigger: IsFastAttack
+  hitFx: {fileID: 7819638651085767881, guid: 1abb80549ae77e84bb0cd7739ad15d28, type: 3}
   fxOffset: 0.15
