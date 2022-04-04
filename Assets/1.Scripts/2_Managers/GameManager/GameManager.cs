@@ -4,16 +4,13 @@ namespace MainSystem.Managers.GameManager
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Events;
-    using Managers.UIManager;
 
     public partial class GameManager : MonoBehaviour//Data
     {
         private int gameRound = 0;
         private int whoseTurn = 0;
         private UnityEvent<int, int> turnProgressEvent = new UnityEvent<int, int>();
-        private Player player;
-        private Enemy enemy;
-        private AttackButton attackButton;
+        private List<Character> characterList = new List<Character>();
     }
     public partial class GameManager : MonoBehaviour//Main
     {
@@ -27,27 +24,20 @@ namespace MainSystem.Managers.GameManager
 
         }
     }
+    public partial class GameManager : MonoBehaviour//Signup
+    {
+        public void SignupCharacter(Character character)
+        {
+            characterList.Add(character);
+            turnProgressEvent.AddListener(character.ReceiveTureOrder);
+            character.Initialize();
+            character.SignupGameManager(this);
+        }
+    }
     public partial class GameManager : MonoBehaviour//Prop
     {
-        public void SignupATB(AttackButton attackButtonp)
-        {
-            attackButton = attackButtonp;
-            attackButton.Signup(this);
-        }
-        public void SignupEnemy(Enemy enemyp)
-        {
-            enemy = enemyp;
-            turnProgressEvent.AddListener(enemy.ReceiveTureOrder);
-            enemy.SignupGameManager(this);
-        }
-        public void SignupPlayer(Player playerp)
-        {
-            player = playerp;
-            turnProgressEvent.AddListener(player.ReceiveTureOrder);
-            player.SignupGameManager(this);
-        }
         public void RoundProgress()
-    {
+        {
             Debug.Log("RoundProgress");
             RoundCount();
             CheckTurn();
@@ -91,7 +81,6 @@ namespace MainSystem.Managers.GameManager
             }
             Debug.Log("GameManager: The End");
             Debug.Log($"GameManager: Object Number {whoseTurn} is Winer!");
-            attackButton.Disable();
         }
     }
 }

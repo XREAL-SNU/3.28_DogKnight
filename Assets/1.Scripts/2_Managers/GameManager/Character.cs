@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using MainSystem.Managers.GameManager;
 public enum AnimatorParameters
 {
     IsAttack, IsSpecialAttack, GetHit, IsDead
@@ -21,17 +20,18 @@ namespace MainSystem.Managers.GameManager
         [SerializeField] protected UnityEvent DeadSignal;
         [SerializeField] protected int myNum;
         private GameManager gameManager;
+        [SerializeField] private UnityEvent<int> sendName;
     }
     public partial class Character : MonoBehaviour //Main
     {
         private void Start()
         {
+            MainSystem.Instance.GameManager.SignupCharacter(this);
             Initialize();
         }
         private void Allocate()
         {
             _animator = GetComponent<Animator>();
-
             ExtendAllocate();
         }
         public void Initialize()
@@ -52,12 +52,19 @@ namespace MainSystem.Managers.GameManager
 
         }
     }
-    public partial class Character : MonoBehaviour
+    public partial class Character : MonoBehaviour//Signup
     {
         public void SignupGameManager(GameManager gameManagerp)
         {
             gameManager = gameManagerp;
             DeadSignal.AddListener(gameManager.ReceiveDeadSignal);
+        }
+    }
+    public partial class Character : MonoBehaviour
+    {
+        public void SendName()
+        {
+            sendName.Invoke(myNum);
         }
         public void ReceiveTureOrder(int whosTurnPra, int gameRoundPra)
         {

@@ -8,7 +8,7 @@ namespace MainSystem.Managers.GameManager
     {
         protected override void ExtendAllocate()
         {
-            MainSystem.Instance.GameManager.SignupEnemy(this);
+
         }
         protected override void ExtendInitialize()
         {

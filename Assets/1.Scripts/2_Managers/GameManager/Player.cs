@@ -7,12 +7,11 @@ namespace MainSystem.Managers.GameManager
     {
         protected override void ExtendAllocate()
         {
-            MainSystem.Instance.GameManager.SignupPlayer(this);
 
         }
         protected override void ExtendInitialize()
         {
-
+            
         }
     }
     public partial class Player : Character//Prop
