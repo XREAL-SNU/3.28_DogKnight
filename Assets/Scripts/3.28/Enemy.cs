@@ -5,7 +5,6 @@ using UnityEngine;
 public class Enemy : Character
 {
     // 1. _player 변수 삭제 -> GetCharacter로 접근할 거임
-    //private Player _player;
     private float _randomHeal;
 
     protected override void Init()

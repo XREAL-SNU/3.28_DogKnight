@@ -23,11 +23,31 @@ public class ItemGroup : UIBase
     public override void Init()
     {
 
+        Text _typeName = UIUtils.FindUIChild<Text>(gameObject, "Name", true);
+        _typeName.text = _itemGroupName;
+        Transform itemPanel = UIUtils.FindUIChild<Transform>(gameObject, "BackGround");
+
+
+
+        foreach (ItemProperty itemProperty in ItemProperty.ItemProperties)
+        {
+            if (itemProperty.PropertyType == _itemGroupName)
+            {
+                for (int i = 0; i < itemProperty.ItemNumber; i++)
+                {
+                    Item item = UIManager.UI.MakeSubItem<Item>(itemPanel, itemProperty.ItemName);
+                    item.SetInfo(itemProperty.ItemName);
+                }
+            }
+
+        }
+
+
     }
 
     // 5. SetInfo: itemtype을 _itemGroupName에 할당
     public void SetInfo(string itemtype)
     {
-        
+        _itemGroupName = itemtype;
     }
 }

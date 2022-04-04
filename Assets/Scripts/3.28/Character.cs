@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// �ִϸ����� Ʈ���� �̸� ���������� ���� (������ �ʿ� ����)
+
 public enum AnimatorParameters
 {
     IsAttack, IsSpecialAttack, GetHit, IsDead
@@ -12,7 +12,7 @@ public class Character : MonoBehaviour, Observer
 {
     public string _myName;
     public float _myHp;
-    // 1. Hp UI bar ������ ���� HpMax �� �߰�
+
     public float _myHpMax;
     public float _myDamage;
 
@@ -84,13 +84,13 @@ public class Character : MonoBehaviour, Observer
 
     IEnumerator GetHitCoroutine()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         _animator.SetTrigger(AnimatorParameters.GetHit.ToString());
     }
 
     IEnumerator DeadCoroutine()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1f);
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 }
