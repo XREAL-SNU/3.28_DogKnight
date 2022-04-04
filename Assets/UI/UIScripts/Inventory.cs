@@ -35,12 +35,11 @@ public class Inventory : UIPopup
         closeButton.BindEvent(OnClick_Close);
 
         GameObject contentPanel = GetObject((int)Inventories.ContentPanel); 
-        foreach(ItemPropertyType type in Enum.GetValues(typeof(ItemPropertyType)))
+        foreach(string type in Enum.GetNames(typeof(ItemPropertyType)))
         {
-            GameObject itemgroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform).gameObject;
-            ItemGroup itemgroupscript = itemgroup.GetOrAddComponent<ItemGroup>();
-            itemgroupscript.SetInfo(type.ToString());
-           
+            ItemGroup _itemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform,"ItemGroup");
+            _itemGroup.SetInfo(type);
+
         }
     }
 

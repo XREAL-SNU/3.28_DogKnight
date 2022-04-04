@@ -29,11 +29,9 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
-        Bind<Image>(typeof(Images));
-        Bind<Text>(typeof(Texts));
-
-        GetText((int)Texts.Text).text = _name;;
-        GetImage((int)Images.Image).gameObject.BindEvent(OnClick_ItemUse);
+        Bind<GameObject>(typeof(Images));
+        GameObject image = GetUIComponent<GameObject>((int)Images.Image);
+        image.BindEvent(OnClick_ItemUse);
 
     }
 
@@ -71,22 +69,29 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
+        Character Player = GameManager.Instance().GetCharacter("Player");
 
         switch (_itemName)
         {
             case "FlameItem":
-                GameManager.Instance().GetCharacter("Player")._myDamage = 30;  //이러면 영구히 올라가 버리는 거 아니냐?    
-                
+                Player._myDamage += 5;
+                Debug.Log($"Your Damage Added for 5!");
                 break;
 
 
             case "FireSpearItem":
-                GameManager.Instance().GetCharacter("Player")._myDamage = 25; 
+                Player._myDamage += Player._myDamage/10;
+                Debug.Log($"Your Damage Multiplied for 10%!");
+
                 break;
 
             case "Heal":
-                GameManager.Instance().GetCharacter("Player")._myHp += 10;
-                UIManager.Instance()._sceneUI.GetComponent<SceneUI>().CharacterHp();
+                if (Player._myHp < Player._myHpMax-10)
+                {
+                    Player._myHp += 5;
+                }
+                UIManager.UI._sceneUI.GetComponent<SceneUI>().CharacterHp();
+                Debug.Log($"Your Got Your Hp 5 back!");
                 break;
 
             default:

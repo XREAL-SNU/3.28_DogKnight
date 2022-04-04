@@ -91,9 +91,9 @@ GameObject:
   - component: {fileID: 8373836615289560751}
   - component: {fileID: 2614930309365247774}
   - component: {fileID: 5778474348393657410}
-  - component: {fileID: 7462465132905046324}
+  - component: {fileID: 4705259159343596160}
   m_Layer: 5
-  m_Name: Item
+  m_Name: FlameItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7462465132905046324
+--- !u!114 &4705259159343596160
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5106289487274644075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d14b4bac74631e42bc85f0525e852a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 184ad246f42269845a9ec6281c6d1c98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7845858824458538000
@@ -251,15 +251,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.15236738, b: 0.15236738, a: 1}
+  m_Color: {r: 0.39460236, g: 0.15294118, b: 0.7529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: ea5ccbf4851b6c746b910f3fc90a264c, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

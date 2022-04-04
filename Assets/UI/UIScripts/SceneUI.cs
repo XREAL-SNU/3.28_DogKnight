@@ -96,7 +96,7 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        if (_whoseTurn == "Player")
+        if (_whoseTurn == "Enemy")
         {
             UIManager.Instance().ShowPopupUI<UIPopup>("Inventory"); // () 자리에 string =null이라는데..: 이건 기본 설정..! 아무 말 않으면 그렇게 나온다는 거긴 해
         }

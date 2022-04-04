@@ -533,7 +533,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1788081099
 PrefabInstance:
@@ -646,7 +646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5788835982253831928, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5788835982253831928, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}
       propertyPath: m_AnchorMax.x
@@ -727,6 +727,18 @@ PrefabInstance:
     - target: {fileID: 5788835982618590369, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7469722673756916292, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}
+      propertyPath: m_Text
+      value: Get Ready...
+      objectReference: {fileID: 0}
+    - target: {fileID: 7469722673756916292, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7469722673756916292, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8297b4c68456ba3489d1cc43003efdfd, type: 3}

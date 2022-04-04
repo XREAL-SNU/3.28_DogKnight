@@ -24,21 +24,19 @@ public class ItemGroup : UIBase
     {
         Text itemText = UIUtils.FindUIChild<Text>(gameObject, "ItemTypeText", true);
         itemText.text = _itemGroupName;
-        Transform itemPanel = UIUtils.FindUIChild<Transform>(gameObject, "ItemPanel");
+        Transform itemPanel = UIUtils.FindUIChild<Transform>(gameObject, "ItemPanel", true);
         foreach (ItemProperty i in ItemProperty.ItemProperties)
         {
             if (i.PropertyType == _itemGroupName)
             {
                 for (int j = 0; j < i.ItemNumber; j++)
                 {
-                    GameObject item = UIManager.UI.MakeSubItem<Item>(itemPanel, i.ItemName).gameObject;
-                    Item itemscript = item.GetOrAddComponent<Item>();
-                    itemscript.SetInfo(i.ToString()); //나중에 숫자 바꾸기
+                    Item item = UIManager.UI.MakeSubItem<Item>(itemPanel, i.ItemName);
+                    item.SetInfo(i.ItemName);
                 }
             }
 
         }
-        //이건.. 도저히 안 되겠어서.. 그치만 조만간 바꾼다..!
     }
     // 5. SetInfo: itemtype을 _itemGroupName에 할당
     public void SetInfo(string itemtype)
