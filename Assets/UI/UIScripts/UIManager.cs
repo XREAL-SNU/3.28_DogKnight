@@ -34,7 +34,7 @@ namespace XReal.XTown.UI
 
         // references to the two types of UI.
         Stack<UIPopup> _popupStack = new Stack<UIPopup>();
-        UIScene _sceneUI = null;
+        public UIScene _sceneUI = null; //아니 이걸 참조하지 않으면 안 되는데... 
 
         // used for sorting order of UI.
         public GameObject Root

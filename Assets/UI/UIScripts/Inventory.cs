@@ -15,7 +15,7 @@ public class Inventory : UIPopup
         CloseButton
     }
 
-    public int ItemNum = 30;
+    public int ItemNum = 20;
 
     private void Start()
     {
@@ -28,24 +28,26 @@ public class Inventory : UIPopup
     // 4. 생성할 때, ItemGroup의 SetInfo에 ItemPropertyType 할당해서 정보 넘겨줄 것
     public override void Init()
     {
-        base.Init();
+        base.Init(); 
+        
         Bind<GameObject>(typeof(Inventories));
         GameObject closeButton = GetUIComponent<GameObject>((int)Inventories.CloseButton);
         closeButton.BindEvent(OnClick_Close);
-        GameObject contentPanel = GetUIComponent<GameObject>((int)Inventories.ContentPanel);
 
-        for (int i = 0; i < ItemNum; i++)
+        GameObject contentPanel = GetObject((int)Inventories.ContentPanel); 
+        foreach(ItemPropertyType type in Enum.GetValues(typeof(ItemPropertyType)))
         {
-            string name = "Item" + i;
-            GameObject item = UIManager.UI.MakeSubItem<Item>(contentPanel.transform).gameObject;
-            Item itemscript = item.GetOrAddComponent<Item>();
-            itemscript.SetInfo(ItemProperty.GetItemProperty(name).PropertyType);
+            GameObject itemgroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform).gameObject;
+            ItemGroup itemgroupscript = itemgroup.GetOrAddComponent<ItemGroup>();
+            itemgroupscript.SetInfo(type.ToString());
+           
         }
     }
+
 
     // 5. OnClick_Close: Popup 닫기
     public void OnClick_Close(PointerEventData data)
     {
-        UIManager.Instance().ClosePopupUI(this);
+        UIManager.UI.ClosePopupUI(this);
     }
 }

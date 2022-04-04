@@ -20,7 +20,6 @@ public class Item : UIBase
 
     private string _itemName;
     private string _name;
-    private int _color;
 
     private void Start()
     {
@@ -33,8 +32,7 @@ public class Item : UIBase
         Bind<Image>(typeof(Images));
         Bind<Text>(typeof(Texts));
 
-        GetText((int)Texts.Text).text = _name;
-        GetImage((int)Images.Image).color = new Color(0, _color / 255f, 0);
+        GetText((int)Texts.Text).text = _name;;
         GetImage((int)Images.Image).gameObject.BindEvent(OnClick_ItemUse);
 
     }
@@ -57,7 +55,7 @@ public class Item : UIBase
         if (itemProperty.ItemNumber > 0)
         {
             itemProperty.ItemNumber--;
-            Destroy(this);
+            Destroy(this.gameObject);
             ItemAction(); //이걸 없애버리는 게 맞냐?
             
         }
@@ -83,13 +81,14 @@ public class Item : UIBase
 
 
             case "FireSpearItem":
-
+                GameManager.Instance().GetCharacter("Player")._myDamage = 25; 
                 break;
 
             case "Heal":
                 GameManager.Instance().GetCharacter("Player")._myHp += 10;
-                //SceneUI.CharacterHp(); //이거 많이 보던 오류인데.. 하..
+                UIManager.Instance()._sceneUI.GetComponent<SceneUI>().CharacterHp();
                 break;
+
             default:
                 break;
         }

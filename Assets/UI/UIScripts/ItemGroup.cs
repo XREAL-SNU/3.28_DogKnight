@@ -22,8 +22,8 @@ public class ItemGroup : UIBase
     // 4. 생성할 때, Item의 SetInfo에 _itemName 할당해서 정보 넘겨줄 것
     public override void Init()
     {
-        Text _typeText = UIUtils.FindUIChild<Text>(gameObject, "ItemTypeText", true);
-        _typeText.text = _itemGroupName;
+        Text itemText = UIUtils.FindUIChild<Text>(gameObject, "ItemTypeText", true);
+        itemText.text = _itemGroupName;
         Transform itemPanel = UIUtils.FindUIChild<Transform>(gameObject, "ItemPanel");
         foreach (ItemProperty i in ItemProperty.ItemProperties)
         {
@@ -31,14 +31,15 @@ public class ItemGroup : UIBase
             {
                 for (int j = 0; j < i.ItemNumber; j++)
                 {
-                    Item item = UIManager.UI.MakeSubItem<Item>(itemPanel, i.ItemName);
-                    item.SetInfo(i.ItemName);
+                    GameObject item = UIManager.UI.MakeSubItem<Item>(itemPanel, i.ItemName).gameObject;
+                    Item itemscript = item.GetOrAddComponent<Item>();
+                    itemscript.SetInfo(i.ToString()); //나중에 숫자 바꾸기
                 }
             }
 
         }
         //이건.. 도저히 안 되겠어서.. 그치만 조만간 바꾼다..!
-
+    }
     // 5. SetInfo: itemtype을 _itemGroupName에 할당
     public void SetInfo(string itemtype)
     {
