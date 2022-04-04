@@ -8,6 +8,15 @@ using XReal.XTown.UI;
 public class Item : UIBase
 {
     // 1. enum 자유롭게 구성
+    enum Images
+    {
+        Image
+    }
+
+    enum Texts
+    {
+        Text
+    }
 
     private string _itemName;
 
@@ -19,7 +28,12 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
-        
+        Bind<Image>(typeof(Images));
+        Bind<Text>(typeof(Texts));
+
+        GetText((int)Texts.Text).text = _itemName;
+        GetImage((int)Images.Image).color = new Color(0, 0, 0);
+        GetImage((int)Images.Image).gameObject.BindEvent(OnClick_ItemUse);
     }
 
     /// <summary>
@@ -49,6 +63,7 @@ public class Item : UIBase
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        this.name = itemName;
+        _itemName = itemName;
     }
 }

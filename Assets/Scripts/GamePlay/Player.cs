@@ -45,11 +45,11 @@ public class Player : Character
         _randomAttack = Random.Range(0, 10);
         if(((int)_randomAttack)%3 == 0){
             SpecialAttackMotion();
-            GameManager.Instance()GetCharacter("Enemy").GetHit(_myDamage + 10);
+            GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage + 10);
         }
         else{
             AttackMotion();
-            GameManager.Instance()GetCharacter("Enemy").GetHit(_myDamage);
+            GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
         }
     }
 
