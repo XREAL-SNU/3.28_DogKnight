@@ -173,6 +173,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameRoundText: {fileID: 721858432}
   attackButton: {fileID: 871003169}
+--- !u!1 &183641986 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 484046327490358599, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+  m_PrefabInstance: {fileID: 1880458182485492194}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &317479924
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,6 +451,11 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1530656908 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 484046326576318783, guid: 50943fdd987d3124ba69f36c5a910456, type: 3}
+  m_PrefabInstance: {fileID: 1880458182485492194}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1560133246
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,6 +522,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1793961716 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8412005259776756172, guid: 991eb16ca7023e049a6c499c8e47ac63, type: 3}
+  m_PrefabInstance: {fileID: 8412005261346079237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1793961717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793961716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42d6822b10cc7e4aa9c6c638714000f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1880458182485492194
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -758,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 751348411435262265, guid: 1c501c6c374b29b49a1f31041ff89983, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 361
+      value: 352
       objectReference: {fileID: 0}
     - target: {fileID: 1991116798205148085, guid: 1c501c6c374b29b49a1f31041ff89983, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1030,6 +1057,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5932007961811248873, guid: 71c28f920e5795b459068b14a311cea1, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 183641986}
+    - target: {fileID: 5932007961811248873, guid: 71c28f920e5795b459068b14a311cea1, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1530656908}
     - target: {fileID: 5932007961811248887, guid: 71c28f920e5795b459068b14a311cea1, type: 3}
       propertyPath: m_Name
       value: HealItem
@@ -1192,6 +1227,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlameItem
       objectReference: {fileID: 0}
+    - target: {fileID: 8412005259776756174, guid: 991eb16ca7023e049a6c499c8e47ac63, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 183641986}
+    - target: {fileID: 8412005259776756174, guid: 991eb16ca7023e049a6c499c8e47ac63, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1530656908}
     - target: {fileID: 8412005259776756175, guid: 991eb16ca7023e049a6c499c8e47ac63, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

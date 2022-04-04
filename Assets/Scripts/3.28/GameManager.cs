@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour, Subject
     {
         _turnHandler += new TurnHandler(character.GetComponent<Character>().TurnUpdate);
         _finishHandler += new FinishHandler(character.GetComponent<Character>().FinishUpdate);
+        this._characterList.Add(character.name, character);
         // 1. _characterList¿¡ Ãß°¡
     }
 
@@ -141,6 +142,10 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public Character GetCharacter(string name)
     {
+        if(this._characterList.ContainsKey(name))
+        {
+            return this._characterList[name];
+        }
         return null;
     }
 }

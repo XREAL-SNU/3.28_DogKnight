@@ -37,6 +37,17 @@ public class Player : Character
         }
     }
 
+    public void AddDamage(int damage)
+    {
+        _myDamage += damage;
+    }
+
+    public void AddHpAndUpdateBar(int heal)
+    {
+        _myHp += heal;
+        SetHpOfChracters.updatePlayerHp(_myHp);
+    }
+
     /// <summary>
     /// Attack:
     /// 1) Player는 30%의 확률로 공격력이 더 높은 공격을 가할 것

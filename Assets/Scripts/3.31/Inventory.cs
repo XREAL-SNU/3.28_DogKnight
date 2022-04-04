@@ -35,7 +35,6 @@ public class Inventory : UIPopup
         GetObject((int)GameObjects.CloseButton).BindEvent(OnClick_Close);
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
 
-
         // flame item 추가
         ItemGroup flameItemGroup =  UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
         GameObject flameItemGroupObject = flameItemGroup.gameObject;
@@ -50,19 +49,18 @@ public class Inventory : UIPopup
             itemscript.SetInfo(name);
         }
 
+        // heal item 추가
         ItemGroup healItemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
         GameObject healItemGroupObject = healItemGroup.gameObject;
         healItemGroup.SetInfo("Heal");
-
-        // heal item 추가 
-        for (int i = 0; i <  healItemNum; i++)
+ 
+        for (int i = 0; i < healItemNum; i++)
         {
             string name = "HealItem";
             GameObject item = UIManager.UI.MakeSubItem<Item>(healItemGroupObject.transform.GetChild(1).transform, name).gameObject;
             Item itemscript = item.GetOrAddComponent<Item>();
             itemscript.SetInfo(name);
         }
-
     }
 
     // 5. OnClick_Close: Popup 닫기

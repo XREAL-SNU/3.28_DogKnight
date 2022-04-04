@@ -57,6 +57,9 @@ namespace XReal.XTown.UI
         public static void BindEvent(GameObject go, Action<PointerEventData> action, UIEvents.UIEvent type = UIEvents.UIEvent.Click)
         {
             UIEventHandler evt = go.GetComponent<UIEventHandler>();
+            Debug.Log(evt);
+            Debug.Log("event");
+
             if (evt is null)
             {
                 Debug.Log("<color = red> Deprecation warning: XReal UI convention requires you to attach UIEventHandler script to " +
@@ -72,6 +75,7 @@ namespace XReal.XTown.UI
                     break;
                 case UIEvents.UIEvent.Click:
                     evt.OnClickHandler -= action;
+                    Debug.Log("clicked");
                     evt.OnClickHandler += action;
                     break;
                 case UIEvents.UIEvent.Exit:

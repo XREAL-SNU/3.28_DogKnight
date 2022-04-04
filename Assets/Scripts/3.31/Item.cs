@@ -9,7 +9,17 @@ public class Item : UIBase
 {
     // 1. enum 자유롭게 구성
 
+    enum GameObjects
+    {
+        Image
+    }
+
     private string _itemName;
+    private int flameItemNum = 10;
+    private int healItemNum = 15;
+
+    private int DAMAGE_INCREASE = 5;
+    private int HP_INCREASE = 7;
 
     private void Start()
     {
@@ -19,7 +29,11 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
-        
+       
+        Bind<GameObject>(typeof(GameObjects));
+
+        GameObject image = GetUIComponent<GameObject>((int)GameObjects.Image);
+        image.BindEvent(OnClick_ItemUse);
     }
 
     /// <summary>
@@ -31,7 +45,24 @@ public class Item : UIBase
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
     {
-        
+        if(_itemName == "FlameItem")
+        {
+            if(flameItemNum > 0)
+            {
+                flameItemNum--;
+                Destroy(this.gameObject);
+
+            }
+        } else
+        {
+            if (healItemNum > 0)
+            {
+                healItemNum--;
+                Destroy(this.gameObject);
+
+            }
+        }
+        ItemAction();
     }
 
     /// <summary>
@@ -43,7 +74,14 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
-        
+        if (_itemName == "FlameItem")
+        {
+            GameManager.Instance().GetCharacter("Player").GetComponent<Player>().AddDamage(DAMAGE_INCREASE);
+        } else
+        {
+            GameManager.Instance().GetCharacter("Player").GetComponent<Player>().AddHpAndUpdateBar(HP_INCREASE);
+           
+        }
     }
 
     // 5. SetInfo: itemName을 _itemName에 할당
