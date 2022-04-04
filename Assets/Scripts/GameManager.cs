@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour, Subject
 {
@@ -66,8 +67,15 @@ public class GameManager : MonoBehaviour, Subject
     ///  + Debug.Log($"GameManager: {_whoseTurn} turn.");
     /// 2) _turnHandler 호출
     /// </summary>
+    /// 
+
+    public Image blocker;
+
+
     public void TurnNotify()
     {
+        blocker.enabled = true;
+
         if (_whoseTurn=="Enemy")
         {   //처음에 Enemy니까 Player로 바뀌고 시작: 처음 찍히는 로그가 " Player turn"임
             _whoseTurn = "Player";
@@ -124,4 +132,7 @@ public class GameManager : MonoBehaviour, Subject
 
 
     }
+
+
+  
 }

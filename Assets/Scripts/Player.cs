@@ -77,5 +77,42 @@ public class Player : Character
     public override void GetHit(float damage)
     {
         base.GetHit(damage);
+
+        StartCoroutine(HpBarDelay());
+        
+        
     }
+
+
+    //HP bar UI
+
+    public delegate void HpHandler(float hp);
+    HpHandler _hpHandler;
+
+
+    public void AddObserver(HpInterface characterHpBar)
+    {
+        _hpHandler += characterHpBar.HpOnNotify;
+    }
+
+    public void HpNotify(float hp)
+    {
+        _hpHandler(hp);
+    }
+
+
+
+    IEnumerator HpBarDelay()
+    {
+
+        yield return new WaitForSeconds(2f);
+        HpNotify(_myHp);
+
+    }
+
+
+
+
+
+
 }
