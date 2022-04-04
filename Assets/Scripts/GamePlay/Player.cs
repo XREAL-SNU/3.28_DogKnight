@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
+    //private Enemy _enemy;
     private float _randomAttack;
 
     /// <summary>
@@ -19,24 +19,14 @@ public class Player : Character
         base.Init();
         GameManager.Instance().AddCharacter(gameObject.GetComponent<Player>());
         _myName = "Player";
-        _myHp = 100;
+        _myHpMax = 100;
+        _myHp = _myHpMax;
         _myDamage = 20;
     }
 
     private void Awake()
     {
         Init();
-    }
-
-    /// <summary>
-    /// 1) _enemy�� �Ҵ��� �ȵƴٸ�,
-    /// 2) GameObject.FindWithTag �̿��ؼ� _enemy �Ҵ�
-    /// </summary>
-    private void Start()
-    {
-        if(_enemy == null){
-            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
-        }
     }
 
     /// <summary>
@@ -54,12 +44,12 @@ public class Player : Character
         if(_isFinished || _myName != _whoseTurn) return;
         _randomAttack = Random.Range(0, 10);
         if(((int)_randomAttack)%3 == 0){
-            _enemy.GetHit(_myDamage + 10);
             SpecialAttackMotion();
+            GameManager.Instance()GetCharacter("Enemy").GetHit(_myDamage + 10);
         }
         else{
-            _enemy.GetHit(_myDamage);
             AttackMotion();
+            GameManager.Instance()GetCharacter("Enemy").GetHit(_myDamage);
         }
     }
 

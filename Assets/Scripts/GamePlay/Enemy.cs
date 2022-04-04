@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private Player _player;
+    // private Player _player;
     private float _randomHeal;
 
     /// <summary>
@@ -19,7 +19,8 @@ public class Enemy : Character
         base.Init();
         GameManager.Instance().AddCharacter(gameObject.GetComponent<Enemy>());
         _myName = "Enemy";
-        _myHp = 100;
+        _myHpMax = 100;
+        _myHp = _myHpMax;
         _myDamage = 10;
     }
 
@@ -28,16 +29,6 @@ public class Enemy : Character
         Init();
     }
 
-    /// <summary>
-    /// 1) _player�� �Ҵ��� �ȵƴٸ�,
-    /// 2) GameObject.FindWithTag �̿��ؼ� _player �Ҵ�
-    /// </summary>
-    private void Start()
-    {
-        if(_player == null){
-            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        }
-    }
 
     /// <summary>
     /// Attack:
@@ -47,13 +38,13 @@ public class Enemy : Character
     public override void Attack()
     {
         if(_isFinished || _myName != _whoseTurn) return;
+        AttackMotion();
         if(_gameRound<10){
-            _player.GetHit(3*_gameRound + _myDamage);
+            GameManager.Instance().GetCharacter("Player").GetHit(3*_gameRound + _myDamage);
         }
         else{
-            _player.GetHit(999);
+            GameManager.Instance().GetCharacter("Player").GetHit(999);
         }
-        AttackMotion();
     }
 
     /// <summary>

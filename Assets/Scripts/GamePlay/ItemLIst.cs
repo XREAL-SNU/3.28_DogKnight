@@ -20,7 +20,7 @@ public class ItemProperty
         HealItem_HealStone
     };
 
-    // �̸����� ItemProperties �ȿ� �ش� �̸��� ItemProperty�� �ִ��� ������ ������ �ν��Ͻ� ��ȯ 
+    // 이름으로 ItemProperties 안에 해당 이름의 ItemProperty이 있는지 없는지 있으면 인스턴스 반환 
     public static ItemProperty GetItemProperty(string name)
     {
         foreach (ItemProperty item in ItemProperties)
@@ -41,8 +41,8 @@ public class ItemProperty
         this.ItemAction = action;
     }
 
-    public string PropertyType; // ������ ����
-    public string ItemName; // ������ �̸�
-    public int ItemNumber; // ������ ����
-    public float ItemAction; // ������ Ŭ���� Ȱ���� ����
+    public string PropertyType; // 아이템 종류
+    public string ItemName; // 아이템 이름
+    public int ItemNumber; // 아이템 개수
+    public float ItemAction; // 아이템 클릭시 활용할 변수
 }
