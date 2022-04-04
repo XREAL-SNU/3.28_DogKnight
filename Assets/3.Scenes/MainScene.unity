@@ -530,6 +530,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   myNum: 1
+  sendName:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &278362740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,6 +1309,9 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   myNum: 0
+  sendName:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1734614695
 GameObject:
   m_ObjectHideFlags: 0
