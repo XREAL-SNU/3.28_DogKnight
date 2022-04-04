@@ -11,13 +11,12 @@ public enum AnimatorParameters
 public class Character : MonoBehaviour, Observer
 {
     public string _myName;
+    // 1. Hp UI bar 구현을 위해 HpMax 값 추가
+    public float _myHpMax;
     public float _myHp;
     public float _myDamage;
 
     protected int _gameRound;
-    // fixed _whoseTurn data type from 'int' to 'string'
-    // was not sure if senior sunbaenim meant to convert 'string' to 'index(int)'
-    // so I just gaeshangmyway
     protected string _whoseTurn;
     protected bool _isFinished;
 
@@ -65,6 +64,7 @@ public class Character : MonoBehaviour, Observer
         else
         {
             GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
         }
     }
 

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private Player _player;
     private float _randomHeal;
-    private float _turnDamage;
 
     /// <summary>
     /// 1. Init: ??? ??
@@ -18,27 +16,17 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance().AddCharacter(this);
         _myName = "Enemy";
-        _myHp = 100;
+        _myHpMax = 100;
+        _myHp = _myHpMax;
         _myDamage = 10;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
+
     }
 
     private void Awake()
     {
         Init();
-    }
-
-    /// <summary>
-    /// 1) _player? ??? ????,
-    /// 2) GameObject.FindWithTag ???? _player ??
-    /// </summary>
-    private void Start()
-    {
-        if (_player == null)
-        {
-            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        }
     }
 
     /// <summary>
@@ -48,17 +36,18 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-        if (!_isFinished && _myName == _whoseTurn)
+        if (!_isFinished && _myName.Equals(_whoseTurn))
         {
-            _turnDamage = _myDamage + 3 * _gameRound;
-            if (_gameRound == 10)
-            {
-                _turnDamage = float.MaxValue;
-            }
-
             AttackMotion();
 
-            _player.GetHit(_turnDamage);
+            if (_gameRound >= 10)
+            {
+                GameManager.Instance().GetCharacter("Player").GetHit(float.MaxValue);
+            }
+            else
+            {
+                GameManager.Instance().GetCharacter("Player").GetHit(_myDamage + 3 * _gameRound);
+            }
         }
     }
 
@@ -78,12 +67,23 @@ public class Enemy : Character
 
             if (_randomHeal < 3)
             {
-                _myHp += 10;
-                Debug.Log($"{_myName} Heal!");
+                StartCoroutine(HealCoroutine());
             }
-
-            Debug.Log($"{_myName} HP: {_myHp}");
         }
+    }
+
+    /// <summary>
+    /// HealCoroutine: 
+    /// 1) Player가 Enemy 공격 -> Hp 깎임 -> UI 반영
+    /// 2) Enemy 확률적으로 회복 -> Hp 참 -> UI 반영
+    /// 3) 중간에 yield return 하지 않으면 한번에 처리돼서 피격 하고 Heal 하는 UI 반영이 제대로 이루어지지 않음.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator HealCoroutine()
+    {
+        yield return new WaitForSeconds(1.3f);
+        _myHp += 10;
+        Debug.Log($"{_myName} Heal!");
     }
 }
 

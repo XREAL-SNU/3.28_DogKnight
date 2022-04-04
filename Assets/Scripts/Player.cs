@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
     private float _randomAttack;
-    private float _turnDamage;
 
     /// <summary>
     /// 1. Init: ??? ??
@@ -18,27 +16,16 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-        GameManager.Instance().AddCharacter(this);
         _myName = "Player";
-        _myHp = 100;
+        _myHpMax = 100;
+        _myHp = _myHpMax;
         _myDamage = 20;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
     }
 
     private void Awake()
     {
         Init();
-    }
-
-    /// <summary>
-    /// 1) _enemy? ??? ????,
-    /// 2) GameObject.FindWithTag ???? _enemy ??
-    /// </summary>
-    private void Start()
-    {
-        if (_enemy == null)
-        {
-            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
-        }
     }
 
     /// <summary>
@@ -56,30 +43,23 @@ public class Player : Character
         if (!_isFinished && _myName == _whoseTurn)
         {
             _randomAttack = Random.Range(0, 10);
-            _turnDamage = _myDamage;
 
             if (_randomAttack < 3)
             {
                 SpecialAttackMotion();
                 Debug.Log($"{_myName} Special Attack!");
-                _turnDamage += 10;
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage + 10);
             }
             else
             {
                 AttackMotion();
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
             }
-
-            _enemy.GetHit(_turnDamage);
         }
     }
 
     public override void GetHit(float damage)
     {
         base.GetHit(damage);
-
-        if (_myHp > 0)
-        {
-            Debug.Log($"{_myName} HP: {_myHp}");
-        }
     }
 }
