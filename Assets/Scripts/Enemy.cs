@@ -17,11 +17,17 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        _myHp = 100;
+        _myDamage = 10;
+        _myName = "Enemy";
+
     }
 
     private void Awake()
     {
         Init();
+
     }
 
     /// <summary>
@@ -30,7 +36,10 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>(); // John-Lemon문법 참고
+        }
     }
 
     /// <summary>
@@ -40,18 +49,33 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
-
+        bool revisFinished = !_isFinished;
+        if ((_myName == _whoseTurn) && revisFinished) // Character 부분에선 if ((_myName == _whoseTurn)&&(_gameRound <= 10))로 작성
+        {
+            if (_gameRound == 10)
+            {
+                _player.GetHit(123456789);
+            }
+            else
+            {
+                AttackMotion();
+                _player.GetHit(_myDamage); 
+                _myDamage = _myDamage + 3;
+            }
+            
+        }
     }
 
-    /// <summary>
-    /// GetHit:
-    /// 1) Player의 _randomAttack과 동일한 기능
-    /// 2) 30%의 확률로 피격시 10 체력 증가
-    ///   + Debug.Log($"{_myName} Heal!"); 추가
-    /// </summary>
+  
     public override void GetHit(float damage)
     {
-
+        int _randomAttack= Random.Range(0, 10);
+        base.GetHit(damage);
+        if(_randomAttack >= 7)
+        {
+            _myHp = _myHp + 10;
+            Debug.Log($"{_myName} Heal!");
+        }
     }
 }
 
