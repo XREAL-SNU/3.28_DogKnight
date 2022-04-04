@@ -8,6 +8,10 @@ using XReal.XTown.UI;
 public class Item : UIBase
 {
     // 1. enum 자유롭게 구성
+    enum GameObjects
+    {
+        BackgroundImage
+    }
 
     private string _itemName;
 
@@ -19,7 +23,9 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
-
+        Bind<GameObject>(typeof(GameObjects));
+        GameObject backgroundImage = GetUIComponent<GameObject>((int)GameObjects.BackgroundImage);
+        backgroundImage.BindEvent(OnClick_ItemUse);
     }
 
     /// <summary>
@@ -31,7 +37,13 @@ public class Item : UIBase
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
     {
-
+        ItemProperty itemProperty = ItemProperty.GetItemProperty(_itemName);
+        if(itemProperty.ItemNumber > 0)
+        {
+            itemProperty.ItemNumber--;
+        }
+        Destroy(this);
+        ItemAction();
     }
 
     /// <summary>
@@ -43,12 +55,27 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
+        Character player = GameManager.Instance().GetCharacter("Player");
+        ItemProperty itemProperty = ItemProperty.GetItemProperty(_itemName);
 
+        switch (itemProperty.ItemName)
+        {
+            case "FlameItem":
+                player._myDamage += 10;
+                break;
+            case "HealItem":
+                if(player._myHp < player._myHpMax)
+                {
+                    player._myHp = player._myHp + 10 > player._myHpMax ? player._myHpMax : player._myHp + 10;
+                }
+                UIManager.UI.GetComponent<SceneUI>().CharacterHp();
+                break;
+        }
     }
 
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        _itemName = itemName;
     }
 }

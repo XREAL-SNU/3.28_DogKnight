@@ -115,7 +115,7 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-
+        UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트

@@ -10,14 +10,15 @@ public enum ItemPropertyType
 public class ItemProperty
 {
     public static ItemProperty DamageItem_Flame = new ItemProperty(ItemPropertyType.Damage, "FlameItem", 4, 5f);
-    public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "FireSpearItem", 3, 10f);
-    public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealStoneItem", 4, 20f);
+    //public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "FireSpearItem", 3, 10f);
+    public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealItem", 4, 20f);
 
 
     public static ItemProperty[] ItemProperties = new ItemProperty[]
     {
-        DamageItem_Flame, DamageItem_FireSpear,
+        DamageItem_Flame,
         HealItem_HealStone
+        //DamageItem_FireSpear,
     };
 
     // 이름으로 ItemProperties 안에 해당 이름의 ItemProperty이 있는지 없는지 있으면 인스턴스 반환 
