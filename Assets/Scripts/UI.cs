@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -28,6 +29,10 @@ public class UI : MonoBehaviour {
         }
     }
 
+    public static Canvas Canvas() {
+        return FindObjectOfType<Canvas>();
+    }
+
     public static void Damage(Transform? parent, Vector3 worldPos, int amount, Color color, System.Func<float, float> interp) {
         RectTransform screenRect = FindObjectOfType<Canvas>().gameObject.GetComponent<RectTransform>();
         Vector2 pos = (Vector2)Camera.main.WorldToScreenPoint(worldPos) - screenRect.sizeDelta / 2f;
@@ -43,7 +48,7 @@ public class UI : MonoBehaviour {
         text.color = color;
         text.text = amount.ToString();
 
-        o.GetComponent<DamageIndicator>().Set(parent, new Vector2(Random.Range(-30f, 30f), Random.Range(-30f, 30f) + 100f), interp);
+        o.GetComponent<DamageIndicator>().Set(parent, new Vector2(UnityEngine.Random.Range(-30f, 30f), UnityEngine.Random.Range(-30f, 30f) + 100f), interp);
     }
 
     public static void Damage(Vector3 pos, int amount) {
@@ -60,5 +65,12 @@ public class UI : MonoBehaviour {
         GameObject o = Instantiate(Resources.Load<GameObject>("UI/CharBorder"), Vector3.zero, Quaternion.identity);
         o.GetComponent<CharacterFrame>().Set(character, enemy);
         o.transform.SetParent(enemy ? main.enemyFrame : main.playerFrame, false);
+    }
+
+    public static void SelectTarget(Vector2 pos, List<Character> list, Action<Character> action) {
+        GameObject o = Instantiate(Resources.Load<GameObject>("UI/CharSelectFrame"), Vector3.zero, Quaternion.identity);
+        o.GetComponent<CharSelectFrame>().Set(list, action);
+        o.transform.SetParent(Canvas().transform, false);
+        o.transform.position = pos;
     }
 }

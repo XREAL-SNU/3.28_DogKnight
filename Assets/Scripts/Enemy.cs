@@ -34,10 +34,10 @@ public class Enemy : Character
     /// 1) _gameRound가 지날때마다 데미지 3씩 증가
     /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가
     /// </summary>
-    public override void Attack() {
+    public override void Attack(Character target) {
         strength = 0.5f + 0.15f * _gameRound;
         if (_gameRound >= 10) strength = 99f;
-        base.Attack();
+        base.Attack(target);
 
         if (hp < maxHp - 1 && Random.Range(0f, 1f) < 0.3f) {
             Heal(10);

@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3b6f5722c4e7c42861ed8d554fbb3d, type: 3}
-  m_Name: TripleAttack
+  m_Script: {fileID: 11500000, guid: a7042cdc24484e7498df29faa45b2e94, type: 3}
+  m_Name: MPTripleAttack
   m_EditorClassIdentifier: 
-  damage: 8
+  damage: 7
   strengthMultiplier: 1
   duration: 0.4
   animTrigger: IsFastAttack
@@ -21,3 +21,6 @@ MonoBehaviour:
   animSpacingTrigger: IsFastAttack
   hitFx: {fileID: 7819638651085767881, guid: 08e139b6b7f11ca4b8695be6a9fb1a14, type: 3}
   fxOffset: 0.15
+  mpBase: -1
+  mpExtra: 5
+  mpEffect: {fileID: 7819638651085767881, guid: 3a0f5a3cfda78b24d98104f12af781f5, type: 3}

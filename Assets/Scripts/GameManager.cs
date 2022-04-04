@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour, Subject
     ///  + Debug.Log($"GameManager: Round {gameRound}.");
     /// 2) TurnNotify() 호출
     /// </summary>
-    public void RoundNotify()
+    public void RoundNotify(Action<Character> attack) //스켈레톤이 공격과 턴 체인지를 통합시켰는데, 이를 분리하려니 희대의 스파게티 코드가 탄생... 
     {
         if (_isEnd) return;
         if (!PlayerTurn() && turn >= enemies.Count - 1) {
@@ -45,7 +46,11 @@ public class GameManager : MonoBehaviour, Subject
             Debug.Log($"GameManager: Round {_gameRound}.");
         }
         
-        TurnNotify();
+        TurnNotify(attack);
+    }
+
+    public void RoundNotify() {
+        RoundNotify(c => c.Attack(null));
     }
 
     /// <summary>
@@ -54,7 +59,7 @@ public class GameManager : MonoBehaviour, Subject
     ///  + Debug.Log($"GameManager: {_whoseTurn} turn.");
     /// 2) _turnHandler 호출
     /// </summary>
-    public void TurnNotify()
+    public void TurnNotify(Action<Character> attack)
     {
         turn++;
         if(turn >= TeamMember(PlayerTurn()).Count) {
@@ -68,8 +73,12 @@ public class GameManager : MonoBehaviour, Subject
         }
         else {
             TurnEvent(_gameRound, _whoseTurn, CurrentCharacter());
-            CurrentCharacter().Attack();
+            attack(CurrentCharacter());
         }
+    }
+
+    public void TurnNotify() {
+        TurnNotify(c => c.Attack(null));
     }
 
     public void TurnEnd() {

@@ -25,7 +25,7 @@ public class ManaBar : MonoBehaviour {
             setMP(Player.mp);
         }
 
-        mpText.text = Mathf.CeilToInt(Mathf.Clamp(Player.mp, 0, Player.maxMp)) + "";
+        mpText.text = Mathf.FloorToInt(Mathf.Clamp(Player.mp, 0, Player.maxMp)) + "";
     }
 
     private void setMP(float mp) {

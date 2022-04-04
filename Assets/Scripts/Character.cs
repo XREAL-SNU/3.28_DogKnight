@@ -47,8 +47,8 @@ public class Character : MonoBehaviour, Observer
     /// 2) AttackMotion() 호출해서 애니메이션 실행
     /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
     /// </summary>
-    public virtual void Attack() {
-        baseAttack.At(this, Target());
+    public virtual void Attack(Character target) {
+        baseAttack.At(this, target == null ? Target() : target);
     }
 
     public virtual void EndAttack() {
