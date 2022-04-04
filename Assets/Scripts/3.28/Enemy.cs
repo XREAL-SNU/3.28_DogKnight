@@ -59,6 +59,12 @@ public class Enemy : Character
     {
         yield return new WaitForSeconds(1.3f);
         _myHp += 10;
+
+        // show Heal Image for 1sec
+        GameObject healImg = Instantiate(Resources.Load("UI/Scene/HealImage") as GameObject, new Vector3(570F, -362F, 0F), Quaternion.identity) as GameObject;
+        Debug.Log(healImg.ToString());
+        healImg.transform.SetParent(GameObject.Find("SceneUI").transform, false);
+        Destroy(healImg, 1F);
         Debug.Log($"{_myName} Heal!");
     }
 }

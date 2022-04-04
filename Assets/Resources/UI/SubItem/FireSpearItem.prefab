@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8404464767473562920}
   - component: {fileID: 1077486251072001438}
   - component: {fileID: 4323945763494554142}
+  - component: {fileID: -8802375831462542576}
   m_Layer: 5
   m_Name: FireSpearItem
   m_TagString: Untagged
@@ -131,5 +132,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4cb7f365b84463a40aca10ed879fe58c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8802375831462542576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 820645985114366274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f42d6822b10cc7e4aa9c6c638714000f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

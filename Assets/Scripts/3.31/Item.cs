@@ -60,8 +60,18 @@ public class Item : UIBase
 
             case "Heal":
                 player._myHp += 10;
-                GameObject.Find("SceneUI").GetComponent<SceneUI>().CharacterHp();
+                GameObject sceneUI = GameObject.Find("SceneUI");
+                sceneUI.GetComponent<SceneUI>().CharacterHp();
+
+                // show Heal Image for 1sec
+                GameObject healImg = Instantiate(Resources.Load("UI/Scene/HealImage") as GameObject, new Vector3(-535F, -362F, 0F), Quaternion.identity) as GameObject;
+                Debug.Log(healImg.ToString());
+                healImg.transform.SetParent(sceneUI.transform, false);
+                Destroy(healImg, 1F);
+
                 break;
+
+
         }
     }
 
