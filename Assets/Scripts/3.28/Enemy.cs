@@ -15,7 +15,7 @@ public class Enemy : Character
         _myHpMax = 100;
         _myHp = _myHpMax;
         _myDamage = 15;
-        GameManager.Instance().AddCharacter(this.GetComponent<Enemy>());
+        GameManager.Instance().AddCharacter("Enemy", this.GetComponent<Enemy>());
     }
 
     private void Awake()

@@ -59,29 +59,29 @@ public class GameManager : MonoBehaviour, Subject
         _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy";
         Debug.Log($"GameManager: {_whoseTurn} turn.");
         _turnHandler(_gameRound, _whoseTurn);
-        // 2. _uiHandler 호출
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
     }
 
     public void EndNotify()
     {
         _isEnd = true;
         _finishHandler(_isEnd);
-        // 2. _uiHandler 호출
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
     }
 
-    public void AddCharacter(Character character)
+    public void AddCharacter(string characterName, Character character)
     {
         _turnHandler += new TurnHandler(character.TurnUpdate);
         _finishHandler += new FinishHandler(character.FinishUpdate);
-        // 1. _characterList에 추가
+        _characterList.Add(characterName, character);
     }
 
     // 3. AddUI: SceneUI 옵저버로 등록
     public void AddUI(SceneUI ui)
     {
-    
+        _uiHandler += new UIHandler(ui.UIUpdate);
     }
 
     /// <summary>
@@ -92,6 +92,10 @@ public class GameManager : MonoBehaviour, Subject
     /// </summary>
     public Character GetCharacter(string name)
     {
-        return null;
+        Character characterOfName = null;
+        if(_characterList.ContainsKey(name)) {
+            characterOfName = _characterList[name];
+        }
+        return characterOfName;
     }
 }

@@ -9,7 +9,15 @@ public class Item : UIBase
 {
     // 1. enum 자유롭게 구성
 
+    enum Images {
+        Image
+    }
+    enum Texts {
+        Text
+    }
+
     private string _itemName;
+    private int _color;
 
     private void Start()
     {
@@ -19,7 +27,12 @@ public class Item : UIBase
     // 2. Item Button에 OnClick_ItemUse Bind
     public override void Init()
     {
-        
+        Bind<Image>(typeof(Images));
+        Bind<Text>(typeof(Texts));
+
+        GetText((int)Texts.Text).text = _itemName;
+        GetImage((int)Images.Image).color = new Color(0, _color/255f, 0);
+        GetImage((int)Images.Image).gameObject.BindEvent(OnClick_Item);
     }
 
     /// <summary>

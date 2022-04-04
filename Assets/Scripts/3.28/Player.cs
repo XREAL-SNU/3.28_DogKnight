@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player : Character
 {
-    // 1. _enemy 변수 삭제 -> GetCharacter로 접근할 거임
-    //private Enemy _enemy;
     private float _randomAttack;
 
     protected override void Init()
@@ -15,7 +13,7 @@ public class Player : Character
         _myHpMax = 100;
         _myHp = _myHpMax;
         _myDamage = 20;
-        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
+        GameManager.Instance().AddCharacter("Player", this.GetComponent<Player>());
     }
 
     private void Awake()
@@ -31,7 +29,6 @@ public class Player : Character
             if (_randomAttack < 7)
             {
                 AttackMotion();
-                // 1. GetCharacter로 Enemy 접근
                 GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
             }
             else
