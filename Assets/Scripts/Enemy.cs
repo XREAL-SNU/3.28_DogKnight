@@ -66,12 +66,7 @@ public class Enemy : Character
         }
     }
 
-    /// <summary>
-    /// GetHit:
-    /// 1) Player의 _randomAttack과 동일한 기능
-    /// 2) 30%의 확률로 피격시 10 체력 증가
-    ///   + Debug.Log($"{_myName} Heal!"); 추가
-    /// </summary>
+  
     public override void GetHit(float damage)
     {
         int _randomAttack= Random.Range(0, 10);
