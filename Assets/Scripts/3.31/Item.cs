@@ -32,7 +32,7 @@ public class Item : UIBase
 
         GetText((int)Texts.Text).text = _itemName;
         GetImage((int)Images.Image).color = new Color(0, _color/255f, 0);
-        GetImage((int)Images.Image).gameObject.BindEvent(OnClick_Item);
+        GetImage((int)Images.Image).gameObject.BindEvent(OnClick_ItemUse);
     }
 
     /// <summary>

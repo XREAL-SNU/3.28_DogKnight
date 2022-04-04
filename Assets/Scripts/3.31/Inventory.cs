@@ -31,16 +31,6 @@ public class Inventory : UIPopup
         Bind<GameObject>(typeof(GameObjects));
         GetObject((int)GameObjects.CloseButton).BindEvent(OnClick_Close);
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
-
-        for (int i = 0; i < 2; i++)
-
-        for (int i = 0; i < ItemNum; i++)
-        {
-            string name = "Item" + i;
-            GameObject item = UIManager.UI.MakeSubItem<Item>(contentPanel.transform).gameObject;
-            Item itemscript = item.GetOrAddComponent<Item>();
-            itemscript.SetInfo(name);
-        }
     }
 
     // 5. OnClick_Close: Popup 닫기
