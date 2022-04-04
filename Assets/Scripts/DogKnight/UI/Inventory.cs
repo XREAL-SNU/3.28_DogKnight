@@ -32,14 +32,11 @@ public class Inventory : UIPopup
 
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
 
-        // TODO
-        /*for (int i = 0; i < ItemNum; i++)
+        foreach (ItemProperty itemproperty in ItemProperty.ItemProperties)
         {
-            string name = "Item" + i;
-            GameObject item = UIManager.UI.MakeSubItem<Item>(contentPanel.transform).gameObject;
-            Item itemscript = item.GetOrAddComponent<Item>();
-            itemscript.SetInfo(typename);
-        }*/
+            ItemGroup itemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
+            itemGroup.SetInfo(itemproperty.ItemName);
+        }
     }
 
     // 5. OnClick_Close: Popup ´Ý±â

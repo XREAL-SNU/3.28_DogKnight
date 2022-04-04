@@ -37,6 +37,7 @@ public class SceneUI : UIScene
 
     // Attack 버튼 이중 클릭 방지 bool 변수
     private bool _isClicked = false;
+    private bool _isInventoryClicked = false;
 
     private GameObject attackButton;
     private GameObject inventoryButton;
@@ -102,6 +103,8 @@ public class SceneUI : UIScene
             }
             else
             {
+                _isInventoryClicked = true;
+                inventoryButton.GetComponent<Button>().interactable = false;
                 _enemy.Attack();
             }
             StartCoroutine(GetDamageCoroutine());
@@ -115,7 +118,10 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
+        if(!_isInventoryClicked)
+        {
+            UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
+        }
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
@@ -168,10 +174,12 @@ public class SceneUI : UIScene
         
         // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
         _isClicked = false;
+        _isInventoryClicked = false;
         attackButton.GetComponent<Button>().interactable = true;
-
+        
         yield return new WaitForSeconds(0.3f);
         healImage.SetActive(false);
+        inventoryButton.GetComponent<Button>().interactable = true;
     }
 
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트

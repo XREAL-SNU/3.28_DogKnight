@@ -11,7 +11,7 @@ public class ItemGroup : UIBase
     // 1. enum 자유롭게 구성
     enum Texts
     {
-        Text
+        ItemTypeText
     }
 
     enum GameObjects
@@ -34,14 +34,19 @@ public class ItemGroup : UIBase
         Bind<Text>(typeof(Texts));
         Bind<GameObject>(typeof(GameObjects));
 
-        GetText((int)Texts.Text).text = _itemGroupName;
+        GetText((int)Texts.ItemTypeText).text = _itemGroupName;
+        GameObject itemPanel = GetUIComponent<GameObject>((int)GameObjects.ItemPanel);
 
-        for (int i = 0; i < ItemNum; i++)
+        foreach (ItemProperty itemproperty in ItemProperty.ItemProperties)
         {
-            string name = "Item" + i;
-            GameObject item = UIManager.UI.MakeSubItem<Item>(ItemPanel.transform).gameObject;
-            Item itemscript = item.GetOrAddComponent<Item>();
-            itemscript.SetInfo(_itemGroupName);
+            if(itemproperty.ItemName == _itemGroupName)
+            {
+                for(int i=0;i<itemproperty.ItemNumber;i++)
+                {
+                    Item item = UIManager.UI.MakeSubItem<Item>(itemPanel.transform, _itemGroupName);
+                    item.SetInfo(_itemGroupName);
+                }
+            }
         }
     }
 

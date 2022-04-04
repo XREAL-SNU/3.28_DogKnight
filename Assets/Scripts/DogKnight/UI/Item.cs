@@ -37,12 +37,13 @@ public class Item : UIBase
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
     {
+        Debug.Log("Clicked!");
         ItemProperty itemProperty = ItemProperty.GetItemProperty(_itemName);
         if(itemProperty.ItemNumber > 0)
         {
             itemProperty.ItemNumber--;
         }
-        Destroy(this);
+        Destroy(this.gameObject);
         ItemAction();
     }
 
@@ -68,7 +69,8 @@ public class Item : UIBase
                 {
                     player._myHp = player._myHp + 10 > player._myHpMax ? player._myHpMax : player._myHp + 10;
                 }
-                UIManager.UI.GetComponent<SceneUI>().CharacterHp();
+                GameObject sceneUI = GameObject.Find("SceneUI");
+                sceneUI.GetComponent<SceneUI>().CharacterHp();
                 break;
         }
     }
