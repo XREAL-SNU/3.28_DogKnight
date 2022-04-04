@@ -12,7 +12,7 @@ public class Inventory : UIPopup
     enum GameObjects
     {
         CloseButton,
-        ContentPanel
+        Panel
     }
 
     private void Start()
@@ -20,8 +20,8 @@ public class Inventory : UIPopup
         Init();
     }
 
-    private int flameItemNum = 10;
-    private int healItemNum = 15;
+    private int flameItemNum = 8;
+    private int healItemNum = 8;
     
     // 2. Popup UI 닫는 버튼에 OnClick_Close 바인드
     // 3. ItemList의 ItemPropertyType 참고해서 각자의 방식으로 ItemGroup subitem 만들어 볼 것
@@ -34,10 +34,11 @@ public class Inventory : UIPopup
 
         GameObject closeButton = GetUIComponent<GameObject>((int)GameObjects.CloseButton);
         closeButton.BindEvent(OnClick_Close);
-        GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
+        GameObject panel = GetUIComponent<GameObject>((int)GameObjects.Panel);
 
+        Debug.Log(panel.transform.GetChild(0));
         // flame item 추가
-        ItemGroup flameItemGroup =  UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
+        ItemGroup flameItemGroup =  UIManager.UI.MakeSubItem<ItemGroup>(panel.transform.GetChild(0).transform, "ItemGroup");
         GameObject flameItemGroupObject = flameItemGroup.gameObject;
         flameItemGroup.SetInfo("Damage");
 
@@ -51,7 +52,7 @@ public class Inventory : UIPopup
         }
 
         // heal item 추가
-        ItemGroup healItemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
+        ItemGroup healItemGroup = UIManager.UI.MakeSubItem<ItemGroup>(panel.transform.GetChild(0).transform, "ItemGroup");
         GameObject healItemGroupObject = healItemGroup.gameObject;
         healItemGroup.SetInfo("Heal");
  

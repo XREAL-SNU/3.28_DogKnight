@@ -58,7 +58,7 @@ public class SceneUI : UIScene
 
     public void OnButtonEnter(PointerEventData data)
     {
-        Debug.Log(data.pointerEnter.name + " Enter!");
+        
     }
 
     /// <summary>
@@ -108,10 +108,12 @@ public class SceneUI : UIScene
     /// </summary>
     public void GameEnd()
     {
-        if(this._isEnd)
-        {
 
-        }
+        GameObject.FindGameObjectWithTag("GameOver").GetComponent<Image>().color = new Color32(255, 255, 255, 100);
+        GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().color = new Color32(0, 0, 0, 100);
+        GameObject.FindGameObjectWithTag("GameOverText").GetComponent<Text>().text += _whoseTurn + "  win!";
+           
+        
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
@@ -131,5 +133,10 @@ public class SceneUI : UIScene
         this._gameRound = round;
         this._whoseTurn = turn;
         this._isEnd = isFinish;
+
+        if(isFinish)
+        {
+            GameEnd();
+        }
     }
 }

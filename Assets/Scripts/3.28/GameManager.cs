@@ -66,8 +66,7 @@ public class GameManager : MonoBehaviour, Subject
     {
         
         attackButton.interactable = false;
-        Debug.Log("false");
-      
+     
 
         if (_whoseTurn == "Enemy")
         {
