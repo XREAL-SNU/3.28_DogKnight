@@ -11,23 +11,33 @@ public enum AnimatorParameters
 public class Character : MonoBehaviour, Observer
 {
     public string _myName;
-    public float _myHp;
-    public float _myDamage;
+    public float hp, maxHp;
+
+    public Attack baseAttack;
+    public float strength = 1f;
+    public bool dead = false;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
+    protected bool myturn = false;
     protected bool _isFinished;
 
-    // 1. TurnUpdate: _gameRound, _whoseTurn update
-    public void TurnUpdate(int round, string turn)
-    {
+    void Awake() {
+        Init();
+    }
 
+    // 1. TurnUpdate: _gameRound, _whoseTurn update
+    public void TurnUpdate(int round, string turn, Character character)
+    {
+        _gameRound = round;
+        _whoseTurn = turn;
+        myturn = character == this;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -37,9 +47,12 @@ public class Character : MonoBehaviour, Observer
     /// 2) AttackMotion() 호출해서 애니메이션 실행
     /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
     /// </summary>
-    public virtual void Attack()
-    {
+    public virtual void Attack(Character target) {
+        baseAttack.At(this, target == null ? Target() : target);
+    }
 
+    public virtual void EndAttack() {
+        GameManager.Instance().TurnEnd();
     }
 
     /// <summary>
@@ -53,7 +66,30 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
+        hp -= damage;
+        UI.Damage(transform, Mathf.CeilToInt(damage));
+        if(hp <= 0) {
+            dead = true;
+            DeadMotion();
+            GameManager.Instance().DeadNotify(this);
+            GameManager.Instance().EndNotify();
+        }
+        else {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {hp}");
+        }
+    }
 
+    public virtual void Heal(float hp) {
+        hp = Mathf.Min(hp, maxHp - this.hp);
+        this.hp += hp;
+        UI.Damage(transform, -Mathf.CeilToInt(hp));
+    }
+
+    public virtual Character Target() {
+        List<Character> enemies = GameManager.Instance().TeamMember(!GameManager.Instance().PlayerTurn());
+
+        return enemies[Random.Range(0, enemies.Count)];
     }
 
     /// <summary>
@@ -68,9 +104,14 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     protected Animator _animator;
 
+    public void Animate(string animation) {
+        _animator.SetTrigger(animation);
+    }
+
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
+        hp = maxHp;
     }
     protected void AttackMotion()
     {
@@ -83,12 +124,12 @@ public class Character : MonoBehaviour, Observer
 
     protected void DeadMotion()
     {
-        StartCoroutine(DeadCoroutine());
+        _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 
     protected void GetHitMotion()
     {
-        StartCoroutine(GetHitCoroutine());
+        _animator.SetTrigger(AnimatorParameters.GetHit.ToString());
     }
 
     IEnumerator GetHitCoroutine()

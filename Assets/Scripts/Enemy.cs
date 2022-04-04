@@ -17,11 +17,7 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-    }
-
-    private void Awake()
-    {
-        Init();
+        GameManager.Instance().AddCharacter(this, false);
     }
 
     /// <summary>
@@ -30,7 +26,7 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        _player = GameObject.FindWithTag("Player").GetComponent<Player>();
     }
 
     /// <summary>
@@ -38,9 +34,15 @@ public class Enemy : Character
     /// 1) _gameRound가 지날때마다 데미지 3씩 증가
     /// 2) _gameRound가 10이 되면 무조건 Player를 죽이도록 데미지 증가
     /// </summary>
-    public override void Attack()
-    {
+    public override void Attack(Character target) {
+        strength = 0.5f + 0.15f * _gameRound;
+        if (_gameRound >= 15) strength = 99f;
+        base.Attack(target);
 
+        if (hp < maxHp - 1 && Random.Range(0f, 1f) < 0.3f) {
+            Heal(10);
+            Debug.Log($"{_myName} Heal!");
+        }
     }
 
     /// <summary>
@@ -51,7 +53,8 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
-
+        base.GetHit(damage);
+        //heal은 Attack()에 넣었습니다^^
     }
 }
 

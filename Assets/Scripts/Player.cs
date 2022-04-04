@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Player : Character
 {
+    public static float mp = 0f, maxMp = 250f;
+
+    public Skill[] skills;
+    public int meditation = 0;
+    private bool meditated = false;
+
+    public Color meditateColor = Color.white;
+    public GameObject meditateFx;
+
     private Enemy _enemy;
     private float _randomAttack;
 
@@ -17,20 +26,15 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this, true);
     }
-
-    private void Awake()
-    {
-        Init();
-    }
-
     /// <summary>
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
     /// </summary>
     private void Start()
     {
-
+        _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
     }
 
     /// <summary>
@@ -43,13 +47,36 @@ public class Player : Character
     ///    + Debug.Log($"{_myName} Special Attack!"); 추가
     /// 5) 70% 확률로 하는 일반 공격은 Character에 써있는 주석과 동일
     /// </summary>
-    public override void Attack()
+    public override void Attack(Character target)
     {
+        base.Attack(target);
+    }
 
+    public override void EndAttack() {
+        if(!meditated) meditation = 0;
+        meditated = false;
+        base.EndAttack();
+    }
+
+    public void Meditate() {
+        meditated = true;
+        StartCoroutine(MeditateEnum(Mathf.Min(maxMp - mp, 10 * (1 << meditation))));
+        meditation++;
+        if (meditation > 3) meditation = 3;
     }
 
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
+    }
 
+    private IEnumerator MeditateEnum(float amount) {
+        if(meditateFx != null) Instantiate(meditateFx, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+        yield return new WaitForSeconds(1f);
+
+        mp += amount;
+        if(mp > maxMp) mp = maxMp;
+        if (amount >= 0.5f) UI.Damage(transform, transform.position, Mathf.RoundToInt(amount), meditateColor, DamageIndicator.fin);
+        EndAttack();
     }
 }
