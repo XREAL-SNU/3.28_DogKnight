@@ -8,6 +8,8 @@ namespace MainSystem.Managers.UIManager
     public partial class UIManager : MonoBehaviour//Data
     {
         private List<UI> uiList = new List<UI>();
+        private GameObject ending;
+        private UnityEvent<int> sendWinner = new UnityEvent<int>();
     }
     public partial class UIManager : MonoBehaviour//Main
     {
@@ -29,12 +31,24 @@ namespace MainSystem.Managers.UIManager
             ui.Initialize();
             ui.SignupUIManager(this);
         }
+        public void SignupEnding(GameObject gameObject)
+        {
+            ending = gameObject;
+        }
     }
     public partial class UIManager : MonoBehaviour//:Prop
     {
         public void CallRoundProgress()
         {
             MainSystem.Instance.GameManager.RoundProgress();
+        }
+        public void CallInventory()
+        {
+            MainSystem.Instance.GameManager.CallInventory();
+        }
+        public void ActiveEnding(int winnersName)
+        {
+            ending.SetActive(true);
         }
     }
 }

@@ -42,6 +42,7 @@ namespace MainSystem.Managers.UIManager
         public virtual void SignupUIManager(UIManager uiManagerPra)
         {
             uiManager = uiManagerPra;
+
         }
     }
 }

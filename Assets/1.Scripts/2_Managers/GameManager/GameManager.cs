@@ -11,6 +11,8 @@ namespace MainSystem.Managers.GameManager
         private int whoseTurn = 0;
         private UnityEvent<int, int> turnProgressEvent = new UnityEvent<int, int>();
         private List<Character> characterList = new List<Character>();
+        private Player player;
+        private UnityEvent callInventory = new UnityEvent();
     }
     public partial class GameManager : MonoBehaviour//Main
     {
@@ -33,9 +35,18 @@ namespace MainSystem.Managers.GameManager
             character.Initialize();
             character.SignupGameManager(this);
         }
+        public void SignupPlayer(Player playerpra)
+        {
+            player = playerpra;
+            callInventory.AddListener(player.Inventory);
+        }
     }
     public partial class GameManager : MonoBehaviour//Prop
     {
+        public void CallInventory()
+        {
+            callInventory.Invoke();
+        }
         public void RoundProgress()
         {
             Debug.Log("RoundProgress");
@@ -79,6 +90,7 @@ namespace MainSystem.Managers.GameManager
             {
                 whoseTurn = 1;
             }
+            MainSystem.Instance.UIManager.ActiveEnding(whoseTurn);
             Debug.Log("GameManager: The End");
             Debug.Log($"GameManager: Object Number {whoseTurn} is Winer!");
         }

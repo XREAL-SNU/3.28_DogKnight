@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public partial class HeaithBar : MonoBehaviour//Data
+using UnityEngine.UI;
+public partial class HealthBar : MonoBehaviour//Data
 {
-
+    [SerializeField] private Slider healthBar;
 }
-public partial class HeaithBar : MonoBehaviour//Main
+public partial class HealthBar : MonoBehaviour//Main
 {
     private void Allocate()
     {
@@ -18,9 +19,12 @@ public partial class HeaithBar : MonoBehaviour//Main
     }
 
 }
-public partial class HeaithBar : MonoBehaviour//Prop
+public partial class HealthBar : MonoBehaviour//Prop
 {
-
+    public void ObjectHealthUpdate(float objHealth)
+    {
+        healthBar.value = objHealth;
+    }
 }
 public partial class HeaithBar : MonoBehaviour//
 {

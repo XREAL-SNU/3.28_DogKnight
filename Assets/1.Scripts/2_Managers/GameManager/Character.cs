@@ -21,10 +21,11 @@ namespace MainSystem.Managers.GameManager
         [SerializeField] protected int myNum;
         private GameManager gameManager;
         [SerializeField] private UnityEvent<int> sendName;
+        [SerializeField] protected UnityEvent<float> sendHealth;
     }
     public partial class Character : MonoBehaviour //Main
     {
-        private void Start()
+        protected virtual void Start()
         {
             MainSystem.Instance.GameManager.SignupCharacter(this);
             Initialize();
@@ -96,13 +97,19 @@ namespace MainSystem.Managers.GameManager
         {
             giveDamageEvent.Invoke(damage);
         }
+        protected void Healing(float heal)
+        {
+            myHp += heal;
+        }
         protected virtual void GetHit(float damage)
         {
             myHp -= damage;
+            sendHealth.Invoke(myHp);
             Debug.Log($"Object Number {myNum} HP: {myHp}");
             if (myHp <= 0)
             {
                 Death();
+                return;
             }
             GetHitMotion();
         }

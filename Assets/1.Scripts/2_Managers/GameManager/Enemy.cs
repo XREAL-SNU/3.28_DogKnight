@@ -39,9 +39,14 @@ namespace MainSystem.Managers.GameManager
             base.GetHit(damage);
             if (Random.Range(1, 100) < 30)
             {
-                myHp += 10;
-                Debug.Log($"Object Number {myNum} Heal!");
+                HealPassive();
             }
+        }
+        private void HealPassive()
+        {
+            Healing(10);
+            sendHealth.Invoke(myHp);
+            Debug.Log($"Object Number {myNum} Heal!");
         }
     }
 

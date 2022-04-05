@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public partial class NameTag : MonoBehaviour//Data
 {
-    private string objectName;
+    public Text objectName;
     [SerializeField]private UnityEvent getObjectName;
 }
 public partial class NameTag : MonoBehaviour//Main
@@ -14,12 +14,21 @@ public partial class NameTag : MonoBehaviour//Main
     {
         getObjectName.Invoke();
     }
+    private void Allocate()
+    {
+
+    }
+    public void Initialize()
+    {
+        Allocate();
+
+    }
 }
 public partial class NameTag : MonoBehaviour//Prop
 {
     public void ReceiveObjectName(int mynum)
     {
-        objectName = "" + mynum;
+        objectName.text = ""+mynum;
     }
 }
 public partial class NameTag : MonoBehaviour//
