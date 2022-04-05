@@ -11,8 +11,7 @@ public class Inventory : UIPopup
     // 1. enum 자유롭게 구성
     enum GameObjects
     {
-        CloseButton,
-        Panel
+        InventoryContent
     }
 
     private void Start()
@@ -20,7 +19,7 @@ public class Inventory : UIPopup
         Init();
     }
 
-    private int flameItemNum = 8;
+    private int flameItemNum = 10;
     private int healItemNum = 8;
     
     // 2. Popup UI 닫는 버튼에 OnClick_Close 바인드
@@ -32,13 +31,21 @@ public class Inventory : UIPopup
 
         Bind<GameObject>(typeof(GameObjects));
 
-        GameObject closeButton = GetUIComponent<GameObject>((int)GameObjects.CloseButton);
-        closeButton.BindEvent(OnClick_Close);
-        GameObject panel = GetUIComponent<GameObject>((int)GameObjects.Panel);
+        GameObject inventoryContent = GetUIComponent<GameObject>((int)GameObjects.InventoryContent);
 
-        Debug.Log(panel.transform.GetChild(0));
+        GameObject closeButton = inventoryContent.transform.GetChild(2).gameObject;
+        Debug.Log(closeButton);
+        closeButton.BindEvent(OnClick_Close);
+
+        Transform content = inventoryContent.transform.GetChild(0).GetChild(0);
+
         // flame item 추가
-        ItemGroup flameItemGroup =  UIManager.UI.MakeSubItem<ItemGroup>(panel.transform.GetChild(0).transform, "ItemGroup");
+        ItemGroup flameItemGroup =  UIManager.UI.MakeSubItem<ItemGroup>(content, "ItemGroup");
+        flameItemGroup.gameObject.AddComponent<LayoutElement>();
+        flameItemGroup.GetComponent<LayoutElement>().preferredHeight = 500;
+        flameItemGroup.GetComponent<LayoutElement>().preferredWidth = 1300;
+
+
         GameObject flameItemGroupObject = flameItemGroup.gameObject;
         flameItemGroup.SetInfo("Damage");
 
@@ -52,7 +59,11 @@ public class Inventory : UIPopup
         }
 
         // heal item 추가
-        ItemGroup healItemGroup = UIManager.UI.MakeSubItem<ItemGroup>(panel.transform.GetChild(0).transform, "ItemGroup");
+        ItemGroup healItemGroup = UIManager.UI.MakeSubItem<ItemGroup>(content, "ItemGroup1");
+        healItemGroup.gameObject.AddComponent<LayoutElement>();
+        healItemGroup.GetComponent<LayoutElement>().preferredHeight = 900;
+        healItemGroup.GetComponent<LayoutElement>().preferredWidth = 1300;
+
         GameObject healItemGroupObject = healItemGroup.gameObject;
         healItemGroup.SetInfo("Heal");
  
