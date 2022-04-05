@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - GameRoundText
+  - GameOver
+  - GameOverText
   layers:
   - Default
   - TransparentFX
