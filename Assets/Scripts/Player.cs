@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
     private float _randomAttack;
 
     /// <summary>
@@ -14,9 +13,16 @@ public class Player : Character
     /// 3) _myName은 무조건 "Player"로 할 것
     /// 4) _myHp, _myDamage는 100, 20으로 각각 초기화 (권장 사항)
     /// </summary>
+    /// 
+
     protected override void Init()
     {
         base.Init();
+        GameManager.Instance().AddCharacter(this);
+        this._myName = "Player";
+        this._myHp = 100;
+        this._myHpMax = 100;
+        this._myDamage = 20;
     }
 
     private void Awake()
@@ -30,7 +36,10 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if (_enemy == null) 
+        {
+           _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        } 
     }
 
     /// <summary>
@@ -45,11 +54,25 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
-
+        if (_myName == _whoseTurn)
+        {
+            _randomAttack = Random.Range(0, 10);
+            if (_randomAttack < 3)
+            {
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage + 10);
+            }
+            else
+            {
+                AttackMotion();
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
+            }
+        }
     }
 
     public override void GetHit(float damage)
     {
-
+        base.GetHit(damage);
     }
 }
