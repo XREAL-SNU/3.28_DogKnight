@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -56,23 +55,25 @@ public class Player : Character
     {
         if (!_isFinished && (_myName == _whoseTurn))
         {
-            _randomAttack = Random.Range(0, 10);
-            if (_randomAttack < 3)
+
+            if (isSkilled)
             {
                 SpecialAttackMotion();
                 Debug.Log($"{_myName} Special Attack!");
-                other.GetHit(UIManager.Instance().enemyHpBar,_myDamage+10);
+                other.GetHit(_myDamage+10);
+                UIManager.Instance().SliderBarUpdate(other);
             }
             else
             {
                 AttackMotion();
-                other.GetHit(UIManager.Instance().enemyHpBar,_myDamage);
+                other.GetHit(_myDamage);
+                UIManager.Instance().SliderBarUpdate(other);
             }
         }            
     }
 
-    public override void GetHit(Slider hpBar, float damage)
+    public override void GetHit(float damage)
     {
-        base.GetHit(hpBar, damage);
+        base.GetHit(damage);
     }
 }

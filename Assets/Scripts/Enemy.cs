@@ -54,7 +54,9 @@ public class Enemy : Character
                 _myDamage = _player._myHp;
             }
             AttackMotion();
-            other.GetHit(UIManager.Instance().playerHpBar, _myDamage);
+            other.GetHit(_myDamage);
+            UIManager.Instance().SliderBarUpdate(other);
+
         }
     }
 
@@ -64,17 +66,16 @@ public class Enemy : Character
     /// 2) 30%의 확률로 피격시 10 체력 증가
     ///   + Debug.Log($"{_myName} Heal!"); 추가
     /// </summary>
-    public override void GetHit(Slider hpBar, float damage)
+    public override void GetHit( float damage)
     {
-        base.GetHit(hpBar, damage);
+        base.GetHit(damage);
         if(_myHp > 0)
         {
-            _randomHeal = Random.Range(0, 10);
-            if (_randomHeal < 3)
+            if (isSkilled)
             {
                 _myHp += 10;
-                hpBar.value = _myHp;
                 Debug.Log($"{_myName} Heal!");
+                UIManager.Instance().SliderBarUpdate(this);
             }
         }   
     }
