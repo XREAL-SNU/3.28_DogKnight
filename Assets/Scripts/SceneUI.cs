@@ -13,7 +13,8 @@ public class SceneUI : UIScene
     {
         AttackButton,
         InventoryButton,
-        GameRoundText
+        GameRoundText,
+        GameEnd
     }
 
     // 서브젝트에게 넘겨받을 변수들
@@ -35,6 +36,8 @@ public class SceneUI : UIScene
         // 1. 옵저버 등록: AddUI(this);
         GameManager.Instance().AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
+        GameObjects gameEnd = GetUIComponent<GameObject>((int)GameObjects.GameEnd);
+        gameEnd.SetActive(false);
     }
 
     /// <summary>
@@ -85,20 +88,26 @@ public class SceneUI : UIScene
     {
         if(_whoseTurn == "Player")
         {
- 
+            UIManager.Instance().ShowPopupUI<UIPopup>("Inventory");
         }
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
     public void GameRoundText()
     {
-
+        Text gameRoundText = UIUtils.FindUIChild<Text>(gameObject, "GameRoundText", true);
+        gameRoundText.text = $"GameRound{_gameRound}";
     }
 
     // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용
     public void CharacterHp()
     {
-
+        Slider playerSlider = UIUtils.FindUIChild<Slider>(gameObject, "PlayerSlider", true);
+        Slider enemySlider = UIUtils.FindUIChild<Slider>(gameObject, "EnemySlider", true);
+        float _playerFillAmount = _player._myHp / _player._myHpMax;
+        float _enemyFillAmount = _enemy._myHp / _enemy._myHpMax;
+        playerSlider.value = _playerFillAmount;
+        enemySlider.value = _enemyFillAmount;
     }
 
     /// <summary>
@@ -109,7 +118,15 @@ public class SceneUI : UIScene
     /// </summary>
     public void GameEnd()
     {
+        if (_isEnd)
+        {
+            GameObject gameEnd = GetUIComponent<GameObject>((int)GameObjects.GameEnd);
+            gameEnd.SetActive(true);
 
+            Text winner = UIUtils.FindUIChild<Text>(gameObject, "winner", true);
+            winner.text = $"{_whoseTurn} Wins !";
+
+        }
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
