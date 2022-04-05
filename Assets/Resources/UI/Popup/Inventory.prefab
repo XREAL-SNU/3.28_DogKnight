@@ -560,7 +560,7 @@ GameObject:
   - component: {fileID: 2762646188867368866}
   - component: {fileID: 5946715856736500900}
   - component: {fileID: 4574112304641956020}
-  - component: {fileID: 6381553687566849228}
+  - component: {fileID: 1918829045349862877}
   m_Layer: 5
   m_Name: ContentPanel
   m_TagString: Untagged
@@ -639,7 +639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 1
---- !u!114 &6381553687566849228
+--- !u!114 &1918829045349862877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -659,11 +659,11 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
+  m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
 --- !u!1 &7221809513589396629
 GameObject:
