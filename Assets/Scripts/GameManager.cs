@@ -26,12 +26,16 @@ public class GameManager : MonoBehaviour, Subject
     private string _whoseTurn = "Enemy";
     private bool _isEnd = false;
 
+    private Dictionary<string, Character> _characterList = new Dictionary<string, Character>(); 
+
     // delegate: TurnHandler, FinishHandler 선언
     delegate void TurnHandler(int round, string turn);
     delegate void FinishHandler(bool isFinish);
+    private delegate void UIHandler(int round, string turn, bool isFinish);
 
     TurnHandler _turnHandler;
     FinishHandler _finishHandler;
+    private UIHandler _uiHandler;
 
     /// <summary>
     /// 2. RoundNotify:
@@ -60,6 +64,7 @@ public class GameManager : MonoBehaviour, Subject
 
         Debug.Log($"GameManager: {_whoseTurn} turn.");
         _turnHandler(_gameRound, _whoseTurn);
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
     }
 
 
@@ -76,6 +81,7 @@ public class GameManager : MonoBehaviour, Subject
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} is Win!");
         _finishHandler(true);
+        _uiHandler(_gameRound, _whoseTurn, _isEnd);
     }
 
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가
@@ -83,5 +89,31 @@ public class GameManager : MonoBehaviour, Subject
     {
         _turnHandler += new TurnHandler(character.TurnUpdate);
         _finishHandler += new FinishHandler(character.FinishUpdate);
+    }
+
+    public void ADDUI(SceneUI ui)
+    {
+        _uiHandler += new UIHandler(ui.UIUpdate);
+    }
+
+    /// <summary>
+    /// 4. GetChracter: 넘겨 받은 name의 Character가 있다면 해당 캐릭터 반환
+    /// 1) _characterList 순회하며
+    /// 2) if 문과 ContainsKey(name) 이용
+    /// 3) 없다면 null 반환
+    /// </summary>
+    public Character GetCharacter(string name)
+    {   
+        for (int i = 0; i < _characterList.Count; i++)
+        {
+            if(_characterList.ContainsKey(name) == _characterList[name])
+            {
+                return _characterList[name];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

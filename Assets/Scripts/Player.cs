@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
     private float _randomAttack;
 
     /// <summary>
@@ -22,6 +21,7 @@ public class Player : Character
         GameManager.Instance().AddCharacter(this);
         this._myName = "Player";
         this._myHp = 100;
+        this._myHpMax = 100;
         this._myDamage = 20;
     }
 
@@ -59,16 +59,14 @@ public class Player : Character
             _randomAttack = Random.Range(0, 10);
             if (_randomAttack < 3)
             {
-                _myDamage += 10;
                 SpecialAttackMotion();
                 Debug.Log($"{_myName} Special Attack!");
-                _enemy.GetHit(_myDamage);
-                _myDamage -= 10;
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage + 10);
             }
             else
             {
                 AttackMotion();
-                _enemy.GetHit(_myDamage);
+                GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
             }
         }
     }

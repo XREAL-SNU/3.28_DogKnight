@@ -12,6 +12,7 @@ public class Character : MonoBehaviour, Observer
 {
     public string _myName;
     public float _myHp;
+    public float _myHpMax;
     public float _myDamage;
 
     public Subject subject;
