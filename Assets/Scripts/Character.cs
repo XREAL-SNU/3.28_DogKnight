@@ -22,14 +22,13 @@ public class Character : MonoBehaviour, Observer
 
     protected int _gameRound;
     protected string _whoseTurn;
-    protected bool _isFinished=false;
+    protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
         _whoseTurn = turn;
         _gameRound = round;
-        Attack();
     }
 
     // 2. FinishUpdate: _isFinished update
@@ -75,7 +74,7 @@ public class Character : MonoBehaviour, Observer
         if (_myHp <= 0)
         {
             DeadMotion();
-            gamemanager.GetComponent<GameManager>().EndNotify();
+            attackButton.GetComponent<GameManager>().EndNotify();
 
         }
        
@@ -105,7 +104,6 @@ public class Character : MonoBehaviour, Observer
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
-        gamemanager.GetComponent<GameManager>().AddCharacter(this);
     }
     protected void AttackMotion()
     {

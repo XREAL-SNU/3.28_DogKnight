@@ -23,9 +23,16 @@ public class GameManager : MonoBehaviour, Subject
 
 
   
+    public GameObject enemey;
+    public GameObject player;
     void Start()
     {
-      
+        _turnHandler += new TurnHandler(player.GetComponent<Player>().TurnUpdate);
+        _turnHandler += new TurnHandler(enemey.GetComponent<Enemy>().TurnUpdate);
+
+        _finishHandler += new FinishHandler(player.GetComponent<Player>().FinishUpdate);
+        _finishHandler += new FinishHandler(enemey.GetComponent<Enemy>().FinishUpdate);
+
 
     }
 
@@ -63,9 +70,8 @@ public void TurnNotify()
     {
         _whoseTurn = "Enemy";
     }
-        _turnHandler(_gameRound, _whoseTurn);  /// 2) _turnHandler 호출
-        Debug.Log($"GameManager: {_whoseTurn} turn."); ///  + Debug.Log($"GameManager: {_whoseTurn} turn.");
-    
+    Debug.Log($"GameManager: {_whoseTurn} turn."); ///  + Debug.Log($"GameManager: {_whoseTurn} turn.");
+    _turnHandler(_gameRound, _whoseTurn);  /// 2) _turnHandler 호출
 
 
 }
@@ -90,13 +96,11 @@ public void EndNotify()///-완료!!!!!!!!!!!!!
     // 5. AddCharacter: _turnHandler, _finishHandler 각각에 메소드 추가 ///-완료!!!!!!!!!!!!!
     public void AddCharacter(Character character)
     {
+        _turnHandler = _turnHandler + new TurnHandler(character.GetComponent<Character>().TurnUpdate);
 
 
 
-    
-    _turnHandler = _turnHandler + new TurnHandler(character.GetComponent<Character>().TurnUpdate);
-
-     _finishHandler = _finishHandler + new FinishHandler(character.GetComponent<Character>().FinishUpdate);
+        _finishHandler = _finishHandler + new FinishHandler(character.GetComponent<Character>().FinishUpdate);
     }
 }
 
