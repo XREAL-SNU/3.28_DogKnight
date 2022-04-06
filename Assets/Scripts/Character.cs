@@ -3,43 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 애니메이팅 트리거 이름 열거형으로 저장 (이해할 필요 없음)
+
 public enum AnimatorParameters
 {
     IsAttack, IsSpecialAttack, GetHit, IsDead
 }
 
 public class Character : MonoBehaviour, Observer
+
+
+
 {
+    public GameObject gamemanager;
+    public GameObject attackbutton;
     public string _myName;
     public float _myHp;
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        _whoseTurn = turn;
+        _gameRound = round;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
+    /// 
     /// 3. Attack: 공격시 실행될 내용 중 Player와 Enemy 공통으로 실행될 기능 작성
+    /// 
     /// 이후 각 class에서 오버라이딩해서 작성
+    /// 
     /// 1) 게임이 끝나지 않았고 자신의 _myName와 _whoseTurn이 일치한다면,
+    /// 
     /// 2) AttackMotion() 호출해서 애니메이션 실행
+    /// 
     /// 3) 상대방의 GetHit()에 자신의 _myDamage 넘겨서 호출
+    /// 
     /// </summary>
     public virtual void Attack()
     {
-
+        
     }
 
     /// <summary>
@@ -52,9 +65,29 @@ public class Character : MonoBehaviour, Observer
     ///    + Debug.Log($"{_myName} HP: {_myHp}"); 추가
     /// </summary>
     public virtual void GetHit(float damage)
+
+
     {
 
+        _myHp = _myHp - damage;
+
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            attackButton.GetComponent<GameManager>().EndNotify();
+
+        }
+       
+        else if(_myHp>0)
+        {
+
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
+          
+        
     }
+
 
     /// <summary>
     /// 이 밑으로는 animation 관련 code, 이해할 필요 없음 (다음주 세션에서 할 것)
@@ -103,3 +136,4 @@ public class Character : MonoBehaviour, Observer
         _animator.SetTrigger(AnimatorParameters.IsDead.ToString());
     }
 }
+
