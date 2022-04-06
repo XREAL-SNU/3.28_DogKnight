@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour, Subject
 
     /// <summary>
     /// 2. RoundNotify:
+
     /// 1) 현재 턴이 Enemy이면 다음 gameRound로
     ///  + Debug.Log($"GameManager: Round {gameRound}.");
     /// 2) TurnNotify() 호출
