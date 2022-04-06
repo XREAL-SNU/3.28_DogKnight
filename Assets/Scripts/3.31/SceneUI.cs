@@ -36,6 +36,8 @@ public class SceneUI : UIScene
         // 1. 옵저버 등록: AddUI(this);
         GameManager.Instance().AddUI(this.GetComponent<SceneUI>());
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
+        GameObject GameEnd = GetUIComponent<GameObject>((int)GameObjects.GameEnd);
+        GameEnd.SetActive(false);
     }
 
     /// <summary>
@@ -54,9 +56,6 @@ public class SceneUI : UIScene
 
         GameObject InventoryButton = GetUIComponent<GameObject>((int)GameObjects.InventoryButton);
         InventoryButton.BindEvent(OnClick_InventoryButton);
-
-        GameObject GameEnd = GetUIComponent<GameObject>((int)GameObjects.GameEnd);
-        GameEnd.SetActive(false);
     }
 
     /// <summary>

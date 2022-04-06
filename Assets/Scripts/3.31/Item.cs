@@ -17,11 +17,11 @@ public class Item : UIBase
     }
 
     private string _itemName;
-    private int _color;
 
     private void Start()
     {
         Init();
+        sceneUI = GameObject.Find("SceneUI").GetComponent<SceneUI>();
     }
 
     // 2. Item Button에 OnClick_ItemUse Bind
@@ -30,8 +30,7 @@ public class Item : UIBase
         Bind<Image>(typeof(Images));
         Bind<Text>(typeof(Texts));
 
-        GetText((int)Texts.Text).text = _itemName;
-        GetImage((int)Images.Image).color = new Color(0, _color/255f, 0);
+        GetImage((int)Images.Image).color = new Color(250, 250, 250);
         GetImage((int)Images.Image).gameObject.BindEvent(OnClick_ItemUse);
     }
 
@@ -45,6 +44,7 @@ public class Item : UIBase
     public void OnClick_ItemUse(PointerEventData data)
     {
         
+        ItemAction();
     }
 
     /// <summary>
@@ -56,12 +56,16 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
-        
+        switch(_itemName) {
+            case "DamageItem_Flame" : 
+                Debug.Log("ASD");
+                break;
+        }
     }
 
     // 5. SetInfo: itemName을 _itemName에 할당
     public void SetInfo(string itemName)
     {
-
+        _itemName = itemName;
     }
 }

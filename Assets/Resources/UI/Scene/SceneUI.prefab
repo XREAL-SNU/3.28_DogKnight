@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 6815888234097151005}
   - component: {fileID: 6815888234097151009}
   m_Layer: 5
-  m_Name: GameSystem
+  m_Name: SceneUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
