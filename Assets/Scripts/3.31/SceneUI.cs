@@ -9,12 +9,17 @@ public class SceneUI : UIScene
 {
     // 1. enum 자유롭게 구성
     enum GameObjects {
-        AttackButton,
         PlayerHP,
         EnemyHP,
         RoundText,
         GameEnd,
+    }
+    enum Buttons {
+        AttackButton,
         InventoryButton
+    }
+    enum Images {
+        HealEffect
     }
 
     // 서브젝트에게 넘겨받을 변수들
@@ -38,6 +43,7 @@ public class SceneUI : UIScene
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
         GameObject GameEnd = GetUIComponent<GameObject>((int)GameObjects.GameEnd);
         GameEnd.SetActive(false);
+        GetImage((int)Images.HealEffect).gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -50,12 +56,11 @@ public class SceneUI : UIScene
         base.Init();
 
         Bind<GameObject>(typeof(GameObjects));
+        Bind<Button>(typeof(Buttons));
+        Bind<Image>(typeof(Images));
 
-        GameObject AttackButton = GetUIComponent<GameObject>((int)GameObjects.AttackButton);
-        AttackButton.BindEvent(OnClick_AttackButton);
-
-        GameObject InventoryButton = GetUIComponent<GameObject>((int)GameObjects.InventoryButton);
-        InventoryButton.BindEvent(OnClick_InventoryButton);
+        GetButton((int)Buttons.AttackButton).gameObject.BindEvent(OnClick_AttackButton);
+        GetButton((int)Buttons.InventoryButton).gameObject.BindEvent(OnClick_InventoryButton);
     }
 
     /// <summary>
@@ -104,9 +109,9 @@ public class SceneUI : UIScene
     public void CharacterHp()
     {
         GameObject PlayerHP = GetUIComponent<GameObject>((int)GameObjects.PlayerHP);
-        Image PlayerHPImage = PlayerHP.GetComponent<Image>();
+        Image PlayerHPImage = UIUtils.FindUIChild<Image>(PlayerHP, "HP");
         GameObject EnemyHP = GetUIComponent<GameObject>((int)GameObjects.EnemyHP);
-        Image EnemyHPImage = EnemyHP.GetComponent<Image>();
+        Image EnemyHPImage = UIUtils.FindUIChild<Image>(EnemyHP, "HP");
         PlayerHPImage.fillAmount = _player._myHp/_player._myHpMax;
         EnemyHPImage.fillAmount = _enemy._myHp/_enemy._myHpMax;
     }
@@ -130,12 +135,25 @@ public class SceneUI : UIScene
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
     IEnumerator GetDamageCoroutine()
     {
+        GetButton((int)Buttons.AttackButton).interactable = false;
+        if (!_whoseTurn.Equals("Enemy")) {
+            GetButton((int)Buttons.InventoryButton).interactable = false;
+        }
         yield return new WaitForSeconds(1.2f);
         CharacterHp();
+        float beforeHp = _enemy._myHp;
         yield return new WaitForSeconds(1.2f);
         GameEnd();
+        float afterHp = _enemy._myHp;
         CharacterHp();
-        // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
+        if (beforeHp != afterHp)
+        {
+            GetImage((int)Images.HealEffect).gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.65f);
+            GetImage((int)Images.HealEffect).gameObject.SetActive(false);
+        }
+        GetButton((int)Buttons.AttackButton).interactable = true;
+        if (_whoseTurn.Equals("Enemy")) GetButton((int)Buttons.InventoryButton).interactable = true;
         _isClicked = false;
     }
 

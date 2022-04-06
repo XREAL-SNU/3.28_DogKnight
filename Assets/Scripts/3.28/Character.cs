@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,14 @@ public class Character : MonoBehaviour, Observer
     public void FinishUpdate(bool isFinish)
     {
         this._isFinished = isFinish;
+    }
+
+    public void DamageIncrease(float damage) {
+        _myDamage += damage;
+    }
+
+    public void Heal(float Heal) {
+        _myHp = Math.Min(_myHp + Heal, _myHpMax);
     }
 
     

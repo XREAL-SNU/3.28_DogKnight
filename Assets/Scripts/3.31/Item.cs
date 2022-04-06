@@ -17,6 +17,8 @@ public class Item : UIBase
     }
 
     private string _itemName;
+    private ItemProperty itemProperty;
+    private SceneUI sceneUI;
 
     private void Start()
     {
@@ -30,7 +32,6 @@ public class Item : UIBase
         Bind<Image>(typeof(Images));
         Bind<Text>(typeof(Texts));
 
-        GetImage((int)Images.Image).color = new Color(250, 250, 250);
         GetImage((int)Images.Image).gameObject.BindEvent(OnClick_ItemUse);
     }
 
@@ -43,8 +44,13 @@ public class Item : UIBase
     /// </summary>
     public void OnClick_ItemUse(PointerEventData data)
     {
-        
-        ItemAction();
+        itemProperty =  ItemProperty.GetItemProperty(_itemName);
+        Debug.Log(itemProperty.ItemNumber);
+        if(itemProperty.ItemNumber > 0) {
+            itemProperty.ItemNumber -= 1;
+            ItemAction();
+            Destroy(gameObject);
+        }   
     }
 
     /// <summary>
@@ -56,9 +62,13 @@ public class Item : UIBase
     /// </summary>
     public void ItemAction()
     {
-        switch(_itemName) {
-            case "DamageItem_Flame" : 
-                Debug.Log("ASD");
+        switch(itemProperty.PropertyType.ToString()) {
+            case "Damage" :
+                GameManager.Instance().GetCharacter("Player").DamageIncrease(itemProperty.ItemAction);
+                break;
+            case "Heal" :
+                GameManager.Instance().GetCharacter("Player").Heal(itemProperty.ItemAction);
+                sceneUI.CharacterHp();
                 break;
         }
     }

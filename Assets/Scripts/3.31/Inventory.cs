@@ -35,7 +35,7 @@ public class Inventory : UIPopup
         foreach(ItemPropertyType itemType in Enum.GetValues(typeof(ItemPropertyType))) {
             GameObject itemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform).gameObject;
             ItemGroup itemGroupScript = itemGroup.GetOrAddComponent<ItemGroup>();
-            itemGroupScript.SetInfo(itemType.ToString() + " Items");
+            itemGroupScript.SetInfo(itemType.ToString());
         }
     }
 

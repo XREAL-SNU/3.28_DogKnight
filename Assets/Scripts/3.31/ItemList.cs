@@ -9,9 +9,9 @@ public enum ItemPropertyType
 
 public class ItemProperty
 {
-    public static ItemProperty DamageItem_Flame = new ItemProperty(ItemPropertyType.Damage, "FlameItem", 4, 5f);
-    public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "FireSpearItem", 3, 10f);
-    public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealStoneItem", 4, 20f);
+    public static ItemProperty DamageItem_Flame = new ItemProperty(ItemPropertyType.Damage, "DamageItem_Flame", 6, 5f);
+    public static ItemProperty DamageItem_FireSpear = new ItemProperty(ItemPropertyType.Damage, "DamageItem_FireSpear", 5, 10f);
+    public static ItemProperty HealItem_HealStone = new ItemProperty(ItemPropertyType.Heal, "HealItem_HealStone", 4, 20f);
 
     
     public static ItemProperty[] ItemProperties = new ItemProperty[]

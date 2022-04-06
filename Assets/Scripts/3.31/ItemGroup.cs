@@ -30,14 +30,18 @@ public class ItemGroup : UIBase
         GameObject itemGroupTitleText = GetUIComponent<GameObject>((int)GameObjects.ItemGroupTitleText);
 
         Text _itemGroupTitleText = itemGroupTitleText.GetComponent<Text>();
-        _itemGroupTitleText.text = _itemGroupName;
+        _itemGroupTitleText.text = _itemGroupName + "Items";
 
         GameObject itemsPanel = GetUIComponent<GameObject>((int)GameObjects.ItemsPanel);
 
-        for (int i = 0; i < 10; i++) {
-            GameObject item = UIManager.UI.MakeSubItem<Item>(itemsPanel.transform).gameObject;
-            Item itemScript = item.GetOrAddComponent<Item>();
-            itemScript.SetInfo("DamageItem_Flame");
+        foreach(ItemProperty itemProperty in ItemProperty.ItemProperties) {
+            if(itemProperty.PropertyType.ToString().Equals(_itemGroupName)) {
+                for(int i = 0; i < itemProperty.ItemNumber; i++) {
+                    GameObject item = UIManager.UI.MakeSubItem<Item>(itemsPanel.transform, itemProperty.ItemName).gameObject;
+                    Item itemScript = item.GetOrAddComponent<Item>();
+                    itemScript.SetInfo(itemProperty.ItemName);
+                }
+            }
         }
     }
 
