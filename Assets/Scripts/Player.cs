@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Character
 {
-    private Enemy _enemy;
+   
     private float _randomAttack;
 
     /// <summary>
@@ -17,6 +17,11 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        _myName = "Player";
+        _myHp = 100;
+        _myHpMax = _myHp;
+        _myDamage = 20;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
     }
 
     private void Awake()
@@ -24,32 +29,34 @@ public class Player : Character
         Init();
     }
 
-    /// <summary>
-    /// 1) _enemy가 할당이 안됐다면,
-    /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
-    /// </summary>
-    private void Start()
-    {
 
-    }
-
-    /// <summary>
-    /// Attack:
-    /// 1) Player는 30%의 확률로 공격력이 더 높은 공격을 가할 것
-    /// 2) _randomAttack = Random.Range(0,10); 으로 랜덤 변수 생성
-    ///   -> 0~9 까지의 정수 중 하나를 랜덤으로 할당받음.
-    /// 3) _randomAttack 이용해서 30% 확률로 기존 공격력보다 10 높은 공격 실행
-    /// 4) 이때는 AttackMotion() 말고 SpecialAttackMotion() 호출할 것
-    ///    + Debug.Log($"{_myName} Special Attack!"); 추가
-    /// 5) 70% 확률로 하는 일반 공격은 Character에 써있는 주석과 동일
-    /// </summary>
     public override void Attack()
     {
-
+        _randomAttack = Random.Range(0, 10);
+        if (!_isFinished)
+        {
+            if (_myName == _whoseTurn)
+            {
+                if (_randomAttack <= 3)
+                {
+                    SpecialAttackMotion();
+                    Debug.Log($"{_myName} Special Attack");
+                    GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage+10);
+                    
+                }
+                else
+                {
+                    AttackMotion();
+                    GameManager.Instance().GetCharacter("Enemy").GetHit(_myDamage);
+                    
+                }
+            }
+        }
     }
 
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
 
     }
 }

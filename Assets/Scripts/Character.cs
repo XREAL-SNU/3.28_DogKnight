@@ -8,26 +8,28 @@ public enum AnimatorParameters
     IsAttack, IsSpecialAttack, GetHit, IsDead
 }
 
-public class Character : MonoBehaviour, Observer
+public class Character : MonoBehaviour, Observer//옵저버
 {
     public string _myName;
     public float _myHp;
+    public float _myHpMax;
     public float _myDamage;
 
     protected int _gameRound;
-    protected int _whoseTurn;
+    protected string _whoseTurn;
     protected bool _isFinished;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
-    {
-
+    {   
+        _gameRound = round; // update 박혀 있음->변화 감지
+        _whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        _isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +41,8 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+        if (_isFinished) return;
+       
     }
 
     /// <summary>
@@ -53,6 +56,17 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
+        _myHp -= damage;
+        if (_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
 
     }
 
