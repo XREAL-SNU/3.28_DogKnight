@@ -10,6 +10,11 @@ public class ItemGroup : UIBase
 {
     // 1. enum 자유롭게 구성
 
+    enum GameObjects
+    {
+        ItemPanel, BackgroundImage
+    }
+
     private string _itemGroupName;
 
     private void Start()

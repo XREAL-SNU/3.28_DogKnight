@@ -10,7 +10,7 @@ public class Item : UIBase
     // 1. enum 자유롭게 구성
     enum GameObjects
     {
-        Image
+        BackgroundImage, ItemImage
     }
 
     private string _itemName;

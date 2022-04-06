@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour, Subject
     }
 
     private int _gameRound = 0;
-    private string _whoseTurn = "Enemy";
+    private string _whoseTurn = "Player"; //처음 turn을 Player로 초기화함.
     private bool _isEnd = false;
 
     // 1. SceneUI가 GameManager 접근 할 수 있도록 캐릭터 딕셔너리 선언
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour, Subject
     {
         if (!_isEnd)
         {
-            if (_whoseTurn == "Enemy")
+            if (_whoseTurn == "Player") //Player로 초기화했기 때문에 Player 턴마다 gameRound 출력.
             {
                 _gameRound++;
                 Debug.Log($"GameManager: Round {_gameRound}.");
@@ -54,11 +54,15 @@ public class GameManager : MonoBehaviour, Subject
         }
     }
 
+    ///AttackButton 클릭 시 RoundNotify -> TurnNotify 실행되므로 처음에 _whoseTurn 출력.
+    ///_whoseTurn 바꾸기 전에 _turnHandler update해서 올바른 character가 공격하도록 함.
+    ///_uiHandler update하기 전에 _whoseTurn 바꿔서 Enemy 턴에서는 Inventory 팝업 안 되게 함.
     public void TurnNotify()
     {
-        _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy";
         Debug.Log($"GameManager: {_whoseTurn} turn.");
+        
         _turnHandler(_gameRound, _whoseTurn);
+        _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy";
         // 2. _uiHandler 호출
         _uiHandler(_gameRound, _whoseTurn, _isEnd);
     }
@@ -68,6 +72,7 @@ public class GameManager : MonoBehaviour, Subject
         _isEnd = true;
         _finishHandler(_isEnd);
         // 2. _uiHandler 호출
+        _whoseTurn = _whoseTurn == "Enemy" ? "Player" : "Enemy"; //_uiHandler 및 콘솔창 출력 전에 _whoseTurn 바꿔서 올바르게 출력되게 함.
         _uiHandler(_gameRound, _whoseTurn, _isEnd);
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager: {_whoseTurn} Win!");

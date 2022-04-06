@@ -70,7 +70,7 @@ public class SceneUI : UIScene
             _isClicked = true;
             Button attackButton = UIUtils.FindUIChild<Button>(gameObject, "AttackButton", true);
             attackButton.interactable = false;
-
+                        
             GameManager.Instance().RoundNotify();
             GameRoundText();
             _player.Attack();
@@ -86,10 +86,9 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        if (_whoseTurn == "Player")
-        {
+        if (_whoseTurn == "Enemy") { }
+        else
             UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
-        }
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
@@ -133,9 +132,9 @@ public class SceneUI : UIScene
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
     IEnumerator GetDamageCoroutine()
     {
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.6f);
         CharacterHp();
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.6f);
         GameEnd();
         CharacterHp();
         // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
