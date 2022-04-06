@@ -12,13 +12,14 @@ public class Inventory : UIPopup
     enum GameObjects
     {
         CloseButton,
-        ContentPanel
+        ContentPanel,
+        Background
     }
 
     private void Start()
     {
         Init();
-    }
+    }   
 
     // 2. Popup UI 닫는 버튼에 OnClick_Close 바인드
     // 3. ItemList의 ItemPropertyType 참고해서 각자의 방식으로 ItemGroup subitem 만들어 볼 것
@@ -27,16 +28,18 @@ public class Inventory : UIPopup
     {
 
         Bind<GameObject>(typeof(GameObjects));
+        GameObject CloseButton = GetUIComponent<GameObject>((int)GameObjects.CloseButton);
+        CloseButton.BindEvent(OnClick_Close);
 
         GetObject((int)GameObjects.CloseButton).BindEvent(OnClick_Close);
         GameObject contentPanel = GetUIComponent<GameObject>((int)GameObjects.ContentPanel);
-
+        /*
         foreach (string typeName in Enum.GetNames(typeof(ItemPropertyType)))
         {
             ItemGroup _itemGroup = UIManager.UI.MakeSubItem<ItemGroup>(contentPanel.transform, "ItemGroup");
             _itemGroup.SetInfo(typeName);
         }
-
+        */
         /*
          for(int i = 0; i < System.Enum.GetValues(typeof(ItemPropertyType)).Length; i++)
          {

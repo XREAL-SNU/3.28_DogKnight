@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
         if (_isEnd) return;
         if(_whoseTurn == "Enemy")
         {
-            Debug.Log($"GameManager:Round{_gameRound++}.");
+            Debug.Log($"GameManager:Round{++_gameRound}.");
         }
         TurnNotify();
     }
@@ -98,11 +98,11 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
     public void EndNotify()
     {
         _isEnd = true;
+        _finishHandler(_isEnd);
         _uiHandler(_gameRound, _whoseTurn, _isEnd);
         Debug.Log("GameManager: The End");
         Debug.Log($"GameManager:{_whoseTurn} is Win!");
-        _finishHandler(_isEnd);
-
+       
 
     }
 
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour, Subject//subject 클래스
     // 3. AddUI: SceneUI 옵저버로 등록
     public void AddUI(SceneUI ui)
     {
-        _uiHandler += ui.UIUpdate;
+        _uiHandler += new UIHandler(ui.UIUpdate);
     }
 
     /// <summary>

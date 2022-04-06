@@ -11,8 +11,12 @@ public class SceneUI : UIScene
     enum GameObjects
     {
         InventoryButton,
-        AttackButton
+        AttackButton,
+        GameOverPanel
     }
+
+    
+
 
     // 서브젝트에게 넘겨받을 변수들
     private bool _isEnd;
@@ -31,6 +35,9 @@ public class SceneUI : UIScene
         _player = GameManager.Instance().GetCharacter("Player");
         _enemy = GameManager.Instance().GetCharacter("Enemy");
         GameManager.Instance().AddUI(this);
+        GameObject gameOverPanel = GetUIComponent<GameObject>((int)GameObjects.GameOverPanel);
+        gameOverPanel.SetActive(false);
+
         // 1. 옵저버 등록: AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
     }
@@ -83,7 +90,7 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
-        if(_whoseTurn == "Player")
+        if(_whoseTurn == "Enemy")
         {
             UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
         }
@@ -118,7 +125,13 @@ public class SceneUI : UIScene
     /// </summary>
     public void GameEnd()
     {
-
+        if(_isEnd)
+        {
+            GameObject gameOverPanel = GetUIComponent<GameObject>((int)GameObjects.GameOverPanel);
+            gameOverPanel.SetActive(true);
+            Text _gameOverText = UIUtils.FindUIChild<Text>(gameObject, "GameOverText", true);
+            _gameOverText.text = $"GameOver!!\n{_whoseTurn} Win!!";
+        }
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
@@ -136,8 +149,8 @@ public class SceneUI : UIScene
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
     public void UIUpdate(int round, string turn, bool isFinish)
     {
-        _gameRound = round;
-        _whoseTurn = turn;
-        _isEnd = isFinish;
+        this._gameRound = round;
+        this._whoseTurn = turn;
+        this._isEnd = isFinish;
     }
 }
