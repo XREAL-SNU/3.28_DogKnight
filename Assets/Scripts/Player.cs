@@ -7,6 +7,7 @@ public class Player : Character
     private Enemy _enemy;
     private float _randomAttack;
 
+
     /// <summary>
     /// 1. Init: 초기화 기능
     /// 1) Subject에 Observer로 등록
@@ -17,20 +18,22 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
-    }
-
-    private void Awake()
-    {
-        Init();
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
     }
 
     /// <summary>
     /// 1) _enemy가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _enemy 할당
     /// </summary>
-    private void Start()
+    private void Awake()
     {
-
+        Init();
+        if (_enemy == null)
+        {
+            _enemy = GameObject.FindWithTag("Enemy").GetComponent<Enemy>();
+        }
     }
 
     /// <summary>
@@ -45,11 +48,37 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
+        float _damage = 0;
 
+        Debug.Log("Attack");
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            int _randomAttack = Random.Range(0, 10);
+            if (0 <= _randomAttack && _randomAttack <3)
+            {
+                SpecialAttackMotion();
+                _damage = _myDamage + 10;
+                Debug.Log($"{_myName} Special Attack!");
+            }
+            else
+            {
+                AttackMotion();
+                _damage = _myDamage;
+            }
+
+            _enemy.GetHit(_damage);
+        }
     }
 
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
 
     }
 }
+
+
+
+
+
+

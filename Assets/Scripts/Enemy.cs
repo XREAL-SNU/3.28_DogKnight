@@ -5,7 +5,12 @@ using UnityEngine;
 public class Enemy : Character
 {
     private Player _player;
-    private float _randomHeal;
+
+   
+    private int FINAL_ROUND = 10;
+    private int PLAYER_HP = 100;
+  
+
 
     /// <summary>
     /// 1. Init: 초기화 기능
@@ -17,21 +22,25 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
-    }
-
-    private void Awake()
-    {
-        Init();
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
     }
 
     /// <summary>
     /// 1) _player가 할당이 안됐다면,
     /// 2) GameObject.FindWithTag 이용해서 _player 할당
     /// </summary>
-    private void Start()
+    private void Awake()
     {
-
+        Init();
+        if (_player == null)
+        {
+            _player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        }
     }
+
+
 
     /// <summary>
     /// Attack:
@@ -40,6 +49,20 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        if (!_isFinished && _myName == _whoseTurn)
+        {
+            AttackMotion();
+            if (_gameRound == FINAL_ROUND)
+            {
+                _myDamage = PLAYER_HP;
+            }
+            else
+            {
+                _myDamage = _myDamage + 3;
+            }
+            _player.GetHit(_myDamage);
+        }
+
 
     }
 
@@ -51,7 +74,13 @@ public class Enemy : Character
     /// </summary>
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
+        int _randomHealOrNot = Random.Range(0, 10);
 
+        if (0 <= _randomHealOrNot && _randomHealOrNot < 3)
+        {
+            PLAYER_HP += 10;
+            Debug.Log($"{_myName} Heal!");
+        }
     }
 }
-
