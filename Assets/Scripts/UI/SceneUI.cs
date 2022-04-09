@@ -9,6 +9,34 @@ public class SceneUI : UIScene
 {
     // 1. enum 자유롭게 구성
 
+        enum Buttons
+    {
+
+        AttackButton,
+        InventoryButton
+    }
+
+    enum Texts
+    {
+        GameRoundText,
+            GameOverText
+    }
+
+    enum Bars{
+
+        PlayerHpBar,
+        EnemyHpBar
+
+    }
+    enum etcs
+    {
+        GameOverPanel,
+        HealImage
+
+    }
+
+
+
     // 서브젝트에게 넘겨받을 변수들
     private bool _isEnd;
     private int _gameRound;
@@ -25,18 +53,23 @@ public class SceneUI : UIScene
         Init();
         _player = GameManager.Instance().GetCharacter("Player");
         _enemy = GameManager.Instance().GetCharacter("Enemy");
+
         // 1. 옵저버 등록: AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
     }
 
     /// <summary>
-    /// 2. Init: 각 요소에 함수 바인딩
+    /// 2. Init: 각 요소에(enum들) 함수 바인딩
     /// 1) Attack Button에 OnClick_AttackButton Bind
     /// 2) 인벤토리 창 여는 버튼에 OnClick_InventoryButton Bind
     /// </summary>
     public override void Init()
     {
         base.Init();
+        Bind<Button>(typeof(Buttons));
+        Bind<Text>(typeof(Texts));
+        Bind<Image>(typeof(Bars));
+        Bind<Image>(typeof(etcs));
     }
 
     /// <summary>
@@ -51,6 +84,9 @@ public class SceneUI : UIScene
     public void OnClick_AttackButton(PointerEventData data)
     {
 
+
+
+
     }
 
     /// <summary>
@@ -60,6 +96,9 @@ public class SceneUI : UIScene
     /// </summary>
     public void OnClick_InventoryButton(PointerEventData data)
     {
+
+
+
 
     }
 
