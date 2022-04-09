@@ -22,12 +22,11 @@ public class ItemGroup : UIBase
     // 4. 생성할 때, Item의 SetInfo에 _itemName 할당해서 정보 넘겨줄 것
     public override void Init()
     {
-
+        UIUtils.
     }
 
     // 5. SetInfo: itemtype을 _itemGroupName에 할당
     public void SetInfo(string itemtype)
     {
-
     }
 }

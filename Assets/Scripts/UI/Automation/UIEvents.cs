@@ -4,10 +4,10 @@ namespace XReal.XTown.UI
     {
         public enum UIEvent
         {
-            Enter,
-            Click,
-            Exit,
-            Drag
+            Drag,
+            PointerEnter,
+            PointerClick,
+            PointerExit
         }
     }
 }
