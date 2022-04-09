@@ -56,6 +56,12 @@ public class SceneUI : UIScene
 
         // 1. 옵저버 등록: AddUI(this);
         // 1. Game Ending 됐을 때 뜨는 UI 비활성화
+
+        GetImage((int)etcs.HealImage).gameObject.SetActive(false);
+        GetImage((int)etcs.GameOverPanel).gameObject.SetActive(false);
+
+
+
     }
 
     /// <summary>
@@ -70,6 +76,8 @@ public class SceneUI : UIScene
         Bind<Text>(typeof(Texts));
         Bind<Image>(typeof(Bars));
         Bind<Image>(typeof(etcs));
+        GetButton((int)Buttons.AttackButton).gameObject.BindEvent(OnClick_AttackButton);
+        GetButton((int)Buttons.InventoryButton).gameObject.BindEvent(OnClick_InventoryButton);
     }
 
     /// <summary>
@@ -84,7 +92,15 @@ public class SceneUI : UIScene
     public void OnClick_AttackButton(PointerEventData data)
     {
 
-
+        if (_isClicked==false)
+        {
+            _isClicked = true;
+            GameManager.Instance().RoundNotify();
+            GameRoundText();
+            _player.Attack();
+            _enemy.Attack();
+            StartCoroutine(GetDamageCoroutine());
+        }
 
 
     }
@@ -97,22 +113,60 @@ public class SceneUI : UIScene
     public void OnClick_InventoryButton(PointerEventData data)
     {
 
+        if (_whoseTurn=="Enemy")
+        {
+            UIManager.UI.ShowPopupUI<UIPopup>("Inventory");
 
+        }
+         else if (_whoseTurn == "Player")
+        {
 
+        }
 
     }
 
     // 5. GameRoundText: GameRound 띄우는 UI의 text 업데이트
     public void GameRoundText()
     {
-
+        GetText((int)Texts.GameRoundText).text = "GameRound" + _gameRound;
     }
 
     // 6. CharacterHp: CharacterHp UI 업데이트 -> fillAmount 값 이용
     public void CharacterHp()
     {
 
+        GetImage((int)Bars.PlayerHpBar).fillAmount = _player._myHp / _player._myHpMax;
+        GetImage((int)Bars.EnemyHpBar).fillAmount = _enemy._myHp / _enemy._myHpMax;
+
+
+
     }
+
+
+    IEnumerator GetDamageCoroutine()
+    {
+        GetButton((int)Buttons.AttackButton).interactable = false;
+        if (_whoseTurn.Equals("Player")) GetButton((int)Buttons.InventoryButton).interactable = false;
+        yield return new WaitForSeconds(1.2f);
+        CharacterHp();
+        float beforeHp = _enemy._myHp;
+        yield return new WaitForSeconds(1.2f);
+        GameEnd();
+        float afterHp = _enemy._myHp;
+        CharacterHp();
+        if (beforeHp != afterHp)
+        {
+            GetImage((int)etcs.HealImage).gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.65f);
+            GetImage((int)etcs.HealImage).gameObject.SetActive(false);
+        }
+        GetButton((int)Buttons.AttackButton).interactable = true;
+        if (_whoseTurn.Equals("Enemy")) GetButton((int)Buttons.InventoryButton).interactable = true;
+        _isClicked = false;
+    }
+
+
+
 
     /// <summary>
     /// 7. GameEnd:
@@ -122,23 +176,21 @@ public class SceneUI : UIScene
     /// </summary>
     public void GameEnd()
     {
-
+        if (_isEnd)
+        {
+            GetImage((int)etcs.GameOverPanel).gameObject.SetActive(true);
+            GetText((int)Texts.GameOverText).text = "Gameover!!\n" + _whoseTurn + " Win!!";
+        }
     }
 
     // 7. GetDamageCoroutine: 각 캐릭터들의 공격/피격 애니메이션에 맞추어 UI 표현이 자연스러울 수 있도록
-    IEnumerator GetDamageCoroutine()
-    {
-        yield return new WaitForSeconds(1.2f);
-        CharacterHp();
-        yield return new WaitForSeconds(1.2f);
-        GameEnd();
-        CharacterHp();
-        // 7. 다시 버튼 눌릴 수 있도록 _isClicked 조절
-    }
+   
 
     // 8. UIUpdate: 서브젝트 델리게이트에 등록될 옵저버 업데이트 함수 -> 변수 업데이트
     public void UIUpdate(int round, string turn, bool isFinish)
     {
-
+        this._gameRound = round;
+        this._whoseTurn = turn;
+        this._isEnd = isFinish;
     }
 }

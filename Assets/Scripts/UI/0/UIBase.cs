@@ -11,6 +11,10 @@ namespace XReal.XTown.UI
     {
         // storage for UIelements, type refers to enum
         protected Dictionary<Type, UnityEngine.Object[]> _objects = new Dictionary<Type, UnityEngine.Object[]>();
+        /* 딕셔너리에 버튼이면 버튼리스트/이미지면 이미지리스트/텍스트면 텍스트리스트
+         
+             
+             */ 
         public abstract void Init();
 
         // T must contain an enum definition for UI element names.
@@ -19,7 +23,10 @@ namespace XReal.XTown.UI
             string[] names = Enum.GetNames(type);
             UnityEngine.Object[] objects = new UnityEngine.Object[names.Length];
             _objects.Add(typeof(T), objects);
+            /* for문을 통해서 자동으로 게임오브젝트에서 자식들 까지 스캔하면서, 같은 이름이 있는지 찾는 기능. 
 
+
+           */
             for (int i = 0; i < names.Length; ++i)
             {
                 if (typeof(T) == typeof(GameObject))
