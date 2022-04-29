@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private Player _player;
     private float _randomHeal;
 
     /// <summary>
-    /// 1. Init: ÃÊ±âÈ­ ±â´É
-    /// 1) Subject¿¡ Observer·Î µî·Ï
-    /// 2) _myName, _myHp, _myDamage ÃÊ±âÈ­
-    /// 3) _myNameÀº ¹«Á¶°Ç "Enemy"·Î ÇÒ °Í
-    /// 4) _myHp, _myDamage´Â 100, 10À¸·Î °¢°¢ ÃÊ±âÈ­ (±ÇÀå »çÇ×)
+    /// 1. Init: ??? ??
+    /// 1) Subject? Observer? ??
+    /// 2) _myName, _myHp, _myDamage ???
+    /// 3) _myName? ??? "Enemy"? ? ?
+    /// 4) _myHp, _myDamage? 100, 10?? ?? ??? (?? ??)
     /// </summary>
     protected override void Init()
     {
         base.Init();
+        _myName = "Enemy";
+        _myHpMax = 100;
+        _myHp = _myHpMax;
+        _myDamage = 10;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>());
+
     }
 
     private void Awake()
@@ -25,33 +30,60 @@ public class Enemy : Character
     }
 
     /// <summary>
-    /// 1) _player°¡ ÇÒ´çÀÌ ¾ÈµÆ´Ù¸é,
-    /// 2) GameObject.FindWithTag ÀÌ¿ëÇØ¼­ _player ÇÒ´ç
-    /// </summary>
-    private void Start()
-    {
-
-    }
-
-    /// <summary>
     /// Attack:
-    /// 1) _gameRound°¡ Áö³¯¶§¸¶´Ù µ¥¹ÌÁö 3¾¿ Áõ°¡
-    /// 2) _gameRound°¡ 10ÀÌ µÇ¸é ¹«Á¶°Ç Player¸¦ Á×ÀÌµµ·Ï µ¥¹ÌÁö Áõ°¡
+    /// 1) _gameRound? ????? ??? 3? ??
+    /// 2) _gameRound? 10? ?? ??? Player? ???? ??? ??
     /// </summary>
     public override void Attack()
     {
+        if (!_isFinished && _myName.Equals(_whoseTurn))
+        {
+            AttackMotion();
 
+            if (_gameRound >= 10)
+            {
+                GameManager.Instance().GetCharacter("Player").GetHit(float.MaxValue);
+            }
+            else
+            {
+                GameManager.Instance().GetCharacter("Player").GetHit(_myDamage + 3 * _gameRound);
+            }
+        }
     }
 
     /// <summary>
     /// GetHit:
-    /// 1) PlayerÀÇ _randomAttack°ú µ¿ÀÏÇÑ ±â´É
-    /// 2) 30%ÀÇ È®·ü·Î ÇÇ°İ½Ã 10 Ã¼·Â Áõ°¡
-    ///   + Debug.Log($"{_myName} Heal!"); Ãß°¡
+    /// 1) Player? _randomAttack? ??? ??
+    /// 2) 30%? ??? ??? 10 ?? ??
+    ///   + Debug.Log($"{_myName} Heal!"); ??
     /// </summary>
     public override void GetHit(float damage)
     {
+        base.GetHit(damage);
 
+        if (_myHp > 0)
+        {
+            _randomHeal = Random.Range(0, 10);
+
+            if (_randomHeal < 3)
+            {
+                StartCoroutine(HealCoroutine());
+            }
+        }
+    }
+
+    /// <summary>
+    /// HealCoroutine: 
+    /// 1) Playerê°€ Enemy ê³µê²© -> Hp ê¹ì„ -> UI ë°˜ì˜
+    /// 2) Enemy í™•ë¥ ì ìœ¼ë¡œ íšŒë³µ -> Hp ì°¸ -> UI ë°˜ì˜
+    /// 3) ì¤‘ê°„ì— yield return í•˜ì§€ ì•Šìœ¼ë©´ í•œë²ˆì— ì²˜ë¦¬ë¼ì„œ í”¼ê²© í•˜ê³  Heal í•˜ëŠ” UI ë°˜ì˜ì´ ì œëŒ€ë¡œ ì´ë£¨ì–´ì§€ì§€ ì•ŠìŒ.
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator HealCoroutine()
+    {
+        yield return new WaitForSeconds(1.3f);
+        _myHp += 10;
+        Debug.Log($"{_myName} Heal!");
     }
 }
 
