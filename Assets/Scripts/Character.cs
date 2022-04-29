@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 // 애니메이팅 트리거 이름 열거형으로 저장 (이해할 필요 없음)
 public enum AnimatorParameters
 {
@@ -10,24 +9,28 @@ public enum AnimatorParameters
 
 public class Character : MonoBehaviour, Observer
 {
+    public Character other;
+    public Subject subject;
     public string _myName;
     public float _myHp;
     public float _myDamage;
+    public bool isSkilled;
 
     protected int _gameRound;
-    protected int _whoseTurn;
-    protected bool _isFinished;
+    protected string _whoseTurn;
+    protected bool _isFinished =false;
 
     // 1. TurnUpdate: _gameRound, _whoseTurn update
     public void TurnUpdate(int round, string turn)
     {
-
+        this._gameRound = round;
+        this._whoseTurn = turn;
     }
 
     // 2. FinishUpdate: _isFinished update
     public void FinishUpdate(bool isFinish)
     {
-
+        this._isFinished = isFinish;
     }
 
     /// <summary>
@@ -39,7 +42,7 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void Attack()
     {
-
+            
     }
 
     /// <summary>
@@ -53,7 +56,17 @@ public class Character : MonoBehaviour, Observer
     /// </summary>
     public virtual void GetHit(float damage)
     {
-
+        _myHp -= damage;
+        if(_myHp <= 0)
+        {
+            DeadMotion();
+            GameManager.Instance().EndNotify();
+        }
+        else
+        {
+            GetHitMotion();
+            Debug.Log($"{_myName} HP: {_myHp}");
+        }
     }
 
     /// <summary>
@@ -71,6 +84,7 @@ public class Character : MonoBehaviour, Observer
     protected virtual void Init()
     {
         _animator = GetComponent<Animator>();
+
     }
     protected void AttackMotion()
     {

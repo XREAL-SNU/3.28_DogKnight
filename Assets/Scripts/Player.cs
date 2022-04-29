@@ -17,6 +17,10 @@ public class Player : Character
     protected override void Init()
     {
         base.Init();
+        _myName = "Player";
+        _myHp = 100;
+        _myDamage = 20;
+        GameManager.Instance().AddCharacter(this.GetComponent<Player>()); //인스턴스를 통해 접근 후 Addcharacter에 player할당하기
     }
 
     private void Awake()
@@ -30,7 +34,11 @@ public class Player : Character
     /// </summary>
     private void Start()
     {
-
+        if(_enemy == null)
+        {
+            _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+            other = _enemy;
+        }
     }
 
     /// <summary>
@@ -45,11 +53,27 @@ public class Player : Character
     /// </summary>
     public override void Attack()
     {
+        if (!_isFinished && (_myName == _whoseTurn))
+        {
 
+            if (isSkilled)
+            {
+                SpecialAttackMotion();
+                Debug.Log($"{_myName} Special Attack!");
+                other.GetHit(_myDamage+10);
+                UIManager.Instance().SliderBarUpdate(other);
+            }
+            else
+            {
+                AttackMotion();
+                other.GetHit(_myDamage);
+                UIManager.Instance().SliderBarUpdate(other);
+            }
+        }            
     }
 
     public override void GetHit(float damage)
     {
-
+        base.GetHit(damage);
     }
 }

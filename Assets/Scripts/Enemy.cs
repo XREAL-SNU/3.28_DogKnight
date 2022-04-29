@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : Character
 {
@@ -17,6 +18,10 @@ public class Enemy : Character
     protected override void Init()
     {
         base.Init();
+        _myName = "Enemy";
+        _myHp = 100;
+        _myDamage = 10;
+        GameManager.Instance().AddCharacter(this.GetComponent<Enemy>());
     }
 
     private void Awake()
@@ -30,7 +35,8 @@ public class Enemy : Character
     /// </summary>
     private void Start()
     {
-
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        other = _player;
     }
 
     /// <summary>
@@ -40,7 +46,18 @@ public class Enemy : Character
     /// </summary>
     public override void Attack()
     {
+        if (!_isFinished && (_myName == _whoseTurn))
+        {
+            _myDamage += 3;
+            if (_gameRound >= 10)
+            {
+                _myDamage = _player._myHp;
+            }
+            AttackMotion();
+            other.GetHit(_myDamage);
+            UIManager.Instance().SliderBarUpdate(other);
 
+        }
     }
 
     /// <summary>
@@ -49,9 +66,18 @@ public class Enemy : Character
     /// 2) 30%의 확률로 피격시 10 체력 증가
     ///   + Debug.Log($"{_myName} Heal!"); 추가
     /// </summary>
-    public override void GetHit(float damage)
+    public override void GetHit( float damage)
     {
-
+        base.GetHit(damage);
+        if(_myHp > 0)
+        {
+            if (isSkilled)
+            {
+                _myHp += 10;
+                Debug.Log($"{_myName} Heal!");
+                UIManager.Instance().SliderBarUpdate(this);
+            }
+        }   
     }
 }
 
